@@ -45,7 +45,15 @@ public class Grid implements IGrid {
 		String separator = " ";
 		for (int i=0; i<this.height; i++){
 			for (int j=0; j<width; j++){
+				if(this.getCellType(j, i)==CellType.EMPTY)
+				{
 				s += "c"+separator;
+				}
+				if(this.getCellType(j, i)==CellType.ROAD)
+				{
+				s += "*"+separator;
+				}
+				
 			}
 			s += "\n";
 		}
