@@ -17,7 +17,7 @@ public class Model {
 	private IGrid grid; 
 	
 	public Model() {
-		grid = new Grid(25,40);
+		grid = new Grid(40, 25); //Grid(Col, Row)
 		grid.setCellDirection(5, 5, Direction.NORTH);
 		
 		System.out.println("has car "+grid.hasCarAt(5, 5));
@@ -40,44 +40,46 @@ try {
 			@SuppressWarnings("resource")
 			BufferedReader reader =new BufferedReader(file);
 			
-			
+			int counter=0;
 			String line = reader.readLine();
 			String []spaces;		
 			while(line != null)
 			{
+				System.out.println(counter);
+				counter++;
 				spaces = line.trim().split("\\s+");
 				
 		        for (int col = 0; col <40; col++) {
 		        	if(Integer.parseInt(spaces[col])==0 || Integer.parseInt(spaces[col])==9)
 		        			{
-		        	grid.setCellType(row, col, CellType.EMPTY);
+		        	grid.setCellType(col, row, CellType.EMPTY);
 		        			}
 		        	if(Integer.parseInt(spaces[col])==1)
 		        			{
 		        		//to east
-		        	grid.setCellType(row, col, CellType.ROAD);
-		        	grid.setCellDirection(row, col, Direction.EAST);
+		        		grid.setCellType(col, row, CellType.ROAD);
+		        	//grid.setCellDirection(row, col, Direction.EAST);
 		        			}
 		        	if(Integer.parseInt(spaces[col])==2)
 		        			{
 		        		//to west
-		        	grid.setCellType(row, col, CellType.ROAD);
-		        	grid.setCellDirection(row, col, Direction.WEST);
+		        		grid.setCellType(col, row, CellType.ROAD);
+		        	//grid.setCellDirection(row, col, Direction.WEST);
 		        			}
 		        	if(Integer.parseInt(spaces[col])==3)
         			{
 		        		//to north
-		        		grid.setCellType(row, col, CellType.ROAD);
-		        		grid.setCellDirection(row, col, Direction.NORTH);
+		        		grid.setCellType(col, row, CellType.ROAD);
+		        		//grid.setCellDirection(row, col, Direction.NORTH);
         			}
 		        	if(Integer.parseInt(spaces[col])==4)
         			{
 		        		//to south
-		        		grid.setCellType(row, col, CellType.ROAD);
-		        		grid.setCellDirection(row, col, Direction.SOUTH);
+		        		grid.setCellType(col, row, CellType.ROAD);
+		        		//grid.setCellDirection(row, col, Direction.SOUTH);
         			}
 		      
-		            System.out.println(grid.getCellType(row, col));
+		            System.out.println(grid.getCellType(col, row));
 		        	
 		            ///////////////////matrix[row][col] = Integer.parseInt(spaces[col]);
 		        
