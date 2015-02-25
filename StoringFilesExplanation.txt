@@ -1,0 +1,12 @@
+Please follow this new guideline for storing in the repository. 
+
+Documentation folder: this folder is for any written work. It is split primarily into reports and policies.
+If the document you are adding to the repository is about a policy or specification of the system, i.e a class diagram, please add it to the diagram and specification folder. 
+If the document you are adding is a report on your current implementation and how it works, please add it to the report folder under final report. 
+if your document is not classed as any of the above please add it to the miscellaneous folder. 
+
+
+
+Software: 
+If the software is part of our older models, it should be placed in the initial work folder.
+If the software is part of the new simulation, please add it to the final model folder - making a new folder where necessary.
