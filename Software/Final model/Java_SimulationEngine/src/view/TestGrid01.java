@@ -18,14 +18,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import core.IGrid;
+
 public class TestGrid01 {
 
-    public TestGrid01() {
+    public TestGrid01(IGrid grid) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
