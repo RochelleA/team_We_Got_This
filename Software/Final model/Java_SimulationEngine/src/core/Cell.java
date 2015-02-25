@@ -22,6 +22,7 @@ public class Cell implements ICell {
 	 * @see Grid#Grid(int, int)
 	 */
 	public Cell(int x, int y) {
+		this.car = null;
 		if(x < 0 || y < 0){
 			throw new IndexOutOfBoundsException("X and Y of the cell must be positive");
 		}
@@ -84,7 +85,7 @@ public class Cell implements ICell {
 	@Override
 	public ICar getCar() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.car;
 	}
 
 	/* (non-Javadoc)
@@ -92,6 +93,11 @@ public class Cell implements ICell {
 	 */
 	@Override
 	public void setCar(ICar car) {
+		if(this.car == null){
+			this.car = car;
+		}else{
+			throw new GridException("Cell already has a car");
+		}
 		// TODO Auto-generated method stub
 
 	}

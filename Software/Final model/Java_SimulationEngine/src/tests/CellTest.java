@@ -85,12 +85,23 @@ public class CellTest {
 
 	@Test
 	public void testGetCar() {
-		fail("Not yet implemented");
+		testSetCar();
 	}
 
 	@Test
 	public void testSetCar() {
-		fail("Not yet implemented");
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.setCar(car);
+		assertEquals(car, cell.getCar());
+	}
+	
+	@Test(expected = GridException.class)
+	public void testSetCarWhenCellHasCar(){
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.setCar(car);
+		cell.setCar(car);
 	}
 
 	@Test
