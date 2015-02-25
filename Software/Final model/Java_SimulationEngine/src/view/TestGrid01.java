@@ -24,11 +24,23 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import core.CellType;
 import core.IGrid;
 
 public class TestGrid01 {
+	
+	private IGrid nGrid;
+	private int gHeight;
+	private int gWidth;
 
     public TestGrid01(IGrid grid) {
+    	
+    	//moving  Nur's Grid Information to my grid
+    	nGrid=grid;
+    	//get The height and width of the grid
+    	gHeight=grid.getHeight();
+    	gWidth=grid.getWidth();
+    	
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -36,6 +48,7 @@ public class TestGrid01 {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
+                
 
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,11 +63,15 @@ public class TestGrid01 {
 
     public class TestPane extends JPanel {
     	
-    	//Grid Coloumn and Row Count
-        private int columnCount = 100;
-        private int rowCount = 100;
+    	/*Grid Column and Row Count which is used to as a parameter for
+    	 * for deciding the height and width values of the cell.
+    	 */
+    	
+        private int columnCount = 10;
+        private int rowCount = 10;
         
         //Rectangular Cells
+        //Now i have to draw the cells based on the 
         private List<Rectangle> cells;
         
         /*Used instead of a Car just to get a look and feel about how to have a control
@@ -66,11 +83,10 @@ public class TestGrid01 {
 
         public TestPane() {
         	//put all the cells column*row into an ArrayList
-        	cells = new ArrayList<>(columnCount * rowCount);
+        	cells = new ArrayList<>(gHeight * gWidth);
         	
-        	
-            MouseAdapter mouseHandler;
-            mouseHandler = new MouseAdapter() {
+        	//Mouse Adapter class methods to get awareness of the kind of 
+            MouseAdapter mouseHandler = new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     Point point = e.getPoint();
@@ -78,11 +94,12 @@ public class TestGrid01 {
                     int width = getWidth();
                     int height = getHeight();
 
-                    int cellWidth = width / columnCount;
-                    int cellHeight = height / rowCount;
+                    int cellWidth = width / gWidth;
+                    int cellHeight = height /gHeight;
 
-                    int column = e.getX() / cellWidth;
+                    int column = e.getX() / cellWidth; 
                     int row = e.getY() / cellHeight;
+                    
 
                     selectedCell = new Point(column, row);
                     repaint();
@@ -93,10 +110,11 @@ public class TestGrid01 {
         }
 
         @Override
+        //Dimension of the Parent Component
         public Dimension getPreferredSize() {
             return new Dimension(600, 600);
         }
-        //invalidate the cells
+        //invalidate the cells not required but, just as a Good Coding practice.
         @Override
         public void invalidate() {
             cells.clear();
@@ -106,27 +124,55 @@ public class TestGrid01 {
 
         @Override
         protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+        
+        	super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
-
-            int width = getWidth();
-            int height = getHeight();
-
-            int cellWidth = width / columnCount;
-            int cellHeight = height / rowCount;
-
-            int xOffset = (width - (columnCount * cellWidth)) / 2;
-            int yOffset = (height - (rowCount * cellHeight)) / 2;
-
+            
+            //to get the width and height of the component
+            //25/4 not required.
+           int width = getWidth();
+           int height = getHeight();
+            
+            //based on the width and height of the outer Component
+            
+            int cellWidth = width / gWidth;
+            int cellHeight = height / gHeight;
+            
+            // why did i write this i have to figure out.
+            int xOffset = (width - (gWidth * cellWidth)) / 2;
+            int yOffset = (height - (gHeight * cellHeight)) / 2;
+            
+            
+            
+            // Good coding practice just to clear if any previous traces remain in the junk
             if (cells.isEmpty()) {
-                for (int row = 0; row < rowCount; row++) {
-                    for (int col = 0; col < columnCount; col++) {
-                        Rectangle cell = new Rectangle(
-                                xOffset + (col * cellWidth),
-                                yOffset + (row * cellHeight),
-                                cellWidth,
-                                cellHeight);
-                        cells.add(cell);
+                for (int row = 0; row < gWidth ; row++) {
+                    for (int col = 0; col < gHeight; col++) {
+                    	
+                    	
+                    	if(nGrid.getCellType(row, col)== CellType.EMPTY){
+                    		Rectangle cell = new Rectangle(
+                                    xOffset + (row * cellWidth),
+                                    yOffset + (col * cellHeight),
+                                    cellWidth,
+                                    cellHeight);
+                    		
+                            cells.add(cell);
+                    		
+                    	}
+                    	else if(nGrid.getCellType(row, col)== CellType.ROAD){
+                    		
+                    		Rectangle cell = new Rectangle(
+                                    xOffset + (row * cellWidth),
+                                    yOffset + (col * cellHeight),
+                                    cellWidth,
+                                    cellHeight);
+                    		
+                            cells.add(cell);
+                    	}
+                    	
+                    	
+                        
                     }
                 }
             }
