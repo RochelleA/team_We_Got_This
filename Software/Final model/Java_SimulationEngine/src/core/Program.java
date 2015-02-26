@@ -14,7 +14,7 @@ public class Program {
 		Controller cont = new Controller();
 		IGrid grid = cont.model.getGrid();
 		
-	    //TestGrid01 tg = new TestGrid01(grid);
+	    TestGrid01 tg = new TestGrid01(grid);
 		
 		//View view = new View();
 	}
