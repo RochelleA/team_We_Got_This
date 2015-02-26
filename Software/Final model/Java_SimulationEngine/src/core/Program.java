@@ -14,7 +14,7 @@ public class Program {
 		
 		IGrid grid = model.getGrid();
 		
-		TestGrid01 tg = new TestGrid01(grid);
+		//TestGrid01 tg = new TestGrid01(grid);
 		
 		//View view = new View();
 	}

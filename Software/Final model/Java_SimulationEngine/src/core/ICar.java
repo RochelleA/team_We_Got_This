@@ -27,6 +27,7 @@ public interface ICar {
 	 * @param x the position to set
 	 */
 	public void setX(int x);
+
 	
 	
 }

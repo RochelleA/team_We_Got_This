@@ -51,7 +51,12 @@ public class Grid implements IGrid {
 				}
 				if(this.getCellType(j, i)==CellType.ROAD)
 				{
-				s += "#"+separator;
+					if(hasCarAt(j, i)){
+						s += "@"+separator;
+						
+					}
+					else{
+				s += "#"+separator;}
 				}
 				
 			}
@@ -123,7 +128,13 @@ public class Grid implements IGrid {
 	@Override
 	public boolean hasCarAt(int x, int y) {
 		// TODO Auto-generated method stub
+		if(this.getCellAt(x, y).getCar()!=null)
+		{
+			return true;
+		}
+		else{
 		return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -132,6 +143,7 @@ public class Grid implements IGrid {
 	@Override
 	public ICar getCarAt(int x, int y) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -141,7 +153,9 @@ public class Grid implements IGrid {
 	@Override
 	public void placeCarAt(int x, int y, ICar car) {
 		// TODO Auto-generated method stub
-
+		this.getCellAt(x, y).setCar(car);
+		System.out.println("Setting the car at " +x + " and " +y);
+		
 	}
 
 	/* (non-Javadoc)

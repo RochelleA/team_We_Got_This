@@ -18,14 +18,16 @@ public class Model {
 	
 	public Model() {
 		grid = new Grid(40, 25); //Grid(Col, Row)
-		grid.setCellDirection(5, 5, Direction.NORTH);
 		
-		System.out.println("has car "+grid.hasCarAt(5, 5));
+		System.out.println("has car "+grid.hasCarAt(0, 10));
 
 		GetMap();
 		
-		grid.placeCarAt(5, 5, new Car());
-		System.out.println("has car "+grid.hasCarAt(5, 5));
+		grid.placeCarAt(7, 10, new Car());
+		grid.placeCarAt(10, 10, new Car());
+		System.out.println("has car " + grid.hasCarAt(0, 10));
+		
+		
 		System.out.println(getGrid().toString());
 		System.out.println("finished");
 	}
@@ -34,19 +36,16 @@ public class Model {
 try {	
 			
 			int row=0;
-			int size=0;
 		
 			FileReader file = new FileReader("files/map.txt");
 			@SuppressWarnings("resource")
 			BufferedReader reader =new BufferedReader(file);
 			
-			int counter=0;
 			String line = reader.readLine();
 			String []spaces;		
 			while(line != null)
 			{
-				System.out.println(counter);
-				counter++;
+
 				spaces = line.trim().split("\\s+");
 				
 		        for (int col = 0; col <40; col++) {
@@ -78,9 +77,7 @@ try {
 		        		grid.setCellType(col, row, CellType.ROAD);
 		        		grid.setCellDirection(col, row, Direction.SOUTH);
         			}
-		      
-		            System.out.println(grid.getCellType(col, row));
-		        	
+		      		        	
 		            ///////////////////matrix[row][col] = Integer.parseInt(spaces[col]);
 		        
 		        }

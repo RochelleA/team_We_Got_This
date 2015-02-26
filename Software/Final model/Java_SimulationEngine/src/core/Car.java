@@ -8,8 +8,10 @@ package core;
  */
 public class Car implements ICar {
 	
+
 	private int x;
 	private int y;
+	
 	
 	@Override
 	public int getX(){
@@ -30,5 +32,6 @@ public class Car implements ICar {
 	public void setY(int y){
 		this.y = y;
 	}
+	
 	
 }
