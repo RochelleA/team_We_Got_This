@@ -68,6 +68,9 @@ public interface ICell {
 	 */
 	void setCar(ICar car);
 	
+	//todo
+	void removeCar();
+	
 	/**
 	 * Returns a traffic light on the cell or null if there's no traffic light.
 	 * @return traffic light

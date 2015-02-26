@@ -56,7 +56,7 @@ try {
 			
 			int row=0;
 		
-			FileReader file = new FileReader("files/map.txt");
+			FileReader file = new FileReader("files/mapJunction.txt");
 			@SuppressWarnings("resource")
 			BufferedReader reader =new BufferedReader(file);
 			
