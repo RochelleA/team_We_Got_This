@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="955" height="600" xmlns:local="*"
+			    creationComplete="application1_creationCompleteHandler(event)" mouseUp="globalMouseUp(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			private var currentInstrument:String = "";
+			
+			protected function updateDimBtn_clickHandler(event:MouseEvent):void
+			{
+				trace('click update');
+				// TODO Auto-generated method stub
+				//scroller.removeElement(squareGrid);
+				squareGrid = new SquareGrid();
+				squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
+				//scroller.invalidateDisplayList();
+				//scroller.addElement(squareGrid);
+				//squareGrid = null;
+				scroller.viewport = squareGrid;
+				//trace(123);
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				squareGrid.init(25,25);
+				gridWidth.text = "25";
+				gridHeight.text = "25";
+//				var i:int = 0;
+//				i = 7.6;
+//				trace ( i);
+//				i = 7.3;
+//				trace(i);
+				
+			}
+			
+			protected function onInstrumentSelect(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				switch(event.currentTarget.id){
+					case "eraserInstr":
+						trace('sel eraser');
+						break;
+					case "roadInstr":
+						trace('sel road');
+						break;
+				}
+			}
+			
+			protected function globalMouseUp(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				squareGrid.mouseUp();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup paddingTop="10" paddingLeft="10">
+		<s:Scroller id="scroller" width="501" height="551">
+			<local:SquareGrid id="squareGrid" />
+		</s:Scroller>
+
+		<s:VGroup>
+			<s:HGroup verticalAlign="middle">
+				<s:Label text="Width:"/>
+				<s:TextInput id="gridWidth" width="50" />
+				<s:Label text="Height:"/>
+				<s:TextInput id="gridHeight" width="50" />
+				<s:Button label="Update" id="updateDimBtn" click="updateDimBtn_clickHandler(event)" />
+			</s:HGroup>
+			<s:Button label="Save as..."/>
+			
+			<s:Label text="Instruments" fontSize="18"/>
+			<s:HGroup id="roadInstr" useHandCursor="true" click="onInstrumentSelect(event)">
+				<s:Rect width="20" height="20" fill="{SquareCell.roadFill}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Label text="Road"/>
+			</s:HGroup>
+			<s:HGroup id="eraserInstr" useHandCursor="true" click="onInstrumentSelect(event)">
+				<s:Rect width="20" height="20" fill="{SquareCell.defaultFill}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Label text="Eraser"/>
+			</s:HGroup>
+		</s:VGroup>
+		
+		
+	</s:HGroup>
+	
+</s:Application>
