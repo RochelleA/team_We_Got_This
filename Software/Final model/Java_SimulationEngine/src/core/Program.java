@@ -1,7 +1,7 @@
 package core;
 
 import view.TestGrid01;
-import model.Model;
+import model.*;
 
 public class Program {
 
@@ -10,11 +10,11 @@ public class Program {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Model model = new Model();
+		//Model model = new Model();
+		Controller cont = new Controller();
+		IGrid grid = cont.model.getGrid();
 		
-		IGrid grid = model.getGrid();
-		
-		//TestGrid01 tg = new TestGrid01(grid);
+	    //TestGrid01 tg = new TestGrid01(grid);
 		
 		//View view = new View();
 	}

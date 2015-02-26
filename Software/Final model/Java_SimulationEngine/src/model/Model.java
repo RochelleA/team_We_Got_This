@@ -3,9 +3,19 @@
  */
 package model;
 
+
+
+
+
+
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 import core.*;
 
@@ -16,23 +26,32 @@ import core.*;
 public class Model {
 	private IGrid grid; 
 	
+	
+	
 	public Model() {
 		grid = new Grid(40, 25); //Grid(Col, Row)
 		
-		System.out.println("has car "+grid.hasCarAt(0, 10));
+	//	System.out.println("has car "+grid.hasCarAt(0, 10));
 
 		GetMap();
 		
-		grid.placeCarAt(7, 10, new Car());
-		grid.placeCarAt(10, 10, new Car());
-		System.out.println("has car " + grid.hasCarAt(0, 10));
+		//grid.placeCarAt(7, 10, new Car());
+		//grid.placeCarAt(10, 10, new Car());
+		//System.out.println("has car " + grid.hasCarAt(10, 10));
 		
 		
-		System.out.println(getGrid().toString());
-		System.out.println("finished");
+		
+		//System.out.println(getGrid().toString());
+		//System.out.println("finished");
 	}
 	
-	public void GetMap(){
+	
+	
+	/**
+ 	 * Gets the map.
+ 	 * reading map from the txt file, and storing it in grid
+ 	 */
+ 	public void GetMap(){
 try {	
 			
 			int row=0;
@@ -103,5 +122,5 @@ try {
 		
 		return grid;
 	}
-
+	
 }

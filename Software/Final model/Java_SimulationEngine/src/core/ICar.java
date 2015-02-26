@@ -1,4 +1,5 @@
 package core;
+// TODO: Auto-generated Javadoc
 /**
  * An interface which provides method for working with cars. 
  * @author Anton
@@ -27,7 +28,17 @@ public interface ICar {
 	 * @param x the position to set
 	 */
 	public void setX(int x);
-
+	
+	public void setPosition(int x, int y);
+	
+	/**
+	 * Gets the speed.
+	 *
+	 * @return the speed
+	 */
+	public int getSpeed();
+	
+	public void setSpeed(int speed);
 	
 	
 }

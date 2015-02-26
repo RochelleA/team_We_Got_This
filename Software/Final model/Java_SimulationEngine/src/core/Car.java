@@ -11,7 +11,21 @@ public class Car implements ICar {
 
 	private int x;
 	private int y;
+	private int speed;
 	
+	public Car(){
+		
+		//this.x=col;
+		
+		//this.y=row;
+		//this.speed = speed;
+		
+	}
+	
+	public void setPosition(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
 	
 	@Override
 	public int getX(){
@@ -31,6 +45,16 @@ public class Car implements ICar {
 	@Override
 	public void setY(int y){
 		this.y = y;
+	}
+	
+	@Override
+	public int getSpeed(){
+		return speed;
+	}
+	
+	@Override
+	public void setSpeed(int speed){
+		this.speed = speed;
 	}
 	
 	
