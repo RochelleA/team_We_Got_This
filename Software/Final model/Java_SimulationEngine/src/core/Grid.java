@@ -47,11 +47,11 @@ public class Grid implements IGrid {
 			for (int j=0; j<width; j++){
 				if(this.getCellType(j, i)==CellType.EMPTY)
 				{
-				s += "c"+separator;
+				s += "*"+separator;
 				}
 				if(this.getCellType(j, i)==CellType.ROAD)
 				{
-				s += "*"+separator;
+				s += "#"+separator;
 				}
 				
 			}

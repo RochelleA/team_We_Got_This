@@ -58,25 +58,25 @@ try {
 		        			{
 		        		//to east
 		        		grid.setCellType(col, row, CellType.ROAD);
-		        	//grid.setCellDirection(row, col, Direction.EAST);
+		        		grid.setCellDirection(col, row, Direction.EAST);
 		        			}
 		        	if(Integer.parseInt(spaces[col])==2)
 		        			{
 		        		//to west
 		        		grid.setCellType(col, row, CellType.ROAD);
-		        	//grid.setCellDirection(row, col, Direction.WEST);
+		        		grid.setCellDirection(col, row, Direction.WEST);
 		        			}
 		        	if(Integer.parseInt(spaces[col])==3)
         			{
 		        		//to north
 		        		grid.setCellType(col, row, CellType.ROAD);
-		        		//grid.setCellDirection(row, col, Direction.NORTH);
+		        		grid.setCellDirection(col, row, Direction.NORTH);
         			}
 		        	if(Integer.parseInt(spaces[col])==4)
         			{
 		        		//to south
 		        		grid.setCellType(col, row, CellType.ROAD);
-		        		//grid.setCellDirection(row, col, Direction.SOUTH);
+		        		grid.setCellDirection(col, row, Direction.SOUTH);
         			}
 		      
 		            System.out.println(grid.getCellType(col, row));
