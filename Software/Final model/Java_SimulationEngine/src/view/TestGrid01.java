@@ -17,6 +17,8 @@ import java.awt.ImageCapabilities;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -29,13 +31,14 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import core.CellType;
 import core.IGrid;
 
-public class TestGrid01 {
+public class TestGrid01  {
 	
 	private IGrid nGrid;
 	private int gHeight;
@@ -48,7 +51,7 @@ public class TestGrid01 {
 	
 	/** The road. */
 	Image road = new ImageIcon("images/1.png").getImage();
-	
+	Image car = new ImageIcon("images/redCar.jpg").getImage();
 	
 
     public TestGrid01(IGrid grid) {
@@ -71,17 +74,20 @@ public class TestGrid01 {
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new BorderLayout());
-                frame.setSize(250, 400);
+                frame.setSize(450, 300);
                 
                 frame.add(new TestPane());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
+       
                 frame.setVisible(true);
             }
         });
     }
 
-    public class TestPane extends JPanel {
+    public class TestPane extends JPanel implements ActionListener {
+    	
+    	//public class Map extends JPanel implements ActionListener, Runnable{
+    	/** The main timer. */
+    	Timer mainTimer = new Timer(30, this);
     	
     	/*Grid Column and Row Count which is used to as a parameter for
     	 * for deciding the height and width values of the cell.
@@ -103,7 +109,7 @@ public class TestGrid01 {
 
         public TestPane() {
         	
-        	
+        	mainTimer.start();
         	
         	
         	//put all the cells column*row into an ArrayList
@@ -295,10 +301,16 @@ public class TestGrid01 {
     				
     				if(nGrid.getCellType(x, y)==CellType.ROAD){
     		    		
+    					
         				px=x*10;
     					py=y*10;
     					g.drawImage(road, px, py, null);
-        			
+    					
+    					if(nGrid.hasCarAt(x, y)){
+            				px=x*10;
+        					py=y*10;
+        					g.drawImage(car, px, py, null);
+    					}
         				}
     				
     				
@@ -308,6 +320,15 @@ public class TestGrid01 {
     		}
         
 }
+        
+    	/* (non-Javadoc)
+    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+    	 */
+    	public void actionPerformed (ActionEvent e){
+    	
+    		repaint();
+    		
+    	}
     
 
 }}
