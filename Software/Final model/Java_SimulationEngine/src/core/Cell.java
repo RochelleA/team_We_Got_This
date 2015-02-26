@@ -102,6 +102,11 @@ public class Cell implements ICell {
 		// TODO Auto-generated method stub
 
 	}
+	
+	//todo: add to interface
+	public void removeCar(){
+		this.car = null;
+	}
 
 	/* (non-Javadoc)
 	 * @see ICell#getTrafficLight()
