@@ -39,8 +39,6 @@ public class Model {
 		//grid.placeCarAt(10, 10, new Car());
 		//System.out.println("has car " + grid.hasCarAt(10, 10));
 		
-		
-		
 		//System.out.println(getGrid().toString());
 		//System.out.println("finished");
 	}

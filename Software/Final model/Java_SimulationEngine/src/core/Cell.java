@@ -68,7 +68,7 @@ public class Cell implements ICell {
 	 */
 	@Override
 	public boolean isExit() {
-		return this.isExit;
+		return isExit;
 	}
 
 	/* (non-Javadoc)

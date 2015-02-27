@@ -36,6 +36,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import core.CellType;
+import core.Direction;
 import core.IGrid;
 
 public class TestGrid01  {
@@ -52,7 +53,7 @@ public class TestGrid01  {
 	/** The road. */
 	Image road = new ImageIcon("images/1.png").getImage();
 	Image car = new ImageIcon("images/redCar.jpg").getImage();
-	
+	Image carNorth = new ImageIcon("images/redCarNorth.jpg").getImage();
 
     public TestGrid01(IGrid grid) {
     	
@@ -307,10 +308,18 @@ public class TestGrid01  {
     					g.drawImage(road, px, py, null);
     					
     					if(nGrid.hasCarAt(x, y)){
+    						if(nGrid.getCellDirection(x, y)==Direction.NORTH || nGrid.getCellDirection(x, y)==Direction.SOUTH)
+    						{
+    						px=x*10;
+            				py=y*10;
+            				g.drawImage(carNorth, px, py, null);
+    							
+    						}
+    					else{
             				px=x*10;
         					py=y*10;
         					g.drawImage(car, px, py, null);
-    					}
+    					}}
         				}
     				
     				
