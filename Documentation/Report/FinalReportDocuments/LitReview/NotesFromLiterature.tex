@@ -1,0 +1,65 @@
+\documentclass[]{article}
+\usepackage{xcolor}
+%opening
+\title{Literature Review Notes}
+\author{team\_we\_got\_this}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Keats paper 1}
+	\begin{itemize}
+		\item  In order to simulate congestion of road traffic system, it is indispensable to describe vehicles having their own decision-making capabilities, and to have detailed and exact road condition data on the road system
+		\item The road-network itself has two kinds of attributes; the physical attributes and the logical attributes.
+		 The former are ones of the roads themselves such as their varying widths, shapes, slopes, running lines of traffic lanes and their channels. 
+		 The latter are ones which depends traffic regulations such as signals and traffic signs. 
+		 The former is called road information and the latter is road traffic regulation information in the road-network
+		 \item It is a microscopic model 
+		 \item A cell automaton assigns one individual to one cell basically and moves a cell in consideration of being affected by the individual which each individual is next to
+		 \item Many road traffic simulation systems have been developed. But the road databases used in almost all of them were developed only for specific areas and purposes, and so cannot be reused in simulations for other areas. \textcolor{red}{we are trying to build a system which has as much generality as possible.} \cite{namekawa2005general}
+		 \item Such a simulation requires a microscopic model for the vehicle's behavior. In simulating such a system, it is essential to have detailed and correct data on road conditions, including the road itself, as well as  traffic signs and signals.
+		 \item In addition, it is
+		 important to reduce a simulation’s execution time to the utmost. A road system is generally described as a network in which the road is an arc and each intersection is a node. It is represented approximately by a combination of lines, circles, and clothoid curves.
+		 \item A database should
+		 be flexible enough to accommodate changes in
+		 road data.
+		 \item The reduction of execution time is the most
+		 important requirement in the real time simulation
+		 of a road traffic simulation with a microscopic
+		 model.
+		 \item Thus the model must describe the detailed physical
+		 form of the road itself as well as the behavior of
+		 the vehicles, which have their own decision-
+		 making capability.
+		 \item Cell automaton (CA) is a method to decide a state
+		 of a cell of the next time by a state of an adjacent
+		 cell.
+		 \item e consider a
+		 state of a cell of the next-door houses on both sides
+		 then when we assume company list of a cell, t the
+		 time in i, and it is given a cell of the next time by
+		 following function F if decided.
+		 
+	\end{itemize}
+	
+	\section{Book: Priciples of Modelling and Simmulation : A multi-disciplinary approach}
+	\begin{itemize}
+		\item In modelling and simulating, one builds a model to represent the real-world, then a simulator to make several observation of the model. Finally one analyses the information collected from the simulation in order to make inference and suggestions. 
+		\item simulation is used when it is impractical, not feasible or dangerous to use the real world. 
+		\item There are two types of system: Discrete where the variables change at set intervals of time or Continuous where the variables change continuously with time.  
+		\item Macroscopic traffic simulations are large traffic simulation capable of showing the effect of small changes on vast and complex networks. Whereas a microscopic traffic simulation is used to model individual movement of cars  in smaller sections of a network such as one specific intersection. These models will study parameters such as velocity and acceleration making them more suitable for study the effect of a change such as a new ramp. \cite{sokolowski2011principles}
+	\end{itemize}
+
+	\section{Hybrid microscopic-mesoscopic traffic simulation}
+	\begin{itemize}
+		\item Macroscopic and mesoscopic models on the other hand, capture traffic dynamics in lesser detail, but are faster and easier to apply and calibrate than microscopic models. Therefore they are most suitable for modelling large networks, while microscopic models are usually applied to smaller areas.
+		\item Earlier attempts at hybrid modelling have concentrated on integrating macroscopic and microscopic models and have proved difficult due to the large difference between the continuous-flow representation of traffic in macroscopic models and the detailed vehicle-and driver-behaviour represented in microscopic models.
+		\item 
+	\end{itemize}
+	
+\bibliographystyle{plain}
+\bibliography{../references}
+
+\end{document}
