@@ -11,10 +11,14 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//Model model = new Model();
-		Controller cont = new Controller();
-		IGrid grid = cont.model.getGrid();
+		Model model = new Model();
 		
-	    TestGrid01 tg = new TestGrid01(grid);
+		//GridController cont = new GridController();
+		//IGrid grid = cont.model.getGrid();
+		
+	    TestGrid01 tg = new TestGrid01(model.getGrid());
+	    
+	    model.addEventListener(tg);
 		
 		//View view = new View();
 	}
