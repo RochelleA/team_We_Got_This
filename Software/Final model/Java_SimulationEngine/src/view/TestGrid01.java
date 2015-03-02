@@ -25,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -38,8 +39,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import core.CellType;
 import core.Direction;
 import core.IGrid;
+import events.ModelEventListener;
 
-public class TestGrid01  {
+public class TestGrid01 implements ModelEventListener {
 	
 	private IGrid nGrid;
 	private int gHeight;
@@ -340,4 +342,12 @@ public class TestGrid01  {
     	}
     
 
-}}
+}
+
+	@Override
+	public void handleModelEvent(EventObject e) {
+		// TODO Auto-generated method stub
+		//UPDATE THE VISUAL REPRESENTATION!!! (repaint)
+		System.out.println("update event!");
+		
+	}}

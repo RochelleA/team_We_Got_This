@@ -13,15 +13,15 @@ import core.Car;
 import core.ICar;
 import core.IGrid;
 
-public class Controller  implements ActionListener, Runnable {
+public class GridController implements ActionListener, Runnable {
 	
 	
 		int mCase;
 		int ranEnt;
 	
-		public Model  model = new Model();
+		private Model model;
 		
-		IGrid grid = model.getGrid();
+		IGrid grid;// = model.getGrid();
 		//creating the cars
 		Thread carsFactory = new Thread(this);
 		
@@ -33,9 +33,11 @@ public class Controller  implements ActionListener, Runnable {
 		Timer mainTimer = new Timer(150, this);
 	
 	/**
-	 * 
+	 * A class which controls the state of the grid and sends events on changes.
 	 */
-	public Controller(){
+	public GridController(IGrid grid, Model m){
+		this.grid = grid;
+		this.model = m;
 		/*
 		ICar car = new Car();
 		car.setPosition(0, 10);
@@ -53,33 +55,42 @@ public class Controller  implements ActionListener, Runnable {
 		grid.setIsExit(20, 1, true);
 		grid.setIsExit(21, 1, true);
 		 carsFactory.start();
-		 mainTimer.start();
+		 //mainTimer.start();
+	}
+	
+	public void startTimer(){
+		mainTimer.start();
+		//carsFactory.start();
+	}
+	public void stopTimer(){
+		mainTimer.stop();
+		//carsFactory.
 	}
 	
 	
 	/**
-	 * Move car.
+	 * Move every car in cars lists. 
 	 */
-	public void moveCar(){
-		System.out.println(model.getGrid().toString());
-	//	System.out.println("move car ");
+	private void moveCar(){
+		//System.out.println(grid.toString());
+		//	System.out.println("move car ");
 		Iterator<ICar> i = listCars.iterator();
 		while(i.hasNext()){
-		//	System.out.println("iterator has next");
+			//	System.out.println("iterator has next");
 			ICar myCar = i.next();
 			//testCrash(myCar);
 			//System.out.println("cars x - " + myCar.getX() + "cars y - " + myCar.getY());
-		
+
 			//System.out.println(grid.getCellDirection(myCar.getX(),  myCar.getY()));
-			
-			
+
+
 
 			//if((myCar.getX()>0 && myCar.getX()<grid.getWidth()-1) && (myCar.getY()>0 && myCar.getY()<24))
 			if(!grid.isExit(myCar.getX(), myCar.getY()))
 			{
-			switch(grid.getCellDirection(myCar.getX(),  myCar.getY()))
-			{
-				
+				switch(grid.getCellDirection(myCar.getX(),  myCar.getY()))
+				{
+
 				case EAST:
 					if(!grid.hasCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY())){
 						grid.removeCarFrom(myCar.getX(), myCar.getY());
@@ -88,52 +99,52 @@ public class Controller  implements ActionListener, Runnable {
 						//System.out.println("moved car to " +(myCar.getX()+myCar.getSpeed()));
 					}				
 					break;
-					
+
 				case WEST:
 					if(!grid.hasCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY())){
-						
+
 						grid.removeCarFrom(myCar.getX(), myCar.getY());
 						grid.placeCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY(), myCar);
 						myCar.setX(myCar.getX()-myCar.getSpeed());
 						//System.out.println("moved car to " +(myCar.getX()+myCar.getSpeed()));
 					}	
-					
+
 					break;
-					
+
 				case NORTH:
 					if(!grid.hasCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed())){
-						
+
 						grid.removeCarFrom(myCar.getX(), myCar.getY());
 						grid.placeCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed(), myCar);
 						myCar.setY(myCar.getY()-myCar.getSpeed());
 						//System.out.println("moved car to " +(myCar.getX()+myCar.getSpeed()));
 					}	
-					
-					
+
+
 					break;
-					
+
 				case SOUTH:
-					
+
 					if(!grid.hasCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed())){
-						
+
 						grid.removeCarFrom(myCar.getX(), myCar.getY());
 						grid.placeCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed(), myCar);
 						myCar.setY(myCar.getY()+myCar.getSpeed());
 						//System.out.println("moved car to " +(myCar.getX()+myCar.getSpeed()));
 					}	
-					
+
 					break;
+				}
+
 			}
-				
-		  	}
-		else{
-		System.out.println("removed from the list");
-			i.remove();
-			grid.removeCarFrom(myCar.getX(),myCar.getY());
+			else{
+				System.out.println("removed from the list");
+				i.remove();
+				grid.removeCarFrom(myCar.getX(),myCar.getY());
+			}
+
 		}
-		
-		}
-		
+
 	}
 	
 	
@@ -145,65 +156,62 @@ public class Controller  implements ActionListener, Runnable {
 	public void actionPerformed (ActionEvent e){
 		//System.out.println("timer event");
 		moveCar();
+		model.fireEvent();
 		
 	}
 	
-	
-	
+	private void addCars(int mCase, int ranEnt){
+		switch(mCase)
+		{
+		case 1:
+			if(!grid.hasCarAt(1, 10+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(1, 10+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(1, 10+ranEnt, car);
+
+				listCars.add(car);
+			}
+			break;
+		case 2:
+			if(!grid.hasCarAt(39, 14-ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(39, 14-ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(39, 14-ranEnt, car);
+
+				listCars.add(car);
+			}
+		}
+	}
+	/**
+	 * Generate Cars
+	 */
 	public void run() { 
 		while(true){
-			
-Random randomCars = new Random();
-Random randomNumb = new Random();	
+
+			Random randomCars = new Random();
+			Random randomNumb = new Random();	
+
 			try {
 				Thread.sleep(randomCars.nextInt(2000));
-				 mCase=randomCars.nextInt(5)+1;
-				 ranEnt=randomNumb.nextInt(2);
-				
-				//	System.out.println("This is a runnable! &&&&&&&&&&&&&&&&&");
-					
-					
-				//	System.out.println(model.getGrid().toString());
-					//Iterator<ICar> i = listCars.iterator();
-					
-					//check if the there is a car already, if not, then create new one
-				switch(mCase)
-				{
-					case 1:
-					if(!grid.hasCarAt(1, 10+ranEnt))
-						{	
-							ICar car = new Car();
-							car.setPosition(1, 10+ranEnt);
-							car.setSpeed(1);
-							grid.placeCarAt(1, 10+ranEnt, car);
-							
-							listCars.add(car);
-						}
-						break;
-					case 2:
-						
-					if(!grid.hasCarAt(39, 14-ranEnt))
-						{	
-							ICar car = new Car();
-							car.setPosition(39, 14-ranEnt);
-							car.setSpeed(1);
-							grid.placeCarAt(39, 14-ranEnt, car);
-							
-							listCars.add(car);
-						}
-						
-						break;
-						
-						
-				
-				
-				
+				mCase=randomCars.nextInt(5)+1;
+				ranEnt=randomNumb.nextInt(2);
 
-					
-				}	////////// moving cars ******************
-				
-					///////// **********************8
-					
+				//	System.out.println("This is a runnable! &&&&&&&&&&&&&&&&&");
+
+
+				//	System.out.println(model.getGrid().toString());
+				//Iterator<ICar> i = listCars.iterator();
+
+				//check if the there is a car already, if not, then create new one
+				addCars(mCase, ranEnt);
+				////////// moving cars ******************
+
+				///////// **********************8
+
 				/*
 				switch(mCase)
 				{
@@ -217,17 +225,17 @@ Random randomNumb = new Random();
 						//from west to east    randomCars.nextInt(5)+1
 						listCars.add(new Car(2, 10, 1, 5));
 						break;
-						
+
 				}
-				
-		*/
-				
+
+				 */
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 
-			}
+
+		}
 	}
 	
 }
