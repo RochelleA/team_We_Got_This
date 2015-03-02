@@ -1,34 +1,28 @@
 package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import java.awt.Image;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import core.IGrid;
+import events.ModelEvent;
+import events.ModelEventListener;
+
 /**
  * 
+ * The main User Interface Class (View component of the system).
  * @author Moinuddin Zaki
  * @version 1
  *
  */
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import core.CellType;
-import core.Direction;
-import core.IGrid;
-import events.ModelEvent;
-import events.ModelEventListener;
-
 public class TestGrid01 implements ModelEventListener {
-	
-	private IGrid nGrid;
-	private int gHeight;
-	private int gWidth;
+
 	Image grassImg;
 	Image roadImg;
 	
