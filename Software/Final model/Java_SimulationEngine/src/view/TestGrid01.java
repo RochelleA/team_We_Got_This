@@ -39,6 +39,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import core.CellType;
 import core.Direction;
 import core.IGrid;
+import events.ModelEvent;
 import events.ModelEventListener;
 
 public class TestGrid01 implements ModelEventListener {
@@ -49,6 +50,7 @@ public class TestGrid01 implements ModelEventListener {
 	Image grassImg;
 	Image roadImg;
 	
+	private TestPane tp;
 	
 	Image grass = new ImageIcon("images/0.png").getImage();
 	
@@ -66,7 +68,7 @@ public class TestGrid01 implements ModelEventListener {
     	gWidth=grid.getWidth();
     	
         EventQueue.invokeLater(new Runnable() {
-            @Override
+        	@Override
             public void run() {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -79,18 +81,30 @@ public class TestGrid01 implements ModelEventListener {
                 frame.setLayout(new BorderLayout());
                 frame.setSize(450, 300);
                 
-                frame.add(new TestPane());
+                tp = new TestPane();
+                frame.add(tp);
+                //tp.repaint();
        
                 frame.setVisible(true);
             }
         });
     }
+    
 
-    public class TestPane extends JPanel implements ActionListener {
+	@Override
+	public void handleModelEvent(ModelEvent e) {
+		// TODO Auto-generated method stub
+		//UPDATE THE VISUAL REPRESENTATION!!! (repaint)
+		System.out.println("update event!");
+		tp.repaint();
+		
+	}
+
+    public class TestPane extends JPanel {
     	
     	//public class Map extends JPanel implements ActionListener, Runnable{
     	/** The main timer. */
-    	Timer mainTimer = new Timer(30, this);
+    	//Timer mainTimer = new Timer(30, this);
     	
     	/*Grid Column and Row Count which is used to as a parameter for
     	 * for deciding the height and width values of the cell.
@@ -112,7 +126,7 @@ public class TestGrid01 implements ModelEventListener {
 
         public TestPane() {
         	
-        	mainTimer.start();
+        	//mainTimer.start();
         	
         	
         	//put all the cells column*row into an ArrayList
@@ -330,24 +344,9 @@ public class TestGrid01 implements ModelEventListener {
     		
     		}
         
-}
-        
-    	/* (non-Javadoc)
-    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-    	 */
-    	public void actionPerformed (ActionEvent e){
-    	
-    		repaint();
-    		
-    	}
+        }
     
 
-}
+    }
 
-	@Override
-	public void handleModelEvent(EventObject e) {
-		// TODO Auto-generated method stub
-		//UPDATE THE VISUAL REPRESENTATION!!! (repaint)
-		System.out.println("update event!");
-		
-	}}
+}
