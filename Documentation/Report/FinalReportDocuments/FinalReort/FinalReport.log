@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2014.11.9)  26 FEB 2015 11:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2014.11.9)  2 MAR 2015 17:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -166,10 +166,10 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./FinalReport.bbl) [2] (.
 /FinalReport.aux) ) 
 Here is how much of TeX's memory you used:
- 1973 strings out of 493108
- 26398 string characters out of 6140725
- 92687 words of memory out of 5000000
- 5435 multiletter control sequences out of 15000+600000
+ 1974 strings out of 493108
+ 26421 string characters out of 6140725
+ 92695 words of memory out of 5000000
+ 5436 multiletter control sequences out of 15000+600000
  7933 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,7n,35p,237b,195s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -179,7 +179,7 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmti10.pfb>
-Output written on FinalReport.pdf (2 pages, 83421 bytes).
+Output written on FinalReport.pdf (2 pages, 82897 bytes).
 PDF statistics:
  35 PDF objects out of 1000 (max. 8388607)
  24 compressed objects within 1 object stream
