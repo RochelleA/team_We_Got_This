@@ -81,6 +81,8 @@ public class GridController implements ActionListener, Runnable {
 	 * the current position of the car is taken, if there is no car in front of it, the car is going to move.
 	 * 
 	 * The car will be moved depending on its speed.
+	 * 
+	 * testing
 	 */
 	private void moveCar(){
 		//System.out.println(grid.toString());
