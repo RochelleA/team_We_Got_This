@@ -127,7 +127,14 @@ public class Grid implements IGrid {
 	 */
 	@Override
 	public boolean hasCarAt(int x, int y) {
-		return this.getCellAt(x, y).getCar() != null;
+		// TODO Auto-generated method stub
+		if(this.getCellAt(x, y).getCar()!=null)
+		{
+			return true;
+		}
+		else{
+		return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -135,7 +142,9 @@ public class Grid implements IGrid {
 	 */
 	@Override
 	public ICar getCarAt(int x, int y) {
-		return this.getCellAt(x, y).getCar();
+		// TODO Auto-generated method stub
+		
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -143,7 +152,10 @@ public class Grid implements IGrid {
 	 */
 	@Override
 	public void placeCarAt(int x, int y, ICar car) {
+		// TODO Auto-generated method stub
 		this.getCellAt(x, y).setCar(car);
+		//System.out.println("Setting the car at " +x + " and " +y);
+		
 	}
 
 	/* (non-Javadoc)
@@ -151,8 +163,12 @@ public class Grid implements IGrid {
 	 */
 	@Override
 	public void removeCarFrom(int x, int y) {
+		// TODO Auto-generated method stub
+		//System.out.println("has car " + hasCarAt(x, y));
 		this.getCellAt(x, y).removeCar();
-
+		
+		//System.out.println("removed  ************8");
+		//System.out.println("has car " + hasCarAt(x, y));
 	}
 
 	/* (non-Javadoc)

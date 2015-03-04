@@ -4,10 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import core.Car;
 import core.CellType;
 import core.Direction;
-import core.ICar;
 import core.IGrid;
 import core.Grid;
 
@@ -102,38 +100,22 @@ public class GridTest {
 
 	@Test
 	public void testHasCarAt() {
-		IGrid grid = new Grid(1, 1);
-		assertFalse(grid.hasCarAt(0, 0));
-		ICar car = new Car();
-		grid.placeCarAt(0, 0, car);
-		assertTrue(grid.hasCarAt(0, 0));
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetCarAt() {
-		IGrid grid = new Grid(1, 1);
-		ICar car = new Car();
-		grid.placeCarAt(0, 0, car);
-		assertEquals(car, grid.getCarAt(0, 0));
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testPlaceCarAt() {
-		IGrid grid = new Grid(1, 1);
-		ICar car = new Car();
-		grid.placeCarAt(0, 0, car);
-		assertEquals(car, grid.getCarAt(0, 0));
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testRemoveCarFrom() {
-		IGrid grid = new Grid(1, 1);
-		assertFalse(grid.hasCarAt(0, 0));
-		ICar car = new Car();
-		grid.placeCarAt(0, 0, car);
-		assertTrue(grid.hasCarAt(0, 0));
-		grid.removeCarFrom(0, 0);
-		assertFalse(grid.hasCarAt(0, 0));
+		fail("Not yet implemented");
 	}
 
 	@Test
