@@ -103,6 +103,24 @@ public class CellTest {
 		cell.setCar(car);
 		cell.setCar(car);
 	}
+	
+	@Test
+	public void testRemoveCar() {
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.setCar(car);
+		assertEquals(car, cell.getCar());
+		cell.removeCar();
+		assertEquals(null, cell.getCar());
+	}
+	
+	@Test(expected = GridException.class)
+	public void testRemoveCarWhenCellDoesNotHaveCar(){
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.removeCar();
+	}
+	
 
 	@Test
 	public void testGetTrafficLight() {

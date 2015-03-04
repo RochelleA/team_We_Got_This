@@ -15,11 +15,6 @@ public class Car implements ICar {
 	
 	public Car(){
 		
-		//this.x=col;
-		
-		//this.y=row;
-		//this.speed = speed;
-		
 	}
 	
 	public void setPosition(int x, int y){
