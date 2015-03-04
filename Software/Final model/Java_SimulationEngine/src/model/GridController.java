@@ -38,22 +38,9 @@ public class GridController implements ActionListener, Runnable {
 	public GridController(IGrid grid, Model m){
 		this.grid = grid;
 		this.model = m;
-		/*
-		ICar car = new Car();
-		car.setPosition(0, 10);
-		car.setSpeed(1);
-		grid.placeCarAt(0, 10, car);
-		grid.setIsExit(39, 10, true);
-		listCars.add(car);*/
+
 		
-		grid.setIsExit(39, 10, true);
-		grid.setIsExit(39, 11, true);
-		grid.setIsExit(0, 14, true);
-		grid.setIsExit(0, 13, true);
-		grid.setIsExit(23, 24, true);
-		grid.setIsExit(24, 24, true);
-		grid.setIsExit(20, 1, true);
-		grid.setIsExit(21, 1, true);
+		 setExitPoint();
 		 carsFactory.start();
 		 //mainTimer.start();
 	}
@@ -67,13 +54,47 @@ public class GridController implements ActionListener, Runnable {
 		//carsFactory.
 	}
 	
+	/**
+	 * Setting exit parameters 
+	 * 
+	 * The cars will be removed from the list of cars and from the map once they at these points
+	 * 
+	 */
+	public void setExitPoint(){
+		
+		grid.setIsExit(39, 10, true);
+		grid.setIsExit(39, 11, true);
+		grid.setIsExit(0, 14, true);
+		grid.setIsExit(0, 13, true);
+		grid.setIsExit(23, 24, true);
+		grid.setIsExit(24, 24, true);
+		grid.setIsExit(20, 1, true);
+		grid.setIsExit(21, 1, true);
+		
+	}
+	
 	
 	/**
-	 * Move every car in cars lists. 
+	 * Moving the car
+	 * 
+	 * Depending on the position of the car, and the direction the car will be moving
+	 * the current position of the car is taken, if there is no car in front of it, the car is going to move.
+	 * 
+	 * The car will be moved depending on its speed.
 	 */
 	private void moveCar(){
 		//System.out.println(grid.toString());
 		//	System.out.println("move car ");
+		
+		/**
+		 * A list of the car which currently on the map, the list will store all cars while they are not on the 
+
+exit points.
+		 * 
+		 * Iterator is going through all the cars in the list, using while loop
+		 * 
+		 *  So that each car is moved
+		 */
 		Iterator<ICar> i = listCars.iterator();
 		while(i.hasNext()){
 			//	System.out.println("iterator has next");
@@ -85,7 +106,13 @@ public class GridController implements ActionListener, Runnable {
 
 
 
-			//if((myCar.getX()>0 && myCar.getX()<grid.getWidth()-1) && (myCar.getY()>0 && myCar.getY()<24))
+			/**
+			 * Statement checks the current position of the car
+			 * 
+			 * if car is on exit position, then it is removed from the list of cars
+			 * 
+			 * if the car is not on the list, then it is moved
+			 */
 			if(!grid.isExit(myCar.getX(), myCar.getY()))
 			{
 				switch(grid.getCellDirection(myCar.getX(),  myCar.getY()))
@@ -200,35 +227,8 @@ public class GridController implements ActionListener, Runnable {
 				mCase=randomCars.nextInt(5)+1;
 				ranEnt=randomNumb.nextInt(2);
 
-				//	System.out.println("This is a runnable! &&&&&&&&&&&&&&&&&");
-
-
-				//	System.out.println(model.getGrid().toString());
-				//Iterator<ICar> i = listCars.iterator();
-
-				//check if the there is a car already, if not, then create new one
 				addCars(mCase, ranEnt);
-				////////// moving cars ******************
 
-				///////// **********************8
-
-				/*
-				switch(mCase)
-				{
-					case 1:
-						System.out.println("carrrrr");
-						//from west to east    randomCars.nextInt(5)+1
-						listCars.add(new Car(1, 10, 1, 5));
-						break;
-					case 2:
-						System.out.println("carrrrr");
-						//from west to east    randomCars.nextInt(5)+1
-						listCars.add(new Car(2, 10, 1, 5));
-						break;
-
-				}
-
-				 */
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
