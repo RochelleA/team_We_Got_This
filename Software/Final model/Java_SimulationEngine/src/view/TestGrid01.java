@@ -10,8 +10,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import core.IGrid;
-import events.ModelEvent;
-import events.ModelEventListener;
+import events.SimulationEvent;
+import events.EventListener;
 
 /**
  * 
@@ -21,7 +21,7 @@ import events.ModelEventListener;
  *
  */
 
-public class TestGrid01 implements ModelEventListener {
+public class TestGrid01 implements EventListener {
 
 	Image grassImg;
 	Image roadImg;
@@ -56,10 +56,10 @@ public class TestGrid01 implements ModelEventListener {
     
 
 	@Override
-	public void handleModelEvent(ModelEvent e) {
+	public void handleSimulationEvent(SimulationEvent e) {
 		// TODO Auto-generated method stub
 		//UPDATE THE VISUAL REPRESENTATION!!! (repaint)
-		System.out.println("update event!");
+		//System.out.println("update event!");
 		tp.repaint();
 		
 	}
