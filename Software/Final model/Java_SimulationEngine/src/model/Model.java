@@ -83,6 +83,12 @@ public class Model extends EventDispatchable {
 						grid.setCellDirection(col, row, Direction.SOUTH);
 					}
 
+					if(Integer.parseInt(spaces[col])==5)
+					{
+						//junction
+						grid.setCellType(col, row, CellType.ROAD);
+						grid.setCellDirection(col, row, Direction.JUNCTION);
+					}
 					///////////////////matrix[row][col] = Integer.parseInt(spaces[col]);
 
 				}
