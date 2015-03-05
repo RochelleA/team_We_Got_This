@@ -1,5 +1,6 @@
 package core;
 
+import events.DataEvent;
 import view.TestGrid01;
 import model.*;
 
@@ -19,6 +20,13 @@ public class Program {
 	    TestGrid01 tg = new TestGrid01(model.getGrid());
 	    
 	    model.addEventListener(tg);
+	    
+	    DataSimulator ds = new DataSimulator(model.getGrid());
+	    
+	    ds.addEventListener(model);
+	    	    
+	    
+	    
 		
 		//View view = new View();
 	}
