@@ -68,7 +68,12 @@ public interface ICell {
 	 */
 	void setCar(ICar car);
 	
-	//todo
+	/**
+	 * Removes the car from the cell. Throws an exception if cell does not have a car.
+	 * @throws GridException
+	 * @see ICar
+	 * @see ICell#hasCar()
+	 */
 	void removeCar();
 	
 	/**
