@@ -1,4 +1,7 @@
 package core;
+
+import java.util.ArrayList;
+
 /**
  * An interface for a Grid representing 2D array of cells. 
  * Provides methods to update cells (e.g. set type, direction, place
@@ -8,7 +11,13 @@ package core;
  * @version 1
  *
  */
-public interface IGrid {	
+public interface IGrid {
+	/**
+	 * Returns the list of all entry cells.
+	 * @return ArrayList of entry cells.
+	 */
+	ArrayList<ICell> getEntryCells();
+	
 	/**
 	 * Returns type of a cell at (x, y).
 	 * @param x x coordinate of the cell
@@ -65,6 +74,24 @@ public interface IGrid {
 	 * @see IGrid#isExit(int x, int y) IGrid.isExit(x, y)
 	 */
 	void setIsExit(int x, int y, boolean isExit);
+	
+	/**
+	 * Checks if the cell is an entry point, i.e. if cars will appear from it.
+	 * @param x x coordinate of the cell
+	 * @param y y coordinate of the cell
+	 * @return true if cell is an entry, false otherwise
+	 * @see IGrid#setIsEntry(int x, int y, boolean isExit)
+	 */
+	boolean isEntry(int x, int y);
+	
+	/**
+	 * Make a cell an entry, or not an entry.
+	 * @param x x coordinate of the cell
+	 * @param y y coordinate of the cell
+	 * @param isEntry true or false
+	 * @see IGrid#isEntry(int x, int y)
+	 */
+	void setIsEntry(int x, int y, boolean isEntry);
 	
 	//cars
 	/**

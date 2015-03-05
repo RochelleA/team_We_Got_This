@@ -52,6 +52,20 @@ public interface ICell {
 	void setIsExit(boolean b);
 	
 	/**
+	 * Checks if the cell if an entry node, i.e. cars will appear from it.
+	 * @return true if entry, false otherwise.
+	 * @see ICell#setIsEntry(boolean b)
+	 */
+	boolean isEntry();
+	
+	/**
+	 * Sets the cell to be an entry or not entry.
+	 * @param b true to place entry marker on the node and false to remove entry marker.
+	 * @see ICell#isEntry()
+	 */
+	void setIsEntry(boolean b);
+	
+	/**
 	 * Returns a car currently positioned on the cell.
 	 * @return car on the cell or null if there's no car.
 	 * @see ICar

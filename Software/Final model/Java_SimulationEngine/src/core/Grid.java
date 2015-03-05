@@ -14,6 +14,7 @@ public class Grid implements IGrid {
 	private int width;
 	private int height;
 	private ArrayList<ArrayList<ICell>> cells;
+	private ArrayList<ICell> entryCells;
 	
 	/**
 	 * Constructs a 2D array of cells of specified width and height. 
@@ -24,6 +25,7 @@ public class Grid implements IGrid {
 	 * @see IGrid
 	 */
 	public Grid(int width, int height) {
+		entryCells = new ArrayList<ICell>();
 		this.width = width;
 		this.height = height;
 		if (width < 0 || height < 0){
@@ -205,6 +207,28 @@ public class Grid implements IGrid {
 	@Override
 	public int getHeight() {
 		return this.height;
+	}
+
+	//todo: tests!
+	@Override
+	public boolean isEntry(int x, int y) {
+		return this.getCellAt(x,y).isEntry();
+	}
+
+	@Override
+	public void setIsEntry(int x, int y, boolean isEntry) {
+		this.getCellAt(x, y).setIsEntry(isEntry);
+		if(isEntry){
+			entryCells.add(this.getCellAt(x, y));
+		}else{
+			entryCells.remove(this.getCellAt(x, y));
+		}
+		
+	}
+
+	@Override
+	public ArrayList<ICell> getEntryCells() {
+		return this.entryCells;
 	}
 
 }

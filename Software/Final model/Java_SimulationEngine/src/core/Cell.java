@@ -12,6 +12,7 @@ public class Cell implements ICell {
 	private int x, y;
 	private Direction dir;
 	private boolean isExit;
+	private boolean isEntry;
 	private ICar car;
 	private ITrafficLight tl;
 	/**
@@ -147,6 +148,18 @@ public class Cell implements ICell {
 	@Override
 	public String toString(){
 		return "cell@("+this.x+";"+this.y+")";
+	}
+
+	//tests!!
+	@Override
+	public boolean isEntry() {
+		return this.isEntry;
+	}
+
+	@Override
+	public void setIsEntry(boolean b) {
+		this.isEntry = b;
+		
 	}
 
 }
