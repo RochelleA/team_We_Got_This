@@ -101,9 +101,13 @@ public class Cell implements ICell {
 
 	}
 	
-	//todo: add to interface
+	@Override
 	public void removeCar(){
-		this.car = null;
+		if(this.car != null){
+			this.car = null;
+		}else{
+			throw new GridException("Cell does not have a car");
+		}
 	}
 
 	/* (non-Javadoc)
