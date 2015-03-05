@@ -14,10 +14,10 @@ import core.IGrid;
 public class GridPane extends JPanel {
 	
 	
-	Image grass = new ImageIcon("images/0.png").getImage();
+	Image grass = new ImageIcon("images/grass2-20.png").getImage();
 	
 	/** The road. */
-	Image road = new ImageIcon("images/1.png").getImage();
+	Image road = new ImageIcon("images/road20.png").getImage();
 	Image car = new ImageIcon("images/redCar.jpg").getImage();
 	Image carNorth = new ImageIcon("images/redCarNorth.jpg").getImage();
 
