@@ -3,24 +3,30 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.Arrays;
 
 import core.*;
+import events.DataEvent;
 import events.EventDispatchable;
+import events.EventListener;
+import events.SimulationEvent;
 
 /**
  * @author NM
+ * @version 1.2
  *
  */
-public class Model extends EventDispatchable {
+public class Model extends EventDispatchable implements EventListener {
 	private IGrid grid; 
 	
 	public Model() {
-		grid = new Grid(40, 25); //Grid(Col, Row)
+		//grid = new Grid(40, 25); //Grid(Col, Row)
 		
 	//	System.out.println("has car "+grid.hasCarAt(0, 10));
 
 		//GetMap();
-		parseMap("files/mapJunction.txt");
+		this.grid = parseMap("files/mapJunction.txt");
 		
 		GridController gc = new GridController(grid, this);
 		gc.startTimer();
@@ -39,56 +45,92 @@ public class Model extends EventDispatchable {
  	 * Gets the map.
  	 * reading map from the txt file, and storing it in grid
  	 * @param filename the name of the map file to read
+	 * @return 
  	 */
-	public void parseMap(String filename){
+	public IGrid parseMap(String filename){
+		//* - entry
+		//! - exit
+		String[] eastRoad = new String[] {"1","1*", "1!"};
+		String[] westRoad = new String[] {"2","2*", "2!"};
+		String[] northRoad = new String[] {"3","3*", "3!"};
+		String[] southRoad = new String[] {"4","4*", "4!"};
+		
+		IGrid rgrid = null; //return grid 
 		try {	
 			int row=0;
 
 			FileReader file = new FileReader(filename);
-			@SuppressWarnings("resource")
-			BufferedReader reader =new BufferedReader(file);
-
+			LineNumberReader lnr = new LineNumberReader(file);
+			lnr.skip(Long.MAX_VALUE);
+			
+			int height = lnr.getLineNumber() + 1;
+						
+			BufferedReader reader =new BufferedReader(new FileReader(filename));
 			String line = reader.readLine();
+			
+			int width = line.trim().split("\\s+").length;
+			
+			//System.out.println(width +":"+ height);
+			
+			rgrid = new Grid(width, height);
+			
 			String []spaces;		
 			while(line != null){
 				spaces = line.trim().split("\\s+");
+				if(spaces.length != width){
+					throw new GridException("Inconsistent number of symbols on each line");
+				}
 
-				for (int col = 0; col <40; col++) {
-					if(Integer.parseInt(spaces[col])==0 || Integer.parseInt(spaces[col])==9)
+				for (int col = 0; col<width; col++) {
+					String value = (String)spaces[col];
+					
+					if(value.equals("0") || value.equals("9"))
 					{
-						grid.setCellType(col, row, CellType.EMPTY);
-					}
-					if(Integer.parseInt(spaces[col])==1)
+						rgrid.setCellType(col, row, CellType.EMPTY);
+					}else if(Arrays.asList(eastRoad).contains(value))
 					{
 						//to east
-						grid.setCellType(col, row, CellType.ROAD);
-						grid.setCellDirection(col, row, Direction.EAST);
-					}
-					if(Integer.parseInt(spaces[col])==2)
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.EAST);
+					}else if(Arrays.asList(westRoad).contains(value))
 					{
 						//to west
-						grid.setCellType(col, row, CellType.ROAD);
-						grid.setCellDirection(col, row, Direction.WEST);
-					}
-					if(Integer.parseInt(spaces[col])==3)
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.WEST);
+					}else if(Arrays.asList(northRoad).contains(value))
 					{
 						//to north
-						grid.setCellType(col, row, CellType.ROAD);
-						grid.setCellDirection(col, row, Direction.NORTH);
-					}
-					if(Integer.parseInt(spaces[col])==4)
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.NORTH);
+					}else if(Arrays.asList(southRoad).contains(value))
 					{
 						//to south
-						grid.setCellType(col, row, CellType.ROAD);
-						grid.setCellDirection(col, row, Direction.SOUTH);
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.SOUTH);
 					}
 
-					if(Integer.parseInt(spaces[col])==5)
+					if(value.equals("5"))
 					{
 						//junction
-						grid.setCellType(col, row, CellType.ROAD);
-						grid.setCellDirection(col, row, Direction.JUNCTION);
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.JUNCTION);
 					}
+					
+					// stop here if no modifier
+					if(value.length() == 1){
+						continue;
+					}
+					
+					String modifier = value.substring(value.length() - 1);
+					
+					if(modifier.equals("!")){
+						System.err.println("! exit");
+						rgrid.setIsExit(col, row, true);
+					}else if(modifier.equals("*")){
+						rgrid.setIsEntry(col, row, true);
+						System.err.println("* entry");
+					}
+					
 					///////////////////matrix[row][col] = Integer.parseInt(spaces[col]);
 
 				}
@@ -96,15 +138,30 @@ public class Model extends EventDispatchable {
 				row++; 
 				line = reader.readLine();				
 			}
-
+			
 		}catch (IOException e) {
 			System.err.println("Caught IOException: " + e.getMessage());
 		}
+		
+		return rgrid;
 		
 	}
 
 	public IGrid getGrid() {
 		return grid;
+	}
+	
+	@Override
+	public void handleSimulationEvent(SimulationEvent e) {
+		//data event
+		if (e instanceof DataEvent){
+			System.out.println("true data event");
+			DataEvent de = (DataEvent)e;
+			if(de.getType() == DataEvent.NEW_CAR){
+				//create new car
+			}
+		}
+		
 	}
 	
 }
