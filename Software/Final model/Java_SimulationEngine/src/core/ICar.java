@@ -40,5 +40,11 @@ public interface ICar {
 	
 	public void setSpeed(int speed);
 	
+	public void setEnterDir(Direction dirEnt);
 	
+	public Direction getEnterDir();
+	
+	public void setExitDir(Direction dirExt);
+	
+	public Direction getExitDir();
 }

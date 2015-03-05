@@ -12,6 +12,8 @@ public class Car implements ICar {
 	private int x;
 	private int y;
 	private int speed;
+	private Direction dirEnt;
+	private Direction dirExt;
 	
 	public Car(){
 		
@@ -26,6 +28,29 @@ public class Car implements ICar {
 		this.x = x;
 		this.y = y;
 	}
+	
+	
+	@Override
+	public void setEnterDir(Direction dirEnt){
+		this.dirEnt = dirEnt;
+	}
+	
+	@Override
+	public Direction getEnterDir(){
+		return dirEnt;
+	}
+	
+	@Override
+	public void setExitDir(Direction dirExt){
+		this.dirExt = dirExt;
+	}
+	
+	@Override
+	public Direction getExitDir(){
+		return dirExt;
+	}
+	
+	
 	
 	@Override
 	public int getX(){
