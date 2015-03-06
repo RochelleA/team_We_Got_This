@@ -297,7 +297,7 @@ public class GridController implements ActionListener, Runnable {
 						{
 							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
 							{
-								driveNorth(myCar);
+								driveSouth(myCar);
 								break;
 							}
 							else
@@ -310,7 +310,7 @@ public class GridController implements ActionListener, Runnable {
 						{
 							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
 							{
-								driveNorth(myCar);
+								driveSouth(myCar);
 								break;
 							}
 							else
@@ -332,7 +332,7 @@ public class GridController implements ActionListener, Runnable {
 						{
 							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
 							{
-								driveSouth(myCar);
+								driveNorth(myCar);
 								break;
 							}
 							else
@@ -345,7 +345,7 @@ public class GridController implements ActionListener, Runnable {
 						{
 							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
 							{
-								driveSouth(myCar);
+								driveNorth(myCar);
 								break;
 							}
 							else
@@ -424,7 +424,7 @@ public class GridController implements ActionListener, Runnable {
 				car.setSpeed(1);
 				grid.placeCarAt(23+ranEnt, 1, car);
 				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.SOUTH);
+				car.setExitDir(Direction.EAST);
 				listCars.add(car);
 			}
 			break;
@@ -437,6 +437,57 @@ public class GridController implements ActionListener, Runnable {
 				grid.placeCarAt(20+ranEnt, 24, car);
 				car.setEnterDir(Direction.SOUTH);
 				car.setExitDir(Direction.NORTH);
+				listCars.add(car);
+			}
+			
+		case 5:
+			if(!grid.hasCarAt(20+ranEnt, 24))
+			{	
+				ICar car = new Car();
+				car.setPosition(20+ranEnt, 24);
+				car.setSpeed(1);
+				grid.placeCarAt(20+ranEnt, 24, car);
+				car.setEnterDir(Direction.SOUTH);
+				car.setExitDir(Direction.EAST);
+				listCars.add(car);
+			}
+			break;
+			
+		case 6:
+			if(!grid.hasCarAt(20+ranEnt, 24))
+			{	
+				ICar car = new Car();
+				car.setPosition(20+ranEnt, 24);
+				car.setSpeed(1);
+				grid.placeCarAt(20+ranEnt, 24, car);
+				car.setEnterDir(Direction.SOUTH);
+				car.setExitDir(Direction.WEST);
+				listCars.add(car);
+			}
+			break;
+			
+		case 7:
+			if(!grid.hasCarAt(1, 10+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(1, 10+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(1, 10+ranEnt, car);
+				car.setEnterDir(Direction.WEST);
+				car.setExitDir(Direction.EAST);
+				listCars.add(car);
+			}
+			break;
+			
+		case 8:
+			if(!grid.hasCarAt(23+ranEnt, 1))
+			{	
+				ICar car = new Car();
+				car.setPosition(23+ranEnt, 1);
+				car.setSpeed(1);
+				grid.placeCarAt(23+ranEnt, 1, car);
+				car.setEnterDir(Direction.NORTH);
+				car.setExitDir(Direction.WEST);
 				listCars.add(car);
 			}
 			break;
@@ -452,8 +503,8 @@ public class GridController implements ActionListener, Runnable {
 			Random randomNumb = new Random();	
 
 			try {
-				Thread.sleep(randomCars.nextInt(500));
-				mCase=randomCars.nextInt(5)+1;
+				Thread.sleep(randomCars.nextInt(1000));
+				mCase=randomCars.nextInt(8)+1;
 				ranEnt=randomNumb.nextInt(2);
 
 				addCars(mCase, ranEnt);
