@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Test cases for the Cell class.
  * @author Anton
- * @version 1
+ * @version 1.1
  *
  */
 public class CellTest {
@@ -22,16 +22,15 @@ public class CellTest {
 				assertEquals("Y shoud be "+j, j, cell.getY());
 			}
 		}
-		//fail("Not yet implemented");
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void testNegativeX(){
+	public void testSetNegativeX(){
 		ICell cell = new Cell(-1,0);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void testNegativeY(){
+	public void testSetNegativeY(){
 		ICell cell = new Cell(0,-1);
 	}
 
@@ -69,9 +68,12 @@ public class CellTest {
 		testGetDirection();
 	}
 
+	//====
+	//MODIFIERS
 	@Test
 	public void testIsExit() {
 		ICell cell = new Cell(0,0);
+		assertFalse(cell.isExit());
 		cell.setIsExit(false);
 		assertFalse(cell.isExit());
 		cell.setIsExit(true);
@@ -82,20 +84,31 @@ public class CellTest {
 	public void testSetIsExit() {
 		testIsExit();
 	}
-
+	
 	@Test
-	public void testGetCar() {
-		testSetCar();
+	public void testIsEntry(){
+		ICell cell = new Cell(0,0);
+		assertFalse(cell.isExit());
+		cell.setIsExit(false);
+		assertFalse(cell.isExit());
+		cell.setIsExit(true);
+		assertTrue(cell.isExit());
 	}
-
+	public void testSetIsEntry(){
+		testIsEntry();
+	}
+	
+	
+	//====
+	//CARS TESTS
 	@Test
 	public void testSetCar() {
 		ICell cell = new Cell(0,0);
 		ICar car = new Car();
 		cell.setCar(car);
 		assertEquals(car, cell.getCar());
+		assertTrue(cell.hasCar());
 	}
-	
 	@Test(expected = GridException.class)
 	public void testSetCarWhenCellHasCar(){
 		ICell cell = new Cell(0,0);
@@ -105,43 +118,113 @@ public class CellTest {
 	}
 	
 	@Test
+	public void testGetCar() {
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.setCar(car);
+		assertEquals(car, cell.getCar());
+	}
+	@Test(expected = GridException.class)
+	public void testGetCarWhenCellDoesNotHaveCar(){
+		ICell cell = new Cell(0,0);
+		cell.getCar();
+	}
+	@Test
+	public void testHasCar(){
+		ICell cell = new Cell(0,0);
+		ICar car = new Car();
+		cell.setCar(car);
+		assertTrue(cell.hasCar());
+		cell.removeCar();
+		assertFalse(cell.hasCar());
+	}
+	@Test
 	public void testRemoveCar() {
 		ICell cell = new Cell(0,0);
 		ICar car = new Car();
 		cell.setCar(car);
 		assertEquals(car, cell.getCar());
+		assertTrue(cell.hasCar());
 		cell.removeCar();
-		assertEquals(null, cell.getCar());
+		assertFalse(cell.hasCar());
 	}
 	
 	@Test(expected = GridException.class)
 	public void testRemoveCarWhenCellDoesNotHaveCar(){
 		ICell cell = new Cell(0,0);
-		ICar car = new Car();
 		cell.removeCar();
 	}
 	
-
-	@Test
-	public void testGetTrafficLight() {
-		fail("Not yet implemented");
-	}
-
+	
+	
+	//====
+	//TRAFFIC LIGHTS TESTS
 	@Test
 	public void testSetTrafficLight() {
-		fail("Not yet implemented");
+		ICell cell = new Cell(0,0);
+		ITrafficLight tl = new TrafficLight();
+		cell.setTrafficLight(tl);
+		assertEquals(tl, cell.getTrafficLight());
+		assertTrue(cell.hasTrafficLight());
+	}	
+	@Test(expected = GridException.class)
+	public void testSetTrafficLightWhenCellHasTrafficLight(){
+		ICell cell = new Cell(0,0);
+		cell.setTrafficLight(new TrafficLight());
+		cell.setTrafficLight(new TrafficLight());
 	}
+	@Test
+	public void testGetTrafficLight() {
+		ICell cell = new Cell(0,0);
+		ITrafficLight tl = new TrafficLight();
+		cell.setTrafficLight(tl);
+		assertEquals(tl, cell.getTrafficLight());
+	}
+	@Test(expected = GridException.class)
+	public void testGetTLWhenMissing() {
+		ICell cell = new Cell(0,0);
+		cell.getTrafficLight();
+	}
+	@Test
+	public void testHasTrafficLight(){
+		ICell cell = new Cell(0,0);
+		assertFalse(cell.hasTrafficLight());
+		cell.setTrafficLight(new TrafficLight());
+		assertTrue(cell.hasTrafficLight());
+	}
+	@Test
+	public void testRemoveTrafficLight(){
+		ICell cell = new Cell(0,0);
+		ITrafficLight tl = new TrafficLight();
+		cell.setTrafficLight(tl);
+		assertEquals(tl, cell.getTrafficLight());
+		assertTrue(cell.hasTrafficLight());
+		cell.removeTrafficLight();
+		assertFalse(cell.hasTrafficLight());
+	}
+	
+	@Test(expected = GridException.class)
+	public void testRemoveTLWhenMissing(){
+		ICell cell = new Cell(0,0);
+		cell.removeTrafficLight();
+	}
+
+	//====
 
 	@Test
 	public void testGetX() {
-		
-		//fail("Not yet implemented");
+		for (int i=0; i<10; i++){
+			ICell cell = new Cell(i, 0);
+			assertEquals(i,cell.getX());
+		}
 	}
 
 	@Test
 	public void testGetY() {
-		
-		//fail("Not yet implemented");
+		for (int i=0; i<10; i++){
+			ICell cell = new Cell(0, i);
+			assertEquals(i,cell.getY());
+		}
 	}
 
 	@Test
