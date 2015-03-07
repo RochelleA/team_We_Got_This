@@ -74,7 +74,7 @@ public class Grid implements IGrid {
 		}
 		return cells.get(y).get(x);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see IGrid#getCellType(int, int)
 	 */

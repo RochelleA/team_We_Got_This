@@ -42,7 +42,7 @@ public class TestGrid01 implements EventListener {
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new BorderLayout());
-                frame.setSize(450, 300);
+                frame.setSize(700, 300);
                 
                 tp = new GridPane();
                 tp.setGrid(grid);

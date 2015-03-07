@@ -26,7 +26,7 @@ public class Model extends EventDispatchable implements EventListener {
 	//	System.out.println("has car "+grid.hasCarAt(0, 10));
 
 		//GetMap();
-		this.grid = parseMap("files/mapJunction.txt");
+		this.grid = parseMap("files/roundabout.txt");
 		
 		GridController gc = new GridController(grid, this);
 		gc.startTimer();
@@ -84,7 +84,7 @@ public class Model extends EventDispatchable implements EventListener {
 				for (int col = 0; col<width; col++) {
 					String value = (String)spaces[col];
 					
-					if(value.equals("0") || value.equals("9"))
+					if(value.equals("0"))
 					{
 						rgrid.setCellType(col, row, CellType.EMPTY);
 					}else if(Arrays.asList(eastRoad).contains(value))
@@ -109,12 +109,28 @@ public class Model extends EventDispatchable implements EventListener {
 						rgrid.setCellDirection(col, row, Direction.SOUTH);
 					}
 
-					if(value.equals("5"))
+					else if(value.equals("5"))
 					{
 						//junction
 						rgrid.setCellType(col, row, CellType.ROAD);
 						rgrid.setCellDirection(col, row, Direction.JUNCTION);
 					}
+					else if(value.equals("9") || value.equals("8"))
+					{
+						//junction
+						rgrid.setCellType(col, row, CellType.ROAD);
+						rgrid.setCellDirection(col, row, Direction.ROUNDABOUT);
+					}
+					
+					else if(value.equals("7"))
+					{
+						//junction
+						rgrid.setCellType(col, row, CellType.EMPTY);
+						rgrid.setCellDirection(col, row, Direction.CIRCLE);
+					}
+					
+					
+					
 					
 					// stop here if no modifier
 					if(value.length() == 1){
