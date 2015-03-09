@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+%opening
+\title{Final Report}
+\author{team\_we\_got\_this}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Introduction}
+	\textcolor{blue}{Describe the context for the work and the problem you are addressing. 
+	Briefly summarise what you achieved in the project.}
+
+\section{Literature Review}
+	\textcolor{gray}{
+		\begin{itemize}
+			\item What are the possible types of traffic simulation? What are the benefits of each? 
+			\item what type of traffic simulation is in \cite{namekawa2005general}? Why is/isn't it suitable for our model?
+			\item what type of traffic simulation is used in \cite{sewall2010continuum}? why is/isn't it suitable for out model?
+			\item what have we taken from each model and why did we decide to include these attributes?
+		\end{itemize}
+	}
+
+\section{Requirements and Design}
+	\textcolor{gray}{What did we set out to achieve?}
+    Following the initial requirements from the Introductory Lecture Slides, we created a list of all requirements for the simulation. We then separated them into  categories based on what was necessary, what was optional if we had time, and what would be done if we added the optional items and still had extra time. Table \ref{requirements} demonstrates the categories.
+
+
+\begin{table}[h] 
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline \rule{0pt}{2.5ex}
+{\bf Necessary}      & {\bf Optional} & {\bf Extra}   \\ \hline \rule{0pt}{2.5ex}
+Roads & Spiral roundabout & Buses  \\ 
+Cars & Emergency vehicles & Parking \\ 
+Roundabout & Dynamic traffic lights & Zebra crossing \\ 
+Multiple lanes & & Behavior (i.e. recklessness, caution) \\
+Traffic lights & & Horns/honking \\
+Car timer (start and end tracker) & & \\ \hline 
+\end{tabular}
+\caption{Requirements for the simulation}
+\label{requirements}
+\end{center}
+\end{table}
+
+We planned to first build the road and get the cars to properly drive on them with a basic intersection. Our first working model was hard coded to depend on the size of the map and used traffic lights to regulate the flow of traffic. We decided to move on from this to use a grid based model in which we would add in a roundabout. The first model would need to be adapted whenever the map changed. Also a roundabout would have been difficult to implement in this way since the cars have x- and y-coordinates. Though a grid is discrete, we would attempt to make it as continuous as possible by making the squares of the grid as small as possible. We would first implement the roundabout with no traffic lights, attempt to break it by creating a heavy flow from one direction which in turn would block cars from entering at the next junction. We would then fix this problem by adding in traffic lights to regulate the flow of cars into the roundabout. We also planned to have multiple lanes leading into and out of the roundabout as well as a timer to start and let it run for a set amount of time.
+
+If we finished with the necessary requirements of our simulation we planned to add in the requirements we designated as optional. In our research we came across a special type of roundabout called a spiral roundabout that has been implemented in northern London. In this type of roundabout a car need only to enter into the designated lane of the roundabout and it need never change lanes to exit. See figure (INSERT REF TO SP ROUNDABOUT DRAWING). One problem we foresaw with a normal roundabout was giving the intelligent to cars for when to change lanes and not cause accidents. The spiral roundabout was our solution to this problem. We also hoped to be able to implement emergency vehicles which could bypass the traffic lights and change lanes to get around cars in its way. Our last optional requirement was dynamic traffic lights which would depend on the number of cars coming from each junction into the roundabout.
+
+If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as 'extra.' This included different types of vehicles such as buses, places for cars to park, a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give the cars behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
+
+We thought that creating categories like this would give us a step-ladder approach to first get the basics and then go for the slightly more advanced version before adding in extra elements.
+	\textcolor{blue}{
+	\begin{itemize}
+		\item Describe the requirements you set for your project at the beginning and the design you have taken for your project.
+		\item  Focus on why you decided to tackle the problem in the way you did, and what effect that had on the design. 
+		\item You may also wish to mention the impact of team-working on your requirements and design.
+	\end{itemize}
+	}
+
+\section{Implementation}
+	\textcolor{blue}{Describe the most significant implementation details, focusing on those where unusual or detailed solutions were required. 
+	Quote code fragments where necessary, but remember that the full source code will be included as an appendix. 
+	Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. 
+	If relevant to your project, explain performance issues and how you tackle}
+
+	\subsection{Documentation}
+		\textcolor{gray}{export of JavaDoc, plus help for the user how to use the simulation (i.e. to start, click the start button, to finish, click stop button, etc).}
+		
+		
+	\subsection{Testing}
+		\textcolor{blue}{unit testing evidence screenshots, description of typical bugs.}
+
+\section{Team Work}
+	\subsection{Roles and Subgroups}
+	\subsection{Github}
+\section{Evaluation}
+	\textcolor{blue}{Critically evaluate your project: what worked well, and what didn't? 
+	how did you do relative to your plan? 
+	what changes were the result of improved thinking and what changes were forced upon you? 
+	how did your team work together? etc. 
+	Note that you need to show that you understand the weaknesses in your work as well as its strengths. You may wish to identify relevant future work that could be done on your project}
+	
+	
+\section{Peer Assessment}
+
+	
+\bibliographystyle{plain}
+\bibliography{../../references}
+
+
+\end{document}
