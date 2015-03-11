@@ -66,8 +66,9 @@ public interface ICell {
 	void setIsEntry(boolean b);
 	
 	/**
-	 * Returns a car currently positioned on the cell.
+	 * Returns a car currently positioned on the cell or throws an exception if there's no car.
 	 * @return car on the cell or null if there's no car.
+	 * @throws GridException
 	 * @see ICar
 	 * @see ICell#setCar(ICar)
 	 */
@@ -81,6 +82,12 @@ public interface ICell {
 	 * @see ICell#getCar()
 	 */
 	void setCar(ICar car);
+
+	/**
+	 * Checks if the cell has a car;
+	 * @return true if car is present in the cell and false otherwise.
+	 */
+	boolean hasCar();
 	
 	/**
 	 * Removes the car from the cell. Throws an exception if cell does not have a car.
@@ -91,12 +98,20 @@ public interface ICell {
 	void removeCar();
 	
 	/**
-	 * Returns a traffic light on the cell or null if there's no traffic light.
+	 * Returns a traffic light on the cell, throws exception if cell does not have one
 	 * @return traffic light
+	 * @throws GridException
 	 * @see ITrafficLight
 	 * @see ICell#setTrafficLight(ITrafficLight)
 	 */
 	ITrafficLight getTrafficLight();
+	
+	/**
+	 * Checks if the cell has a traffic light set to it.
+	 * @return true if cell has traffic light, false otherwise. 
+	 * @see ICell#setTrafficLight()
+	 */
+	boolean hasTrafficLight();
 	
 	/**
 	 * Positions a traffic light on the cell. Throws an exception if there's no traffic light.
@@ -105,6 +120,14 @@ public interface ICell {
 	 * @see ICell#getTrafficLight()
 	 */
 	void setTrafficLight(ITrafficLight tl);
+	
+	/**
+	 * Removes the traffic light from the cells. Throws an exception if cell does not have a traffic light.
+	 * @throws GridException
+	 * @see ITrafficLight
+	 * @see ICell#hasTrafficLight()
+	 */
+	void removeTrafficLight();
 	
 	/**
 	 * Returns x coordinate of the cell set during initialisation of IGrid.

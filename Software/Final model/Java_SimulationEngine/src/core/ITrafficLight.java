@@ -8,5 +8,15 @@ package core;
  *
  */
 public interface ITrafficLight {
-
+	/**
+	 * Set colour of the traffic light
+	 * @param colour the new colour
+	 */
+	public void setColour(TrafficLightColour colour);
+	
+	/**
+	 * Get colour of the traffic light
+	 * @return the current colour
+	 */
+	public TrafficLightColour getColour();
 }

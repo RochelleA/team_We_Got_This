@@ -3,7 +3,7 @@ package core;
 /**
  * An implementation for ICell interface.
  * @author Anton
- * @version 1
+ * @version 1.1
  *
  */
 public class Cell implements ICell {
@@ -15,8 +15,9 @@ public class Cell implements ICell {
 	private boolean isEntry;
 	private ICar car;
 	private ITrafficLight tl;
+	
 	/**
-	 * A single cell on a grid. The object should only be created by an IGrid during
+	 * A single cell on a grid. The object should only be created by an instance of an IGrid during
 	 * initialisation.
 	 * @param x x coordinate of the new cell
 	 * @param y y coordinate of the new cell
@@ -31,66 +32,65 @@ public class Cell implements ICell {
 		this.y = y;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#getType()
-	 */
 	@Override
 	public CellType getType() {
 		return this.type;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#setType(CellType)
-	 */
 	@Override
 	public void setType(CellType type) {
 		this.type = type;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#getDirection()
-	 */
 	@Override
 	public Direction getDirection() {
 		return this.dir;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#setDirection(Direction)
-	 */
 	@Override
 	public void setDirection(Direction direction) {
 		this.dir = direction;
 
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#isExit()
-	 */
 	@Override
 	public boolean isExit() {
 		return this.isExit;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#setIsExit(boolean)
-	 */
 	@Override
 	public void setIsExit(boolean b) {
 		this.isExit = b;
 	}
-
-	/* (non-Javadoc)
-	 * @see ICell#getCar()
-	 */
+	
 	@Override
-	public ICar getCar() {
-		return this.car;
+	public int getX() {
+		return this.x;
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#setCar(ICar)
-	 */
+	@Override
+	public int getY() {
+		return this.y;
+	}
+	
+	@Override
+	public String toString(){
+		return "cell@("+this.x+";"+this.y+")";
+	}
+
+	@Override
+	public boolean isEntry() {
+		return this.isEntry;
+	}
+
+	@Override
+	public void setIsEntry(boolean b) {
+		this.isEntry = b;
+		
+	}
+
+	//CARS
+	//====
 	@Override
 	public void setCar(ICar car) {
 		if(this.car == null){
@@ -98,8 +98,21 @@ public class Cell implements ICell {
 		}else{
 			throw new GridException("Cell already has a car");
 		}
-		// TODO Auto-generated method stub
 
+	}	
+	
+	@Override
+	public boolean hasCar() {
+		return this.car != null;
+	}
+	
+	@Override
+	public ICar getCar() {
+		if(this.car != null){
+			return this.car;
+		}else{
+			throw new GridException("Cell does not have a car to return");
+		}
 	}
 	
 	@Override
@@ -111,55 +124,43 @@ public class Cell implements ICell {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ICell#getTrafficLight()
-	 */
-	@Override
-	public ITrafficLight getTrafficLight() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ICell#setTrafficLight(ITrafficLight)
-	 */
+	
+	//TRAFFIC LIGHTS
+	//====
 	@Override
 	public void setTrafficLight(ITrafficLight tl) {
-		// TODO Auto-generated method stub
+		if(this.tl == null){
+			this.tl = tl;
+		}else{
+			throw new GridException("Cell already has a traffic light");
+		}
 
-	}
-
-	/* (non-Javadoc)
-	 * @see ICell#getX()
-	 */
-	@Override
-	public int getX() {
-		return this.x;
-	}
-
-	/* (non-Javadoc)
-	 * @see ICell#getY()
-	 */
-	@Override
-	public int getY() {
-		return this.y;
 	}
 	
 	@Override
-	public String toString(){
-		return "cell@("+this.x+";"+this.y+")";
+	public boolean hasTrafficLight() {
+		return this.tl != null;
 	}
-
-	//tests!!
+	
 	@Override
-	public boolean isEntry() {
-		return this.isEntry;
+	public ITrafficLight getTrafficLight() {
+		if (this.tl != null){
+			return this.tl;
+		}else{
+			throw new GridException("Cell does not have a traffic light");
+		}
 	}
-
+	
 	@Override
-	public void setIsEntry(boolean b) {
-		this.isEntry = b;
+	public void removeTrafficLight() {
+		if(this.tl != null){
+			this.tl = null;
+		}else{
+			throw new GridException("Cell does not have a traffic light to remove");
+		}
 		
 	}
+	//====
+
 
 }
