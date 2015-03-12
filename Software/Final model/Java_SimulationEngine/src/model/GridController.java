@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import core.Car;
+import core.CellType;
 import core.Direction;
 import core.ICar;
 import core.IGrid;
@@ -41,7 +42,23 @@ public class GridController implements ActionListener, Runnable {
 		this.model = m;
 
 		
-		 setExitPoint();
+
+		if(!grid.hasCarAt(42+ranEnt, 23))
+		{	
+			ICar car = new Car();
+			car.setPosition(42+ranEnt, 23);
+			car.setSpeed(1);
+			grid.placeCarAt(42+ranEnt, 23, car);
+			car.setEnterDir(Direction.SOUTH);
+			car.setExitDir(Direction.EAST);
+			listCars.add(car);
+		}
+		
+
+		
+		
+		
+			 setExitPoint();
 		 carsFactory.start();
 		 //mainTimer.start();
 	}
@@ -74,6 +91,64 @@ public class GridController implements ActionListener, Runnable {
 		*/
 		
 	}
+		
+	//driving to RoundAbout
+	private void driveRoundAbout(ICar car){
+		ICar myCar = car;
+				
+				//if the circle is on the right hand side of the driver and there is a grass on the left side, then the car knows it should drive to North-East
+				if((Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()+4) || Direction.CIRCLE==grid.getCellDirection(myCar.getX()+1,  myCar.getY()+1) && (CellType.EMPTY==grid.getCellType(myCar.getX()-3,  myCar.getY()-2))) && (Direction.NORTH!=grid.getCellDirection(myCar.getX(),  myCar.getY()-5)) )
+				{		System.out.println("NORTH-EAST");
+					driveNorthEast(myCar);
+				}
+			   
+				//if the circle on right side and the road to North and South on left side then go to East
+			   	else if((Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()+2) && (Direction.NORTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-5))) || (Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()+2) && (Direction.SOUTH==grid.getCellDirection(myCar.getX()+1,  myCar.getY()-5) || Direction.NORTH==grid.getCellDirection(myCar.getX()+2,  myCar.getY()-5))) )//&& (Direction.CIRCLE!=grid.getCellDirection(myCar.getX()+1,  myCar.getY())) || Direction.SOUTH==grid.getCellDirection(myCar.getX()+1,  myCar.getY()-5))))
+				{		System.out.println("EAST");
+					driveEast(myCar);
+				}
+				
+				//if circle on right side and grass on left side then go to EAST-South
+			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+3) && (CellType.EMPTY==grid.getCellType(myCar.getX()+5,  myCar.getY())))
+				{		System.out.println("EAST -SOUTH  ");
+					driveEastSouth(myCar);
+				}
+			
+				//if the circle is on the right side and road to WEST and EAST on the left side then go to SOUTH
+			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-3,  myCar.getY()-1) && (Direction.EAST==grid.getCellDirection(myCar.getX()+5,  myCar.getY())) || Direction.WEST==grid.getCellDirection(myCar.getX()+5,  myCar.getY()+1))
+				{	System.out.println(" SOUTH ");
+					driveSouth(myCar);		
+				}
+				
+				//if the circle is on left-top and the grass is on right, then go to SOUTH-WEST
+				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-3,  myCar.getY()) && (CellType.EMPTY==grid.getCellType(myCar.getX(),  myCar.getY()+5)))
+				{	System.out.println(" SOUTH - WEST ");
+					driveSouthWest(myCar);
+				}
+				
+				//if the circle is on top and the roads to NORTH and SOUTH down then drive WEST
+				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()-3) && (Direction.NORTH==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+5)) || Direction.SOUTH==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+5))
+				{
+					System.out.println(" WEST ");
+					driveWest(myCar);
+				}
+				
+				//if the circle is on right-top and grass is on left, then drive WEST-NORTH
+				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()-3) && (CellType.EMPTY==grid.getCellType(myCar.getX()-1,  myCar.getY()+5)))
+				{
+					System.out.println(" WEST NORTH  ");
+					driveWestNorth(myCar);
+				}
+				
+				//if the circle is on the right side and road to WEST and EAST on the left side then go to NORTH
+			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()-2))// && (Direction.EAST==grid.getCellDirection(myCar.getX()-5,  myCar.getY())) || Direction.WEST==grid.getCellDirection(myCar.getX()-5,  myCar.getY()))
+				{
+			   		System.out.println("**************88");
+					driveNorth(myCar);		
+				}
+				
+	}
+	
 	
 	//driving to SOUTH
 	private void driveSouth(ICar car){
@@ -84,12 +159,29 @@ public class GridController implements ActionListener, Runnable {
 			grid.placeCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()+myCar.getSpeed());
 			//going to SOUTH
+			
+			System.out.println("SOUTH");
 		}	
 	}
 	
 	
-	//driving to East-NORTH
-	private void driveEastNorth(ICar car){
+	//driving to SOUTH-WEST
+	private void driveWestNorth(ICar car){
+		ICar myCar = car;
+		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()-1)){
+
+			grid.removeCarFrom(myCar.getX(), myCar.getY());
+			grid.placeCarAt(myCar.getX()-1, myCar.getY()-1, myCar);
+			myCar.setY(myCar.getY()-1);
+			myCar.setX(myCar.getX()-1);
+		}	
+	}
+
+	
+	
+	
+	//driving to NORTH-EAST
+	private void driveNorthEast(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()-1)){
 
@@ -101,8 +193,8 @@ public class GridController implements ActionListener, Runnable {
 		}	
 	}
 	
-	//driving to East-SOUTH
-	private void driveEastSouth(ICar car){
+	//driving to SOUTH-WEST
+	private void driveSouthWest(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()+1)){
 
@@ -110,12 +202,11 @@ public class GridController implements ActionListener, Runnable {
 			grid.placeCarAt(myCar.getX()-1, myCar.getY()+1, myCar);
 			myCar.setY(myCar.getY()+1);
 			myCar.setX(myCar.getX()-1);
-			// drive EAST-NORTH
 		}	
 	}
 	
-	//driving to NORTH-EAST
-		private void driveNorthEast(ICar car){
+	//driving to EAST-SOUTH
+		private void driveEastSouth(ICar car){
 			ICar myCar = car;
 			if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()+1)){
 
@@ -123,7 +214,6 @@ public class GridController implements ActionListener, Runnable {
 				grid.placeCarAt(myCar.getX()+1, myCar.getY()+1, myCar);
 				myCar.setY(myCar.getY()+1);
 				myCar.setX(myCar.getX()+1);
-				//drive NORTH-EAST
 			}	
 		}
 		
@@ -137,6 +227,7 @@ public class GridController implements ActionListener, Runnable {
 			grid.placeCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()-myCar.getSpeed());
 			//going to NORTH
+			System.out.println("NORTH");
 		}	
 	}
 	
@@ -148,12 +239,7 @@ public class GridController implements ActionListener, Runnable {
 			grid.removeCarFrom(myCar.getX(), myCar.getY());
 			grid.placeCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY(), myCar);
 			myCar.setX(myCar.getX()+myCar.getSpeed());
-			//going to EAST
-			System.out.println("X is - " +myCar.getX());
-			System.out.println("y is - " +myCar.getY());
-			System.out.println("EAST");
-			System.out.println("X is - " +myCar.getX());
-			System.out.println("y is - " +myCar.getY());
+			//going to EAST			
 		}		
 	}
 	
@@ -416,102 +502,38 @@ public class GridController implements ActionListener, Runnable {
 					case ROUNDABOUT:
 						
 						
-				//	if(myCar.getEnterDir()==Direction.WEST)
-					//	{
-									//finished
+						if(myCar.getExitDir()==Direction.NORTH
+						 && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()-5)) //NORTH
+						{
+							driveNorth(myCar);
+							break;	
+						}
 						
+						else if(myCar.getExitDir()==Direction.EAST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()+5,  myCar.getY())) //EAST
+						{
+							driveEast(myCar);
+							break;	
+						}
 						
+						else if(myCar.getExitDir()==Direction.SOUTH && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()+5)) //SOUTH
+						{
+							driveSouth(myCar);
+							break;	
+						}
 						
-									if(myCar.getExitDir()==Direction.NORTH)
-									{	
-											if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-5))
-											{
-												driveEastNorth(myCar);
-												break;	
-											}
-											else
-											{
-												driveNorth(myCar);
-												break;
-											}
-									}
-									
-								   // finished
-								   if(myCar.getExitDir()==Direction.EAST)
-									{
-									   if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()) ||Direction.CIRCLE==grid.getCellDirection(myCar.getX()+2,  myCar.getY()) && (Direction.NORTH==grid.getCellDirection(myCar.getX()+4,  myCar.getY()-6) || Direction.SOUTH==grid.getCellDirection(myCar.getX()+3,  myCar.getY()-6)))
-										{
-											driveEastNorth(myCar);
-											break;	
-										}
-									   
-									   	else if((Direction.NORTH==grid.getCellDirection(myCar.getX()+1,  myCar.getY()-6) || Direction.NORTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-6))&& Direction.CIRCLE!=grid.getCellDirection(myCar.getX()+2,  myCar.getY()))
-										{
-											driveEast(myCar);
-											break;
-										}
-										else if(Direction.SOUTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-6))
-										{
-											driveNorthEast(myCar);
-											break;
-										}
-										else if(myCar.getExitDir()==grid.getCellDirection(myCar.getX()+5,  myCar.getY()))
-										{
-											driveEast(myCar);
-											break;
-										}
-									   
-											
-									}
-								   
-								    //finished
-									if(myCar.getExitDir()==Direction.SOUTH)
-									{
-										 
-										if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()) ||Direction.CIRCLE==grid.getCellDirection(myCar.getX()+2,  myCar.getY()) && (Direction.NORTH==grid.getCellDirection(myCar.getX()+4,  myCar.getY()-6) || Direction.SOUTH==grid.getCellDirection(myCar.getX()+3,  myCar.getY()-6)))
-										{
-											driveEastNorth(myCar);
-											break;	
-										}
-									   
-									   	else if((Direction.NORTH==grid.getCellDirection(myCar.getX()+1,  myCar.getY()-6) || Direction.NORTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-6))&& Direction.CIRCLE!=grid.getCellDirection(myCar.getX()+2,  myCar.getY()))
-										{
-											driveEast(myCar);
-											break;
-										}
-										else if(Direction.SOUTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-6))
-										{
-											driveNorthEast(myCar);
-											break;
-										}
-										else if(Direction.EAST==grid.getCellDirection(myCar.getX()+5,  myCar.getY()))
-										{
-											driveNorthEast(myCar);
-											break;
-										}
-										else if(Direction.WEST==grid.getCellDirection(myCar.getX()+5,  myCar.getY()))
-										{
-											driveEastSouth(myCar);
-											break;
-										}
-										if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-4,  myCar.getY()-3) ||Direction.CIRCLE==grid.getCellDirection(myCar.getX()-2,  myCar.getY()-2) && (Direction.SOUTH==grid.getCellDirection(myCar.getX()-3,  myCar.getY()+6) || Direction.NORTH==grid.getCellDirection(myCar.getX()-4,  myCar.getY()+6)))
-										{
-											driveEastSouth(myCar);
-											break;	
-										}
-										else if(myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()+5))
-										{
-											driveSouth(myCar);
-											break;
-										}
-									   
-									}
-									
-
-									break;								
-						//}
-									
-				}
+						else if(myCar.getExitDir()==Direction.WEST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()-5,  myCar.getY())) //WEST
+						{
+							driveWest(myCar);
+							break;	
+						}
+						
+						else {
+							driveRoundAbout(myCar);
+							break;	
+						}
+						
+				}					
+				
 			}
 			else{
 				System.out.println("removed from the list");
@@ -539,8 +561,34 @@ public class GridController implements ActionListener, Runnable {
 	private void addCars(int mCase, int ranEnt){
 		switch(mCase)
 		{
-		
+		/**
 		case 1:
+			if(!grid.hasCarAt(1, 10+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(1, 10+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(1, 10+ranEnt, car);
+				car.setEnterDir(Direction.WEST);
+				car.setExitDir(Direction.NORTH);
+				listCars.add(car);
+			}
+			break;
+			
+		case 2:
+			if(!grid.hasCarAt(1, 10+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(1, 10+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(1, 10+ranEnt, car);
+				car.setEnterDir(Direction.WEST);
+				car.setExitDir(Direction.EAST);
+				listCars.add(car);
+			}
+			break;
+			
+		case 3:
 			if(!grid.hasCarAt(1, 10+ranEnt))
 			{	
 				ICar car = new Car();
@@ -552,21 +600,47 @@ public class GridController implements ActionListener, Runnable {
 				listCars.add(car);
 			}
 			break;
-		
-		case 2:
-			if(!grid.hasCarAt(38, 13-ranEnt))
+		*/
+	/**			case 4:
+			if(!grid.hasCarAt(55, 12+ranEnt))
 			{	
 				ICar car = new Car();
-				car.setPosition(38, 13-ranEnt);
+				car.setPosition(55, 12+ranEnt);
 				car.setSpeed(1);
-				grid.placeCarAt(38, 13-ranEnt, car);
+				grid.placeCarAt(55, 12+ranEnt, car);
 				car.setEnterDir(Direction.EAST);
 				car.setExitDir(Direction.WEST);
 				listCars.add(car);
 			}
 			break;
+			
+		case 5:
+			if(!grid.hasCarAt(55, 12+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(55, 12+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(55, 12+ranEnt, car);
+				car.setEnterDir(Direction.EAST);
+				car.setExitDir(Direction.NORTH);
+				listCars.add(car);
+			}
+			break;	
 		
-		case 3:
+		case 6:
+			if(!grid.hasCarAt(55, 12+ranEnt))
+			{	
+				ICar car = new Car();
+				car.setPosition(55, 12+ranEnt);
+				car.setSpeed(1);
+				grid.placeCarAt(55, 12+ranEnt, car);
+				car.setEnterDir(Direction.EAST);
+				car.setExitDir(Direction.SOUTH);
+				listCars.add(car);
+			}
+			break;
+	
+		case 7:
 			if(!grid.hasCarAt(22+ranEnt, 1))
 			{	
 				ICar car = new Car();
@@ -574,57 +648,6 @@ public class GridController implements ActionListener, Runnable {
 				car.setSpeed(1);
 				grid.placeCarAt(22+ranEnt, 1, car);
 				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 4:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.NORTH);
-				listCars.add(car);
-			}
-			
-		case 5:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 6:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.WEST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 7:
-			if(!grid.hasCarAt(1, 10+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(1, 10+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(1, 10+ranEnt, car);
-				car.setEnterDir(Direction.WEST);
 				car.setExitDir(Direction.EAST);
 				listCars.add(car);
 			}
@@ -638,50 +661,90 @@ public class GridController implements ActionListener, Runnable {
 				car.setSpeed(1);
 				grid.placeCarAt(22+ranEnt, 1, car);
 				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.WEST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 9:
-			if(!grid.hasCarAt(34, 10))
-			{	
-				ICar car = new Car();
-				car.setPosition(34, 10);
-				car.setSpeed(1);
-				grid.placeCarAt(34, 10, car);
-				car.setEnterDir(Direction.WEST);
 				car.setExitDir(Direction.SOUTH);
 				listCars.add(car);
 			}
 			break;
 			
-		case 10:
-			if(!grid.hasCarAt(34, 10))
+		case 9:
+			if(!grid.hasCarAt(22+ranEnt, 1))
 			{	
 				ICar car = new Car();
-				car.setPosition(34, 10);
+				car.setPosition(22+ranEnt, 1);
 				car.setSpeed(1);
-				grid.placeCarAt(34, 10, car);
-				car.setEnterDir(Direction.WEST);
-				car.setExitDir(Direction.NORTH);
+				grid.placeCarAt(22+ranEnt, 1, car);
+				car.setEnterDir(Direction.NORTH);
+				car.setExitDir(Direction.WEST);
 				listCars.add(car);
 			}
 			break;
 			
-		/**case 11:
-			if(!grid.hasCarAt(44+ranEnt, 1))
+			
+		case 10:
+			if(!grid.hasCarAt(20+ranEnt, 23))
 			{	
 				ICar car = new Car();
-				car.setPosition(44+ranEnt, 1);
+				car.setPosition(20+ranEnt, 23);
 				car.setSpeed(1);
-				grid.placeCarAt(44+ranEnt, 1, car);
-				car.setEnterDir(Direction.NORTH);
+				grid.placeCarAt(20+ranEnt, 23, car);
+				car.setEnterDir(Direction.SOUTH);
+				car.setExitDir(Direction.WEST);
+				listCars.add(car);
+			}
+			
+			
+		case 11:
+			if(!grid.hasCarAt(20+ranEnt, 23))
+			{	
+				ICar car = new Car();
+				car.setPosition(20+ranEnt, 23);
+				car.setSpeed(1);
+				grid.placeCarAt(20+ranEnt, 23, car);
+				car.setEnterDir(Direction.SOUTH);
+				car.setExitDir(Direction.NORTH);
+				listCars.add(car);
+			}
+			
+		case 12:
+			if(!grid.hasCarAt(20+ranEnt, 23))
+			{	
+				ICar car = new Car();
+				car.setPosition(20+ranEnt, 23);
+				car.setSpeed(1);
+				grid.placeCarAt(20+ranEnt, 23, car);
+				car.setEnterDir(Direction.SOUTH);
 				car.setExitDir(Direction.EAST);
 				listCars.add(car);
 			}
-			break;
-*/
+			
+		case 13:
+			if(!grid.hasCarAt(20+ranEnt, 23))
+			{	
+				ICar car = new Car();
+				car.setPosition(20+ranEnt, 23);
+				car.setSpeed(1);
+				grid.placeCarAt(20+ranEnt, 23, car);
+				car.setEnterDir(Direction.SOUTH);
+				car.setExitDir(Direction.EAST);
+				listCars.add(car);
+			}
+		
+			
+			
+		case 14:
+				if(!grid.hasCarAt(42+ranEnt, 23))
+				{	
+					ICar car = new Car();
+					car.setPosition(42+ranEnt, 23);
+					car.setSpeed(1);
+					grid.placeCarAt(42+ranEnt, 23, car);
+					car.setEnterDir(Direction.SOUTH);
+					car.setExitDir(Direction.EAST);
+					listCars.add(car);
+				}
+				
+		*/
+
 			
 		}
 	}
@@ -696,7 +759,7 @@ public class GridController implements ActionListener, Runnable {
 
 			try {
 				Thread.sleep(randomCars.nextInt(500));
-				mCase=randomCars.nextInt(10)+1;
+				mCase=randomCars.nextInt(15)+1;
 				ranEnt=randomNumb.nextInt(2);
 
 				addCars(mCase, ranEnt);
