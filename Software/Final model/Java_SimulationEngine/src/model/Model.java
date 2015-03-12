@@ -10,6 +10,7 @@ import core.*;
 import events.DataEvent;
 import events.EventDispatchable;
 import events.EventListener;
+import events.NewCarEvent;
 import events.SimulationEvent;
 
 /**
@@ -19,6 +20,7 @@ import events.SimulationEvent;
  */
 public class Model extends EventDispatchable implements EventListener {
 	private IGrid grid; 
+	private IGridController _gc;
 	
 	public Model() {
 		//grid = new Grid(40, 25); //Grid(Col, Row)
@@ -28,8 +30,8 @@ public class Model extends EventDispatchable implements EventListener {
 		//GetMap();
 		this.grid = parseMap("files/roundabout.txt");
 		
-		GridController gc = new GridController(grid, this);
-		gc.startTimer();
+		_gc = new GridController(grid, this);
+		_gc.startTimer();
 		
 		//grid.placeCarAt(7, 10, new Car());
 		//grid.placeCarAt(10, 10, new Car());
@@ -42,10 +44,9 @@ public class Model extends EventDispatchable implements EventListener {
 	
 	
 	/**
- 	 * Gets the map.
- 	 * reading map from the txt file, and storing it in grid
+ 	 * Reads a map from a txt file, and creates a corresponding grid.
  	 * @param filename the name of the map file to read
-	 * @return 
+	 * @return IGrid the parsed grid.
  	 */
 	public IGrid parseMap(String filename){
 		//* - entry
@@ -172,9 +173,19 @@ public class Model extends EventDispatchable implements EventListener {
 		//data event
 		if (e instanceof DataEvent){
 			System.out.println("true data event");
+			
 			DataEvent de = (DataEvent)e;
+			
 			if(de.getType() == DataEvent.NEW_CAR){
 				//create new car
+				NewCarEvent nce = (NewCarEvent)de;
+				//System.out.println("new car x: " + nce.car.getX());
+				try{
+					_gc.addCar(nce.car);
+					//System.out.println("added car");
+				}catch(Exception ex){
+					System.out.println("exception of adding a car");
+				}
 			}
 		}
 		

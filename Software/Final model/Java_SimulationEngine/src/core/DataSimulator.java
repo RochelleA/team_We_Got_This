@@ -1,12 +1,9 @@
-/**
- * 
- */
 package core;
 
 import java.util.Random;
 
-import events.DataEvent;
 import events.EventDispatchable;
+import events.NewCarEvent;
 
 /**
  * A class to simulate appearances of cars on the map
@@ -14,38 +11,52 @@ import events.EventDispatchable;
  *
  */
 public class DataSimulator extends EventDispatchable implements Runnable {
+	private static int P_CAR_WILL_APPEAR = 10;
 	private IGrid grid;
+	private int round = 0;
 	
 	public DataSimulator(IGrid grid){
 		this.grid = grid;
 		Thread carsFactory = new Thread(this);
 		carsFactory.start();
 	}
-	public void dispatchEvent(){
-	    Object data = "new data";
-	    DataEvent de = new DataEvent(this, DataEvent.NEW_CAR, data);
-		this.fireDataEvent(de);
+	private void dispatchCar(int x, int y){
+		ICar car = new Car();
+		
+		car.setSpeed(1);
+		car.setPosition(x,y);
+		car.setEnterDir(Direction.SOUTH);
+		car.setExitDir(Direction.EAST);
+		
+		NewCarEvent ce = new NewCarEvent(this,car);
+		
+		this.fireDataEvent(ce);
 	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true){
+			
+			round++;
+			System.out.println("round: " + round);
 
 			Random random = new Random();
 
 			try {
-				Thread.sleep(random.nextInt(2000)); // random delay
-				//int mCase=random.nextInt(5)+1;
-				//int ranEnt=random.nextInt(2);
+				Thread.sleep(1000); // 1 s delay
 				
-				this.dispatchEvent();
-				//addCars(mCase, ranEnt);
-
+				for (ICell c : grid.getEntryCells()){
+					int r = random.nextInt(100);
+					if(DataSimulator.P_CAR_WILL_APPEAR > r){
+						//make car!
+						this.dispatchCar(c.getX(), c.getY());
+					}
+				}
+				
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 
 		}
 	}

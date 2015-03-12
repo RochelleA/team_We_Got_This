@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -15,7 +14,7 @@ import core.Direction;
 import core.ICar;
 import core.IGrid;
 
-public class GridController implements ActionListener, Runnable {
+public class GridController implements ActionListener, IGridController {
 	
 	
 		int mCase;
@@ -25,7 +24,7 @@ public class GridController implements ActionListener, Runnable {
 		
 		IGrid grid;// = model.getGrid();
 		//creating the cars
-		Thread carsFactory = new Thread(this);
+		//Thread carsFactory = new Thread(this);
 		
 		//array of the cars
 		List<ICar> listCars = new ArrayList<ICar>();
@@ -58,8 +57,8 @@ public class GridController implements ActionListener, Runnable {
 		
 		
 		
-			 setExitPoint();
-		 carsFactory.start();
+		 //setExitPoint();
+		 //carsFactory.start();
 		 //mainTimer.start();
 	}
 	
@@ -72,25 +71,25 @@ public class GridController implements ActionListener, Runnable {
 		//carsFactory.
 	}
 	
-	/**
-	 * Setting exit parameters 
-	 * 
-	 * The cars will be removed from the list of cars and from the map once they at these points
-	 * 
-	 */
-	public void setExitPoint(){
-		/*
-		grid.setIsExit(33, 10, true);
-		grid.setIsExit(33, 11, true);
-		grid.setIsExit(0, 13, true);
-		grid.setIsExit(0, 12, true);
-		grid.setIsExit(22, 23, true);
-		grid.setIsExit(23, 23, true);
-		grid.setIsExit(20, 1, true);
-		grid.setIsExit(21, 1, true);
-		*/
-		
-	}
+//	/**
+//	 * Setting exit parameters 
+//	 * 
+//	 * The cars will be removed from the list of cars and from the map once they at these points
+//	 * 
+//	 */
+//	public void setExitPoint(){
+//		/*
+//		grid.setIsExit(33, 10, true);
+//		grid.setIsExit(33, 11, true);
+//		grid.setIsExit(0, 13, true);
+//		grid.setIsExit(0, 12, true);
+//		grid.setIsExit(22, 23, true);
+//		grid.setIsExit(23, 23, true);
+//		grid.setIsExit(20, 1, true);
+//		grid.setIsExit(21, 1, true);
+//		*/
+//		
+//	}
 		
 	//driving to RoundAbout
 	private void driveRoundAbout(ICar car){
@@ -300,249 +299,246 @@ public class GridController implements ActionListener, Runnable {
 			 * if the car is not on the list, then it is moved
 			 */
 			
+			if(grid.isExit(myCar.getX(), myCar.getY())){
+				System.out.println("removed from the list");
+				i.remove();
+				grid.removeCarFrom(myCar.getX(),myCar.getY());
+				continue;
+			}
 			
-			if(!grid.isExit(myCar.getX(), myCar.getY()))
+			switch(grid.getCellDirection(myCar.getX(),  myCar.getY()))
 			{
-				switch(grid.getCellDirection(myCar.getX(),  myCar.getY()))
-				{
 
-					case EAST:
-						driveEast(myCar);
-						break;
-	
-					case WEST:
-						driveWest(myCar);
-						break;
-	
-					case NORTH:
-						driveNorth(myCar);
-						break;
-	
-					case SOUTH:
-						driveSouth(myCar);
-						break;
-						
-					case JUNCTION:
-								/** 
-								* comparing the entered Direction, to know where the car is coming from, to know where to keep direction
-								*
-								* ***************************** COMING FROM WEST
-								*/
-						if(myCar.getEnterDir()==Direction.WEST)
-						{
+				case EAST:
+					driveEast(myCar);
+					break;
+
+				case WEST:
+					driveWest(myCar);
+					break;
+
+				case NORTH:
+					driveNorth(myCar);
+					break;
+
+				case SOUTH:
+					driveSouth(myCar);
+					break;
+					
+				case JUNCTION:
+							/** 
+							* comparing the entered Direction, to know where the car is coming from, to know where to keep direction
+							*
+							* ***************************** COMING FROM WEST
+							*/
+					if(myCar.getEnterDir()==Direction.WEST)
+					{
+								 /**
+								 * comparing the exit point, to know the direction where to turn
+								 * 
+								 * *******************      GOING TO SOUTH
+								 */
+								if(myCar.getExitDir()==Direction.SOUTH)
+								{
 									 /**
-									 * comparing the exit point, to know the direction where to turn
+									 * the car is checking the direction of the road, by adding 7 to its current positon
+									 *  if there is a right direction then it will turn to that way
+									 *  if no, the car will move the same direction as before
+									 *  
 									 * 
-									 * *******************      GOING TO SOUTH
 									 */
-									if(myCar.getExitDir()==Direction.SOUTH)
-									{
-										 /**
-										 * the car is checking the direction of the road, by adding 7 to its current positon
-										 *  if there is a right direction then it will turn to that way
-										 *  if no, the car will move the same direction as before
-										 *  
-										 * 
-										 */
-										if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()+7))
-											{
-											driveEast(myCar);
-												break;
-											}		
-										else
-											{
-											driveSouth(myCar);
-												break;
-											}	
-									}
+									if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()+7))
+										{
+										driveEast(myCar);
+											break;
+										}		
+									else
+										{
+										driveSouth(myCar);
+											break;
+										}	
+								}
+								
+								/**
+								* comparing the exit point, to know the direction where to turn
+								* 
+								* *******************      GOING TO SOUTH
+								*/
+								if(myCar.getExitDir()==Direction.EAST)
+								{
+									driveEast(myCar);
+									break;	
+								}
+								
+								/**
+								 * comparing the exit point, to know the direction where to turn
+								 * 
+								 * *******************      GOING TO SOUTH
+								 */
+								if(myCar.getExitDir()==Direction.NORTH)
+								{	
 									
-									/**
-									* comparing the exit point, to know the direction where to turn
-									* 
-									* *******************      GOING TO SOUTH
-									*/
-									if(myCar.getExitDir()==Direction.EAST)
+									if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-7))
 									{
 										driveEast(myCar);
 										break;	
 									}
-									
-									/**
-									 * comparing the exit point, to know the direction where to turn
-									 * 
-									 * *******************      GOING TO SOUTH
-									 */
-									if(myCar.getExitDir()==Direction.NORTH)
-									{	
-										
-										if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-7))
-										{
-											driveEast(myCar);
-											break;	
-										}
-										else
-										{
-											driveNorth(myCar);
-											break;
-										}
+									else
+									{
+										driveNorth(myCar);
+										break;
 									}
-							
-					}
-					else if(myCar.getEnterDir()==Direction.EAST)
+								}
+						
+				}
+				else if(myCar.getEnterDir()==Direction.EAST)
+				{
+					if(myCar.getExitDir()==Direction.SOUTH)
 					{
-						if(myCar.getExitDir()==Direction.SOUTH)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()+7))
-							{
-								driveWest(myCar);
-								break;
-							}
-							else
-							{
-								driveSouth(myCar);
-								break;
-							}
-						}
-						
-						if(myCar.getExitDir()==Direction.WEST)
-						{
-								driveWest(myCar);
-								break;
-						}
-						if(myCar.getExitDir()==Direction.NORTH)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-7))
-							{
-								driveWest(myCar);
-								break;
-							}
-							else
-							{
-								driveNorth(myCar);
-								break;
-							}
-
-						}
-						
-					}
-					else if(myCar.getEnterDir()==Direction.NORTH)
-					{
-						if(myCar.getExitDir()==Direction.WEST)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
-							{
-								driveSouth(myCar);
-								break;
-							}
-							else
-							{
-								driveWest(myCar);
-								break;
-							}
-						}
-						if(myCar.getExitDir()==Direction.EAST)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
-							{
-								driveSouth(myCar);
-								break;
-							}
-							else
-							{
-								driveEast(myCar);
-								break;
-							}
-						}
-						if(myCar.getExitDir()==Direction.SOUTH)
-						{
-							driveSouth(myCar);
-							break;
-						}
-						
-					}
-					else if(myCar.getEnterDir()==Direction.SOUTH)
-					{
-						if(myCar.getExitDir()==Direction.WEST)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
-							{
-								driveNorth(myCar);
-								break;
-							}
-							else
-							{
-								driveWest(myCar);
-								break;
-							}
-						}
-						if(myCar.getExitDir()==Direction.EAST)
-						{
-							if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
-							{
-								driveNorth(myCar);
-								break;
-							}
-							else
-							{
-								driveEast(myCar);
-								break;
-							}
-						}
-						if(myCar.getExitDir()==Direction.NORTH)
-						{
-							driveNorth(myCar);
-							break;
-						}
-						
-					}
-			
-						break;
-						
-						// **********************************************************************
-					case ROUNDABOUT:
-						
-						
-						if(myCar.getExitDir()==Direction.NORTH
-						 && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()-5)) //NORTH
-						{
-							driveNorth(myCar);
-							break;	
-						}
-						
-						else if(myCar.getExitDir()==Direction.EAST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()+5,  myCar.getY())) //EAST
-						{
-							driveEast(myCar);
-							break;	
-						}
-						
-						else if(myCar.getExitDir()==Direction.SOUTH && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()+5)) //SOUTH
-						{
-							driveSouth(myCar);
-							break;	
-						}
-						
-						else if(myCar.getExitDir()==Direction.WEST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()-5,  myCar.getY())) //WEST
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()+7))
 						{
 							driveWest(myCar);
-							break;	
+							break;
 						}
-						
-						else {
-							driveRoundAbout(myCar);
-							break;	
+						else
+						{
+							driveSouth(myCar);
+							break;
 						}
-						
-				}					
-				
-			}
-			else{
-				System.out.println("removed from the list");
-				i.remove();
-				grid.removeCarFrom(myCar.getX(),myCar.getY());
-			}
+					}
+					
+					if(myCar.getExitDir()==Direction.WEST)
+					{
+							driveWest(myCar);
+							break;
+					}
+					if(myCar.getExitDir()==Direction.NORTH)
+					{
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-7))
+						{
+							driveWest(myCar);
+							break;
+						}
+						else
+						{
+							driveNorth(myCar);
+							break;
+						}
+
+					}
+					
+				}
+				else if(myCar.getEnterDir()==Direction.NORTH)
+				{
+					if(myCar.getExitDir()==Direction.WEST)
+					{
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
+						{
+							driveSouth(myCar);
+							break;
+						}
+						else
+						{
+							driveWest(myCar);
+							break;
+						}
+					}
+					if(myCar.getExitDir()==Direction.EAST)
+					{
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
+						{
+							driveSouth(myCar);
+							break;
+						}
+						else
+						{
+							driveEast(myCar);
+							break;
+						}
+					}
+					if(myCar.getExitDir()==Direction.SOUTH)
+					{
+						driveSouth(myCar);
+						break;
+					}
+					
+				}
+				else if(myCar.getEnterDir()==Direction.SOUTH)
+				{
+					if(myCar.getExitDir()==Direction.WEST)
+					{
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()-7,  myCar.getY()))
+						{
+							driveNorth(myCar);
+							break;
+						}
+						else
+						{
+							driveWest(myCar);
+							break;
+						}
+					}
+					if(myCar.getExitDir()==Direction.EAST)
+					{
+						if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX()+7,  myCar.getY()))
+						{
+							driveNorth(myCar);
+							break;
+						}
+						else
+						{
+							driveEast(myCar);
+							break;
+						}
+					}
+					if(myCar.getExitDir()==Direction.NORTH)
+					{
+						driveNorth(myCar);
+						break;
+					}
+					
+				}
+		
+					break;
+					
+					// **********************************************************************
+				case ROUNDABOUT:
+					
+					
+					if(myCar.getExitDir()==Direction.NORTH
+					 && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()-5)) //NORTH
+					{
+						driveNorth(myCar);
+						break;	
+					}
+					
+					else if(myCar.getExitDir()==Direction.EAST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()+5,  myCar.getY())) //EAST
+					{
+						driveEast(myCar);
+						break;	
+					}
+					
+					else if(myCar.getExitDir()==Direction.SOUTH && myCar.getExitDir()==grid.getCellDirection(myCar.getX(),  myCar.getY()+5)) //SOUTH
+					{
+						driveSouth(myCar);
+						break;	
+					}
+					
+					else if(myCar.getExitDir()==Direction.WEST && myCar.getExitDir()==grid.getCellDirection(myCar.getX()-5,  myCar.getY())) //WEST
+					{
+						driveWest(myCar);
+						break;	
+					}
+					
+					else {
+						driveRoundAbout(myCar);
+						break;	
+					}
+					
+			}					
 
 		
-	}
+		}
 	
 	}
 	
@@ -557,220 +553,226 @@ public class GridController implements ActionListener, Runnable {
 		model.fireEvent();
 		
 	}
-	
-	private void addCars(int mCase, int ranEnt){
-		switch(mCase)
-		{
-		/**
-		case 1:
-			if(!grid.hasCarAt(1, 10+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(1, 10+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(1, 10+ranEnt, car);
-				car.setEnterDir(Direction.WEST);
-				car.setExitDir(Direction.NORTH);
-				listCars.add(car);
-			}
-			break;
-			
-		case 2:
-			if(!grid.hasCarAt(1, 10+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(1, 10+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(1, 10+ranEnt, car);
-				car.setEnterDir(Direction.WEST);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 3:
-			if(!grid.hasCarAt(1, 10+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(1, 10+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(1, 10+ranEnt, car);
-				car.setEnterDir(Direction.WEST);
-				car.setExitDir(Direction.SOUTH);
-				listCars.add(car);
-			}
-			break;
-		*/
-	/**			case 4:
-			if(!grid.hasCarAt(55, 12+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(55, 12+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(55, 12+ranEnt, car);
-				car.setEnterDir(Direction.EAST);
-				car.setExitDir(Direction.WEST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 5:
-			if(!grid.hasCarAt(55, 12+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(55, 12+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(55, 12+ranEnt, car);
-				car.setEnterDir(Direction.EAST);
-				car.setExitDir(Direction.NORTH);
-				listCars.add(car);
-			}
-			break;	
-		
-		case 6:
-			if(!grid.hasCarAt(55, 12+ranEnt))
-			{	
-				ICar car = new Car();
-				car.setPosition(55, 12+ranEnt);
-				car.setSpeed(1);
-				grid.placeCarAt(55, 12+ranEnt, car);
-				car.setEnterDir(Direction.EAST);
-				car.setExitDir(Direction.SOUTH);
-				listCars.add(car);
-			}
-			break;
-	
-		case 7:
-			if(!grid.hasCarAt(22+ranEnt, 1))
-			{	
-				ICar car = new Car();
-				car.setPosition(22+ranEnt, 1);
-				car.setSpeed(1);
-				grid.placeCarAt(22+ranEnt, 1, car);
-				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-			break;
-			
-		case 8:
-			if(!grid.hasCarAt(22+ranEnt, 1))
-			{	
-				ICar car = new Car();
-				car.setPosition(22+ranEnt, 1);
-				car.setSpeed(1);
-				grid.placeCarAt(22+ranEnt, 1, car);
-				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.SOUTH);
-				listCars.add(car);
-			}
-			break;
-			
-		case 9:
-			if(!grid.hasCarAt(22+ranEnt, 1))
-			{	
-				ICar car = new Car();
-				car.setPosition(22+ranEnt, 1);
-				car.setSpeed(1);
-				grid.placeCarAt(22+ranEnt, 1, car);
-				car.setEnterDir(Direction.NORTH);
-				car.setExitDir(Direction.WEST);
-				listCars.add(car);
-			}
-			break;
-			
-			
-		case 10:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.WEST);
-				listCars.add(car);
-			}
-			
-			
-		case 11:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.NORTH);
-				listCars.add(car);
-			}
-			
-		case 12:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-			
-		case 13:
-			if(!grid.hasCarAt(20+ranEnt, 23))
-			{	
-				ICar car = new Car();
-				car.setPosition(20+ranEnt, 23);
-				car.setSpeed(1);
-				grid.placeCarAt(20+ranEnt, 23, car);
-				car.setEnterDir(Direction.SOUTH);
-				car.setExitDir(Direction.EAST);
-				listCars.add(car);
-			}
-		
-			
-			
-		case 14:
-				if(!grid.hasCarAt(42+ranEnt, 23))
-				{	
-					ICar car = new Car();
-					car.setPosition(42+ranEnt, 23);
-					car.setSpeed(1);
-					grid.placeCarAt(42+ranEnt, 23, car);
-					car.setEnterDir(Direction.SOUTH);
-					car.setExitDir(Direction.EAST);
-					listCars.add(car);
-				}
-				
-		*/
 
-			
-		}
+	@Override
+	public void addCar(ICar car) {
+		grid.placeCarAt(car.getX(), car.getY(), car);
+		listCars.add(car);
 	}
-	/**
-	 * Generate Cars
-	 */
-	public void run() { 
-		while(true){
-
-			Random randomCars = new Random();
-			Random randomNumb = new Random();	
-
-			try {
-				Thread.sleep(randomCars.nextInt(500));
-				mCase=randomCars.nextInt(15)+1;
-				ranEnt=randomNumb.nextInt(2);
-
-				addCars(mCase, ranEnt);
-
-
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-
-		}
-	}
+	
+//	private void addCars(int mCase, int ranEnt){
+//		switch(mCase)
+//		{
+//		/**
+//		case 1:
+//			if(!grid.hasCarAt(1, 10+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(1, 10+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(1, 10+ranEnt, car);
+//				car.setEnterDir(Direction.WEST);
+//				car.setExitDir(Direction.NORTH);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//		case 2:
+//			if(!grid.hasCarAt(1, 10+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(1, 10+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(1, 10+ranEnt, car);
+//				car.setEnterDir(Direction.WEST);
+//				car.setExitDir(Direction.EAST);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//		case 3:
+//			if(!grid.hasCarAt(1, 10+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(1, 10+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(1, 10+ranEnt, car);
+//				car.setEnterDir(Direction.WEST);
+//				car.setExitDir(Direction.SOUTH);
+//				listCars.add(car);
+//			}
+//			break;
+//		*/
+//	/**			case 4:
+//			if(!grid.hasCarAt(55, 12+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(55, 12+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(55, 12+ranEnt, car);
+//				car.setEnterDir(Direction.EAST);
+//				car.setExitDir(Direction.WEST);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//		case 5:
+//			if(!grid.hasCarAt(55, 12+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(55, 12+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(55, 12+ranEnt, car);
+//				car.setEnterDir(Direction.EAST);
+//				car.setExitDir(Direction.NORTH);
+//				listCars.add(car);
+//			}
+//			break;	
+//		
+//		case 6:
+//			if(!grid.hasCarAt(55, 12+ranEnt))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(55, 12+ranEnt);
+//				car.setSpeed(1);
+//				grid.placeCarAt(55, 12+ranEnt, car);
+//				car.setEnterDir(Direction.EAST);
+//				car.setExitDir(Direction.SOUTH);
+//				listCars.add(car);
+//			}
+//			break;
+//	
+//		case 7:
+//			if(!grid.hasCarAt(22+ranEnt, 1))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(22+ranEnt, 1);
+//				car.setSpeed(1);
+//				grid.placeCarAt(22+ranEnt, 1, car);
+//				car.setEnterDir(Direction.NORTH);
+//				car.setExitDir(Direction.EAST);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//		case 8:
+//			if(!grid.hasCarAt(22+ranEnt, 1))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(22+ranEnt, 1);
+//				car.setSpeed(1);
+//				grid.placeCarAt(22+ranEnt, 1, car);
+//				car.setEnterDir(Direction.NORTH);
+//				car.setExitDir(Direction.SOUTH);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//		case 9:
+//			if(!grid.hasCarAt(22+ranEnt, 1))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(22+ranEnt, 1);
+//				car.setSpeed(1);
+//				grid.placeCarAt(22+ranEnt, 1, car);
+//				car.setEnterDir(Direction.NORTH);
+//				car.setExitDir(Direction.WEST);
+//				listCars.add(car);
+//			}
+//			break;
+//			
+//			
+//		case 10:
+//			if(!grid.hasCarAt(20+ranEnt, 23))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(20+ranEnt, 23);
+//				car.setSpeed(1);
+//				grid.placeCarAt(20+ranEnt, 23, car);
+//				car.setEnterDir(Direction.SOUTH);
+//				car.setExitDir(Direction.WEST);
+//				listCars.add(car);
+//			}
+//			
+//			
+//		case 11:
+//			if(!grid.hasCarAt(20+ranEnt, 23))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(20+ranEnt, 23);
+//				car.setSpeed(1);
+//				grid.placeCarAt(20+ranEnt, 23, car);
+//				car.setEnterDir(Direction.SOUTH);
+//				car.setExitDir(Direction.NORTH);
+//				listCars.add(car);
+//			}
+//			
+//		case 12:
+//			if(!grid.hasCarAt(20+ranEnt, 23))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(20+ranEnt, 23);
+//				car.setSpeed(1);
+//				grid.placeCarAt(20+ranEnt, 23, car);
+//				car.setEnterDir(Direction.SOUTH);
+//				car.setExitDir(Direction.EAST);
+//				listCars.add(car);
+//			}
+//			
+//		case 13:
+//			if(!grid.hasCarAt(20+ranEnt, 23))
+//			{	
+//				ICar car = new Car();
+//				car.setPosition(20+ranEnt, 23);
+//				car.setSpeed(1);
+//				grid.placeCarAt(20+ranEnt, 23, car);
+//				car.setEnterDir(Direction.SOUTH);
+//				car.setExitDir(Direction.EAST);
+//				listCars.add(car);
+//			}
+//		
+//			
+//			
+//		case 14:
+//				if(!grid.hasCarAt(42+ranEnt, 23))
+//				{	
+//					ICar car = new Car();
+//					car.setPosition(42+ranEnt, 23);
+//					car.setSpeed(1);
+//					grid.placeCarAt(42+ranEnt, 23, car);
+//					car.setEnterDir(Direction.SOUTH);
+//					car.setExitDir(Direction.EAST);
+//					listCars.add(car);
+//				}
+//				
+//		*/
+//
+//			
+//		}
+//	}
+//	/**
+//	 * Generate Cars
+//	 */
+//	public void run() { 
+//		while(true){
+//
+//			Random randomCars = new Random();
+//			Random randomNumb = new Random();	
+//
+//			try {
+//				Thread.sleep(randomCars.nextInt(500));
+//				mCase=randomCars.nextInt(15)+1;
+//				ranEnt=randomNumb.nextInt(2);
+//
+//				addCars(mCase, ranEnt);
+//
+//
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//
+//
+//		}
+//	}
 	
 }
