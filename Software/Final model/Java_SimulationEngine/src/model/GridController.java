@@ -416,14 +416,16 @@ public class GridController implements ActionListener, Runnable {
 					case ROUNDABOUT:
 						
 						
-						//if(myCar.getEnterDir()==Direction.WEST)
-						//{
+				//	if(myCar.getEnterDir()==Direction.WEST)
+					//	{
 									//finished
+						
+						
+						
 									if(myCar.getExitDir()==Direction.NORTH)
 									{	
 											if(myCar.getExitDir()!=grid.getCellDirection(myCar.getX(),  myCar.getY()-5))
 											{
-												
 												driveEastNorth(myCar);
 												break;	
 											}
@@ -507,9 +509,8 @@ public class GridController implements ActionListener, Runnable {
 									
 
 									break;								
-				
-						//************************************************************************
-						
+						//}
+									
 				}
 			}
 			else{
@@ -667,7 +668,20 @@ public class GridController implements ActionListener, Runnable {
 				listCars.add(car);
 			}
 			break;
-
+			
+		/**case 11:
+			if(!grid.hasCarAt(44+ranEnt, 1))
+			{	
+				ICar car = new Car();
+				car.setPosition(44+ranEnt, 1);
+				car.setSpeed(1);
+				grid.placeCarAt(44+ranEnt, 1, car);
+				car.setEnterDir(Direction.NORTH);
+				car.setExitDir(Direction.EAST);
+				listCars.add(car);
+			}
+			break;
+*/
 			
 		}
 	}

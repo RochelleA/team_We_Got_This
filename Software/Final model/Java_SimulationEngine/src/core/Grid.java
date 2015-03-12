@@ -81,16 +81,16 @@ public class Grid implements IGrid {
 		}
 		return cells.get(y).get(x);
 	}
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	
 	/* (non-Javadoc)
 	 * @see IGrid#getCellType(int, int)
 	 */
-=======
+//=======
 
 	//PROPERTIES
 	//====
->>>>>>> origin/SimulationEngine
+//>>>>>>> origin/SimulationEngine
 	@Override
 	public CellType getCellType(int x, int y) {
 		return this.getCellAt(x, y).getType();

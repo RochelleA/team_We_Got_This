@@ -3,18 +3,26 @@ package view;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
+import javax.swing.JComponent;
 import core.CellType;
 import core.Direction;
 import core.IGrid;
 
-public class GridPane extends JPanel {
+/**
+ * 
+ * The main User Interface Class (View component of the system).
+ * @author Moinuddin Zaki
+ * @version 1
+ *
+ */
+
+@SuppressWarnings("serial")
+public class GridPane extends JComponent {
 	
 	
 	Image grass = new ImageIcon("images/grass2-20.png").getImage();
+	
 	
 	/** The road. */
 	Image road = new ImageIcon("images/road20.png").getImage();
@@ -47,6 +55,8 @@ public class GridPane extends JPanel {
       //  private Point selectedCell;
 
         public GridPane() {
+        	
+        	
         	//mainTimer.start();
         	
         	
@@ -215,9 +225,11 @@ public class GridPane extends JPanel {
 
             g2d.dispose();
         }*/
+        	
     }
-        public void paint (Graphics g) {
-    		g=(Graphics2D) g;
+        @Override
+		public void paint (Graphics g) {
+    		g=g;
     		
     		int px=0;
     		int py=0;
@@ -258,6 +270,7 @@ public class GridPane extends JPanel {
     		}
         
         }
+      
 		public IGrid getGrid() {
 			return nGrid;
 		}
