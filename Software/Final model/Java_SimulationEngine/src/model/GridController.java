@@ -22,7 +22,9 @@ public class GridController implements ActionListener, IGridController {
 	
 		private Model model;
 		
-		IGrid grid;// = model.getGrid();
+		IGrid grid;
+		
+		// = model.getGrid();
 		//creating the cars
 		//Thread carsFactory = new Thread(this);
 		
@@ -42,17 +44,6 @@ public class GridController implements ActionListener, IGridController {
 
 		
 
-		if(!grid.hasCarAt(42+ranEnt, 23))
-		{	
-			ICar car = new Car();
-			car.setPosition(42+ranEnt, 23);
-			car.setSpeed(1);
-			grid.placeCarAt(42+ranEnt, 23, car);
-			car.setEnterDir(Direction.SOUTH);
-			car.setExitDir(Direction.EAST);
-			listCars.add(car);
-		}
-		
 
 		
 		
@@ -96,7 +87,7 @@ public class GridController implements ActionListener, IGridController {
 		ICar myCar = car;
 				
 				//if the circle is on the right hand side of the driver and there is a grass on the left side, then the car knows it should drive to North-East
-				if((Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()+4) || Direction.CIRCLE==grid.getCellDirection(myCar.getX()+1,  myCar.getY()+1) && (CellType.EMPTY==grid.getCellType(myCar.getX()-3,  myCar.getY()-2))) && (Direction.NORTH!=grid.getCellDirection(myCar.getX(),  myCar.getY()-5)) )
+				if((Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()+4) || Direction.CIRCLE==grid.getCellDirection(myCar.getX()+1,  myCar.getY()+1) && (CellType.EMPTY==grid.getCellType(myCar.getX()-3,  myCar.getY()-2))) && (Direction.SOUTH!=grid.getCellDirection(myCar.getX()+1,  myCar.getY()-5)) )
 				{		System.out.println("NORTH-EAST");
 					driveNorthEast(myCar);
 				}

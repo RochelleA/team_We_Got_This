@@ -25,8 +25,8 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 		
 		car.setSpeed(1);
 		car.setPosition(x,y);
-		car.setEnterDir(Direction.SOUTH);
-		car.setExitDir(Direction.EAST);
+		car.setEnterDir(Direction.NORTH);
+		car.setExitDir(Direction.WEST);
 		
 		NewCarEvent ce = new NewCarEvent(this,car);
 		
