@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import model.Model;
 
@@ -114,6 +115,10 @@ public class TestGrid01 implements EventListener {
         
         controlActionStart.addActionListener(new MenuActionListener());
         controlActionPause.addActionListener(new MenuActionListener());
+        
+        controlActionStart.setAccelerator(KeyStroke.getKeyStroke('s'));
+        controlActionPause.setAccelerator(KeyStroke.getKeyStroke('p'));
+
       
         // Adding the respective menu with their respective Menu Items
         fileMenu.add(newAction);
