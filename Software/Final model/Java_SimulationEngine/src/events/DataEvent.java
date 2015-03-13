@@ -1,6 +1,3 @@
-/**
- * 
- */
 package events;
 
 /**
@@ -8,7 +5,7 @@ package events;
  *
  */
 
-public class DataEvent extends SimulationEvent {
+public class DataEvent extends SimpleEvent {
 
 	public static String NEW_CAR = "new_car";
 
@@ -16,7 +13,7 @@ public class DataEvent extends SimulationEvent {
 	private String type;
 
 	public DataEvent(Object source, String type, Object data) {
-		super(source);
+		super(source, type);
 		this.data = data;
 		this.type = type;
 	}

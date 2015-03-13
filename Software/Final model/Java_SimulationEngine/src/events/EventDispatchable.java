@@ -1,31 +1,32 @@
 package events;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
+/**
+ * An abstract class which implements calling handle methods
+ * on all added event listeners of an object.
+ * @author Anton
+ *
+ */
 public abstract class EventDispatchable {
 	  private ArrayList<EventListener> _listeners = new ArrayList<EventListener>();
+	  
 	  public synchronized void addEventListener(EventListener listener)  {
-	    _listeners.add(listener);
+		  _listeners.add(listener);
 	  }
 	  public synchronized void removeEventListener(EventListener listener)   {
-	    _listeners.remove(listener);
+		  _listeners.remove(listener);
 	  }
 	 
-	  // call this method whenever you want to notify
-	  //the event listeners of the particular event
-	  public synchronized void fireEvent() {
-	    SimulationEvent event = new SimulationEvent(this);
-	    Iterator<EventListener> i = _listeners.iterator();
-	    while(i.hasNext())  {
-	      i.next().handleSimulationEvent(event);
+	  public synchronized void fireSimpleEvent(SimpleEvent e) {
+	    for (EventListener el : _listeners){
+	    	el.handleSimpleEvent(e);
 	    }
 	  }
 	  
 	  public synchronized void fireDataEvent(DataEvent de) {
-	    Iterator<EventListener> i = _listeners.iterator();
-	    while(i.hasNext())  {
-	      i.next().handleSimulationEvent(de);
+	    for (EventListener el : _listeners){
+	    	el.handleSimpleEvent(de);
 	    }
 	  }
 	  
