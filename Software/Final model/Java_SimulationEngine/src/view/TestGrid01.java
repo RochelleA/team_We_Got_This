@@ -31,8 +31,13 @@ public class TestGrid01 implements EventListener {
 	
 	private GridPane tp;
 	private MVCController c;
+	private Model model;
+	private JMenuItem controlActionStart;
+	private JMenuItem controlActionPause;
 	
     public TestGrid01(Model model) {
+    	
+    	this.model = model;
     	
         JFrame frame = new JFrame("«We-Got-This» Traffic Simulation Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,8 +107,8 @@ public class TestGrid01 implements EventListener {
         JMenuItem pasteAction = new JMenuItem("Paste");
         JMenuItem sizeAction = new JMenuItem("Adjust Size");
         JMenuItem browserAction = new JMenuItem("Open in Browser");
-        JMenuItem controlActionStart = new JMenuItem("Start");
-        JMenuItem controlActionPause = new JMenuItem("Pause");
+        controlActionStart = new JMenuItem("Start");
+        controlActionPause = new JMenuItem("Pause");
         JMenuItem codeAction = new JMenuItem("Code Debug");
         JMenuItem helpAction = new JMenuItem("F1 for Help");
         
@@ -129,7 +134,20 @@ public class TestGrid01 implements EventListener {
         frame.add(tp);
    
         frame.setVisible(true);
+        
+        getModelStatus();
 
+    }
+    
+    private void getModelStatus(){
+    	String status = this.model.getStatus();
+    	if(status.equals(Model.STATUS_PAUSED)){
+    		controlActionStart.setEnabled(true);
+    		controlActionPause.setEnabled(false);
+    	}else if(status.equals(Model.STATUS_RUNNING)){
+    		controlActionStart.setEnabled(false);
+    		controlActionPause.setEnabled(true);
+    	}
     }
     
 
@@ -139,6 +157,7 @@ public class TestGrid01 implements EventListener {
 			tp.repaint();
 		}else if(e.getType().equals(SimpleEvent.MODEL_STATUS_CHANGE)){
 			System.out.println("model status change");
+			getModelStatus();
 		}
 		
 	}
