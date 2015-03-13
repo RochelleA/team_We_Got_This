@@ -8,19 +8,19 @@ import java.util.List;
 
 import javax.swing.Timer;
 
-import core.Car;
 import core.CellType;
 import core.Direction;
 import core.ICar;
 import core.IGrid;
+import events.SimpleEvent;
 
 public class GridController implements ActionListener, IGridController {
-	
 	
 		int mCase;
 		int ranEnt;
 	
 		private Model model;
+		private String status;
 		
 		IGrid grid;
 		
@@ -41,15 +41,18 @@ public class GridController implements ActionListener, IGridController {
 	public GridController(IGrid grid, Model m){
 		this.grid = grid;
 		this.model = m;
+		this.setStatus(Model.STATUS_PAUSED);
 
 	}
 	
 	public void startTimer(){
 		mainTimer.start();
+		this.setStatus(Model.STATUS_RUNNING);
 		//carsFactory.start();
 	}
 	public void stopTimer(){
 		mainTimer.stop();
+		this.setStatus(Model.STATUS_PAUSED);
 		//carsFactory.
 	}
 	
@@ -498,7 +501,7 @@ public class GridController implements ActionListener, IGridController {
 	public void actionPerformed (ActionEvent e){
 		//System.out.println("timer event");
 		moveCar();
-		model.fireEvent();
+		model.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STEP));
 		
 	}
 
@@ -506,6 +509,16 @@ public class GridController implements ActionListener, IGridController {
 	public void addCar(ICar car) {
 		grid.placeCarAt(car.getX(), car.getY(), car);
 		listCars.add(car);
+	}
+
+	@Override
+	public String getStatus() {
+		return this.status;
+	}
+
+	private void setStatus(String status) {
+		this.status = status;
+		model.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.MODEL_STATUS_CHANGE));
 	}
 }
 //	private void addCars(int mCase, int ranEnt){

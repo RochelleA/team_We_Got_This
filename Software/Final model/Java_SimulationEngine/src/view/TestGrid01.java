@@ -14,8 +14,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import core.IGrid;
-import events.SimulationEvent;
 import events.EventListener;
+import events.SimpleEvent;
 
 /**
  * 
@@ -146,11 +146,12 @@ public class TestGrid01 implements EventListener {
     
 
 	@Override
-	public void handleSimulationEvent(SimulationEvent e) {
-		// TODO Auto-generated method stub
-		//UPDATE THE VISUAL REPRESENTATION!!! (repaint)
-		//System.out.println("update event!");
-		tp.repaint();
+	public void handleSimpleEvent(SimpleEvent e) {
+		if(e.getType().equals(SimpleEvent.MODEL_STEP)){
+			tp.repaint();
+		}else if(e.getType().equals(SimpleEvent.MODEL_STATUS_CHANGE)){
+			System.out.println("model status change");
+		}
 		
 	}
 

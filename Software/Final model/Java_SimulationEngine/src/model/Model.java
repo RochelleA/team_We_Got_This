@@ -11,7 +11,7 @@ import events.DataEvent;
 import events.EventDispatchable;
 import events.EventListener;
 import events.NewCarEvent;
-import events.SimulationEvent;
+import events.SimpleEvent;
 
 /**
  * @author NM
@@ -22,6 +22,10 @@ public class Model extends EventDispatchable implements EventListener {
 	private IGrid grid; 
 	private IGridController _gc;
 	
+	
+	public static String STATUS_RUNNING = "running";
+	public static String STATUS_PAUSED = "paused";
+	
 	public Model() {
 		//grid = new Grid(40, 25); //Grid(Col, Row)
 		
@@ -31,7 +35,8 @@ public class Model extends EventDispatchable implements EventListener {
 		this.grid = parseMap("files/roundabout.txt");
 		
 		_gc = new GridController(grid, this);
-		_gc.startTimer();
+		
+		this.startSim();
 		
 		//grid.placeCarAt(7, 10, new Car());
 		//grid.placeCarAt(10, 10, new Car());
@@ -168,9 +173,18 @@ public class Model extends EventDispatchable implements EventListener {
 		return grid;
 	}
 	
+	public void startSim(){
+		this._gc.startTimer();
+	}
+	public void pauseSim(){
+		this._gc.stopTimer();
+	}
+	public String getStatus(){
+		return this._gc.getStatus();
+	}
+	
 	@Override
-	public void handleSimulationEvent(SimulationEvent e) {
-		//data event
+	public void handleSimpleEvent(SimpleEvent e) {
 		if (e instanceof DataEvent){
 			System.out.println("true data event");
 			

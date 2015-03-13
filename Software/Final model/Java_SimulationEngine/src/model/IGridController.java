@@ -24,4 +24,10 @@ public interface IGridController {
 	 */
 	public void stopTimer();
 	
+	/**
+	 * Returns the status of the simulation, either running or paused
+	 * @return the current status.
+	 */
+	public String getStatus();
+	
 }
