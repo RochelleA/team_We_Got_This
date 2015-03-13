@@ -16,7 +16,7 @@ public class Program {
 		//GridController cont = new GridController();
 		//IGrid grid = cont.model.getGrid();
 		
-	    TestGrid01 tg = new TestGrid01(model.getGrid());
+	    TestGrid01 tg = new TestGrid01(model);
 	    
 	    model.addEventListener(tg);
 	    

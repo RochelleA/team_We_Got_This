@@ -2,6 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,7 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import core.IGrid;
+import model.Model;
+
 import events.EventListener;
 import events.SimpleEvent;
 
@@ -17,7 +20,7 @@ import events.SimpleEvent;
  * 
  * The main User Interface Class (View component of the system).
  * @author Moinuddin Zaki
- * @version 1.1
+ * @version 1.2
  *
  */
 
@@ -27,8 +30,11 @@ public class TestGrid01 implements EventListener {
 	Image roadImg;
 	
 	private GridPane tp;
+	private MVCController c;
 	
-    public TestGrid01(final IGrid grid) {
+    public TestGrid01(Model model) {
+    	
+    	this.c = new MVCController(model);
 
         JFrame frame = new JFrame("«We-Got-This» Traffic Simulation Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,10 +104,13 @@ public class TestGrid01 implements EventListener {
         JMenuItem pasteAction = new JMenuItem("Paste");
         JMenuItem sizeAction = new JMenuItem("Adjust Size");
         JMenuItem browserAction = new JMenuItem("Open in Browser");
-        JMenuItem controlAction = new JMenuItem("Control Flow");
+        JMenuItem controlActionStart = new JMenuItem("Start");
+        JMenuItem controlActionPause = new JMenuItem("Pause");
         JMenuItem codeAction = new JMenuItem("Code Debug");
         JMenuItem helpAction = new JMenuItem("F1 for Help");
         
+        controlActionStart.addActionListener(new MenuActionListener());
+        controlActionPause.addActionListener(new MenuActionListener());
       
         // Adding the respective menu with their respective Menu Items
         fileMenu.add(newAction);
@@ -112,12 +121,13 @@ public class TestGrid01 implements EventListener {
         fileMenu.add(exitAction);
         viewMenu.add(sizeAction);
         viewMenu.add(browserAction);
-        controlMenu.add(controlAction);
+        controlMenu.add(controlActionStart);
+        controlMenu.add(controlActionPause);
         debugMenu.add(codeAction);
         helpMenu.add(helpAction);
         
         tp = new GridPane();
-        tp.setGrid(grid);                
+        tp.setGrid(model.getGrid());                
         frame.add(tp);
    
         frame.setVisible(true);
@@ -134,5 +144,27 @@ public class TestGrid01 implements EventListener {
 		}
 		
 	}
+	
+	
+	class MenuActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent action) {
+			switch (action.getActionCommand()){
+				case "Start":
+					System.out.println("Start");
+					c.start();
+					break;
+				case "Pause":
+					System.out.println("Pause");
+					c.pause();
+					break;
+				default:
+					//c.pause();
+					System.out.println("Unimplemented control");
+			}
+			
+		}
+	}
+
 
 }
