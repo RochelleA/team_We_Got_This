@@ -34,8 +34,6 @@ public class TestGrid01 implements EventListener {
 	
     public TestGrid01(Model model) {
     	
-    	this.c = new MVCController(model);
-
         JFrame frame = new JFrame("«We-Got-This» Traffic Simulation Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -164,6 +162,10 @@ public class TestGrid01 implements EventListener {
 			}
 			
 		}
+	}
+	
+	public void setMVCController(MVCController mvcc){
+		this.c = mvcc;
 	}
 
 

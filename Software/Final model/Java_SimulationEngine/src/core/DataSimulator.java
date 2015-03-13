@@ -11,9 +11,13 @@ import events.NewCarEvent;
  *
  */
 public class DataSimulator extends EventDispatchable implements Runnable {
-	private static int P_CAR_WILL_APPEAR = 10;
+	private int prob_car_appear = 10;
+	
 	private IGrid grid;
 	private int round = 0;
+	private boolean isRunning = true;
+	private int delay = 1000;  // 1 s default delay
+	private Random random = new Random();
 	
 	public DataSimulator(IGrid grid){
 		this.grid = grid;
@@ -36,30 +40,41 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true){
-			
-			round++;
-			System.out.println("round: " + round);
-
-			Random random = new Random();
-
-			try {
-				Thread.sleep(1000); // 1 s delay
+			if(isRunning){
+				round++;
+				System.out.println("round: " + round);
+	
 				
+					
 				for (ICell c : grid.getEntryCells()){
 					int r = random.nextInt(100);
-					if(DataSimulator.P_CAR_WILL_APPEAR > r){
+					if(prob_car_appear > r){
 						//make car!
 						//check if there is already car
 						this.dispatchCar(c.getX(), c.getY());
 					}
 				}
-				
-
+			}
+			
+			System.out.println(isRunning);
+			
+			try {
+				Thread.sleep(delay);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 		}
+	}
+	
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
+
+	public void setProb_car_appear(int prob_car_appear) {
+		this.prob_car_appear = prob_car_appear;
 	}
 	
 }
