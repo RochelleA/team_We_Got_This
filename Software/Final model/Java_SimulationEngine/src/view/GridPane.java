@@ -26,6 +26,12 @@ public class GridPane extends JComponent {
 	
 	/** The road. */
 	Image road = new ImageIcon("images/road20.png").getImage();
+	Image roadEastSpaceLane = new ImageIcon("images/roadEastSpaceLane.png").getImage();
+	Image roadEastLane = new ImageIcon("images/roadEastLane.png").getImage();
+	Image roadWestSpaceLane = new ImageIcon("images/roadWestSpaceLane.png").getImage();
+	Image roadNorthSpaceLane = new ImageIcon("images/roadNorthSpaceLane.png").getImage();
+	Image roadSouthSpaceLane = new ImageIcon("images/roadSouthSpaceLane.png").getImage();
+	Image roadNorthLane = new ImageIcon("images/roadNorthLane.png").getImage();
 	Image car = new ImageIcon("images/redCar.jpg").getImage();
 	Image carNorth = new ImageIcon("images/redCarNorth.jpg").getImage();
 
@@ -245,11 +251,46 @@ public class GridPane extends JComponent {
 						g.drawImage(grass, px, py, null);
 	    			
     				}else if(getGrid().getCellType(x, y)==CellType.ROAD){
-//    					
-//        				px=x*10;
-//    					py=y*10;
-    					g.drawImage(road, px, py, null);
     					
+    					if((getGrid().getCellDirection(x, y)==Direction.EAST) && (getGrid().getCellType(x, y-1)==CellType.EMPTY))
+    					{
+    						g.drawImage(roadEastSpaceLane, px, py, null);
+    					}
+    					else if((getGrid().getCellDirection(x, y)==Direction.EAST) && (getGrid().getCellType(x, y+1)==CellType.ROAD) && (getGrid().getCellType(x, y-1)!=CellType.EMPTY) )
+    					{
+    						g.drawImage(roadEastLane, px, py, null);
+    					}
+    					
+    					/*else if((getGrid().getCellDirection(x, y)==Direction.WEST) && (getGrid().getCellType(x, y+1)==CellType.EMPTY))
+    					{
+    						g.drawImage(roadWestSpaceLane, px, py, null);
+    					}
+    					
+    					*/
+    					
+    					else if((getGrid().getCellDirection(x, y)==Direction.WEST) && (getGrid().getCellType(x, y+1)==CellType.ROAD))
+    					{
+    						g.drawImage(roadEastSpaceLane, px, py, null);
+    					}
+    					
+    					else if((getGrid().getCellDirection(x, y)==Direction.NORTH) && (getGrid().getCellType(x-1, y)==CellType.EMPTY))
+    					{
+    						g.drawImage(roadNorthSpaceLane, px, py, null);
+    					}
+    					
+    					else if((getGrid().getCellDirection(x, y)==Direction.NORTH) && (getGrid().getCellType(x+1, y)==CellType.ROAD) && (getGrid().getCellType(x-1, y)!=CellType.EMPTY) )
+    					{
+    						g.drawImage(roadNorthLane, px, py, null);
+    					}
+    					else if((getGrid().getCellDirection(x, y)==Direction.SOUTH) && (getGrid().getCellType(x+1, y)==CellType.EMPTY))
+    					{
+    						g.drawImage(roadSouthSpaceLane, px, py, null);
+    					}
+    					
+    					
+    					else{
+    					g.drawImage(road, px, py, null);
+    					}
     					if(getGrid().hasCarAt(x, y)){
     						if(getGrid().getCellDirection(x, y)==Direction.NORTH || getGrid().getCellDirection(x, y)==Direction.SOUTH)
     						{

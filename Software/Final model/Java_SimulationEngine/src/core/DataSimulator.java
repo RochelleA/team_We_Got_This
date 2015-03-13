@@ -49,6 +49,7 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 					int r = random.nextInt(100);
 					if(DataSimulator.P_CAR_WILL_APPEAR > r){
 						//make car!
+						//check if there is already car
 						this.dispatchCar(c.getX(), c.getY());
 					}
 				}
