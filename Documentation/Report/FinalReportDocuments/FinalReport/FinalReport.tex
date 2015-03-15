@@ -36,38 +36,75 @@
 %	}
 	
 	\noindent
-	In what follows we will evaluate the different traffic simulations presented in current literature. We will begin by discussing the different categories of traffic simulations and their use in representing different types of road networks. Thereafter we will focus on Microscopic traffic simulations as these best meet the specifications of our system presented in section \ref{RequirementsAndDeisgn}.
+	In what follows we will evaluate the different traffic simulations presented in current literature. 
+	We will begin by discussing the different categories of traffic simulations and their use in representing different types of road networks. 
+	Thereafter we will focus on Microscopic traffic simulations as these best meet the specifications of our system presented in section \ref{RequirementsAndDeisgn}.
 	
 	\subsection{Background}
 	
-	In order to accurately study a real-life system, it is often necessary to first model this system by abstracting some information. Once this model has been made, one can build a simulation to make several observations of the model. Finally one analyses the information collected from the simulation in order to make inferences and suggestions \cite{sokolowski2011principles}. A traffic simulation can be classified in several ways - microscopic, mesoscopic and macroscopic. Another distinction of a traffic simulator is discrete or continuous. In a discrete system the variables change at set intervals of time whereas in a continuous system the variables change continuously with time. 
+	In order to accurately study a real-life system, it is often necessary to first model this system by abstracting some information. 
+	Once this model has been made, one can build a simulation to make several observations of the model. 
+	Finally one analyses the information collected from the simulation in order to make inferences and suggestions \cite{sokolowski2011principles}. 
+	A traffic simulation can be classified in several ways - microscopic, mesoscopic and macroscopic. 
+	Another distinction of a traffic simulator is discrete or continuous. 
+	In a discrete system the variables change at set intervals of time whereas in a continuous system the variables change continuously with time. 
 	
-	Macroscopic traffic simulations are traffic simulations capable of showing the effect of small changes on vast and complex networks. Whereas a microscopic traffic simulation is used to model individual movement of cars  in smaller sections of a network. For example one might use a microscopic simulation to observe movement of a vehicle in a specific intersection which has had a large number of accidents in a year. Microscopic models are also more suitable for studying changes such as a new road ramp because they focus on parameters such as velocity and acceleration \cite{sokolowski2011principles}. Macroscopic and mesoscopic models are similar in their approaches as they capture traffic dynamics in lesser detail. This results in a faster and easier simulator which is more suitable for larger networks. 
-	On the other hand, a microscopic simulator is applied to a smaller area as it better represents vehicle and driver-behaviour \cite{burghout2005hybrid}. These are attributes we would like to model in our simulation, hence it would seem a microscopic model would best represent our simulation. 
+	Macroscopic traffic simulations are traffic simulations capable of showing the effect of small changes on vast and complex networks. 
+	Whereas a microscopic traffic simulation is used to model individual movement of cars  in smaller sections of a network. 
+	For example one might use a microscopic simulation to observe movement of a vehicle in a specific intersection which has had a large number of accidents in a year. 
+	Microscopic models are also more suitable for studying changes such as a new road ramp because they focus on parameters such as velocity and acceleration \cite{sokolowski2011principles}. 
+	Macroscopic and mesoscopic models are similar in their approaches as they capture traffic dynamics in lesser detail. 
+	This results in a faster and easier simulator which is more suitable for larger networks. 
+	On the other hand, a microscopic simulator is applied to a smaller area as it better represents vehicle and driver-behaviour \cite{burghout2005hybrid}. 
+	These are attributes we would like to model in our simulation, hence it would seem a microscopic model would best represent our simulation. 
 	
 	
 	\subsection{Microscopic Simulations}
 	
 	Before categorising our model, it was necessary to further explore different microscopic simulations to see what other attributes we could include in our simulation.
-	In \cite{namekawa2005general}, the author describes a cell automation method for realizing a microscopic model. In this simulation the main aim is to have vehicles that have the capability to make their own decisions. The road network has physical attributes such as widths, shapes and slopes. They also have logical attributes such as traffic signals and signs. A vehicle is contained within a cell, this is the state at say time $t$. At the next time step, $t+1$, the vehicle will have to decide its new cell based on the information of neighbouring cells in the previous time step. 
+	In \cite{namekawa2005general}, the author describes a cell automation method for realizing a microscopic model. 
+	In this simulation the main aim is to have vehicles that have the capability to make their own decisions. 
+	The road network has physical attributes such as widths, shapes and slopes. 
+	They also have logical attributes such as traffic signals and signs. 
+	A vehicle is contained within a cell, this is the state at say time $t$. 
+	At the next time step, $t+1$, the vehicle will have to decide its new cell based on the information of neighbouring cells in the previous time step. 
 	
-	This model has many useful characteristics which we would like to implement in our traffic simulation. The first, is that by giving cells physical attributes as well as logical attributes, we could better represent different types of networks using the same simulation. We could use this in our simulation to allow users to build their own road networks and specify these attributes themselves. In doing this, we hope the simulation will have a broader application. The second - the use of cell automation - by recording information on neighbouring cells, cars could be modelled individually and make unique decisions based on their current position but also on any policies we introduce. Cars having decision making capabilities based on their current state would also improve our ability to model more complex road structures such as roundabouts.  
+	This model has many useful characteristics which we would like to implement in our traffic simulation. The first, is that by giving cells physical attributes as well as logical attributes, we could better represent different types of networks using the same simulation. 
+	We could use this in our simulation to allow users to build their own road networks and specify these attributes themselves. In doing this, we hope the simulation will have a broader application. 
+	The second - the use of cell automation - by recording information on neighbouring cells, cars could be modelled individually and make unique decisions based on their current position but also on any policies we introduce. 
+	Cars having decision making capabilities based on their current state would also improve our ability to model more complex road structures such as roundabouts.  
 	
-	Another microscopic simulation that we would like to draw elements from defines a reactive agent and is presented in \cite{ehlert2001microscopic}. In this paper the authors focus on intelligent agents so that vehicles can model individual driving behaviours. The paper defines an intelligent agent as capable of sensing its environment and acting accordingly. This model differs from the above model as drivers can now be classed as aggressive if they break the set behaviours defined below. Each agent has seven behaviours which automate its driving on the network. The first, Road-following, keeps the vehicle on the road whilst the second, Intersection/Changing Lanes, ensures the driver adjusts its speed before changing its direction or reaching an intersection. The Traffic Lights behaviour ensures a car stops at a red or yellow traffic light if that traffic light applies to it.  Another necessary behaviour implemented to simulate realistic driving is Car-following. This behaviour requires that a vehicle adjust its speed if the car in front is traveling at a slower speed. The behaviour, Switching Lanes, allows a car to change into another lane in order to overtake a slower car. Applying Other Traffic Rules is a behaviour which allows the simulation to model other rules such as maximum speeds and one-way streets such that drivers will exhibit the necessary actions to comply with these rules. Finally, the Collision Detection and Emergency Breaking behaviour alerts the car when it is about to crash into and object. This behaviour takes priority over all other behaviours. 
+	Another microscopic simulation that we would like to draw elements from defines a reactive agent and is presented in \cite{ehlert2001microscopic}. I
+	n this paper the authors focus on intelligent agents so that vehicles can model individual driving behaviours. 
+	The paper defines an intelligent agent as capable of sensing its environment and acting accordingly. This model differs from the above model as drivers can now be classed as aggressive if they break the set behaviours defined below. 
+	Each agent has seven behaviours which automate its driving on the network. 
+	The first, Road-following, keeps the vehicle on the road whilst the second, Intersection/Changing Lanes, ensures the driver adjusts its speed before changing its direction or reaching an intersection. 
+	The Traffic Lights behaviour ensures a car stops at a red or yellow traffic light if that traffic light applies to it.  
+	Another necessary behaviour implemented to simulate realistic driving is Car-following. 
+	This behaviour requires that a vehicle adjust its speed if the car in front is traveling at a slower speed. 
+	The behaviour, Switching Lanes, allows a car to change into another lane in order to overtake a slower car. 
+	Applying Other Traffic Rules is a behaviour which allows the simulation to model other rules such as maximum speeds and one-way streets such that drivers will exhibit the necessary actions to comply with these rules. 
+	Finally, the Collision Detection and Emergency Breaking behaviour alerts the car when it is about to crash into and object. 
+	This behaviour takes priority over all other behaviours. 
 	
-	Whilst some of these behaviours are not necessary for our simpler simulation, many are crucial features which will allow our simulation to accurately measure real-life networks. We would like to represent the following behaviours, as described above, in our simulation: 
+	Whilst some of these behaviours are not necessary for our simpler simulation, many are crucial features which will allow our simulation to accurately measure real-life networks. 
+	We would like to represent the following behaviours, as described above, in our simulation: 
+	
 	\begin{itemize}
 		\item Road-following
 		\item Traffic Lights
 		\item Car-following
 		\item Switching lane
 	\end{itemize}
-	 We have had great success in representing many of these behaviours in a few of the initial simulations we created. This will be explained in detail in section \ref{RequirementsAndDeisgn}. 
+	 We have had great success in representing many of these behaviours in a few of the initial simulations we created. 
+	 This will be explained in detail in section \ref{RequirementsAndDeisgn}. 
 	
 	
 	\subsection{Conclusion}
 	We believe a microscopic system will better represent our simulation because it will focus on smaller areas and individual driver capabilities. 
-	We have used the different approaches presented in the two microscopic simulations to influence the requirements and implementation of our system. We would like to use the cell automation used in the first simulation to control where our vehicles are at each tick of the clock. In order to model a real urban environment we would like the vehicles in our system to exhibit the following behaviours, Traffic Lights, Car-following, Road-following and Switching Lanes behaviours from the second simulation.
+	We have used the different approaches presented in the two microscopic simulations to influence the requirements and implementation of our system. 
+	We would like to use the cell automation used in the first simulation to control where our vehicles are at each tick of the clock. 
+	In order to model a real urban environment we would like the vehicles in our system to exhibit the following behaviours, Traffic Lights, Car-following, Road-following and Switching Lanes behaviours from the second simulation.
 	
 %	\textcolor{red}{When we discuss the early models we made, it would be good to say tat Anton's model exhibited the Traffic lights behaviour from the paper, \cite{ehlert2001microscopic}}
 %	
@@ -80,9 +117,15 @@
 %todo also wish to mention the impact of team-working on your requirements and design.
 
 \subsection{Introduction}
-	In this section we will discuss the requirements of our simulation based on the initial requirements laid out in the introductory slides, the Literature we have reviewed and based on the initial models we created. We will categorise the requirements of our simulation into functional and non-functional requirements. Given this new list of requirements we will prioritise them into one of three sub-categories  --- Necessary, Optional and Extra. Finally we will outline a timetable for the start and completion of each requirement.  
+	In this section we will discuss the requirements of our simulation based on the initial requirements laid out in the introductory slides, the Literature we have reviewed and based on the initial models we created. 
+	We will categorise the requirements of our simulation into functional and non-functional requirements. Given this new list of requirements we will prioritise them into one of three sub-categories  --- Necessary, Optional and Extra. 
+	Finally we will outline a timetable for the start and completion of each requirement.  
 	
-	 Software systems Requirement Engineering is an important part of software development life-cycle as it extracts the key requirements necessary to build a software. By having clear criteria, software engineers can easily analyse, implement and evaluate their system \cite{nuseibeh2000requirements}. There are five key stages of requirement engineering. The first is the elicitation of requirements where the team identifies, reviews and understands the constraints of the system. The second stage is analysing the constraints followed by writing these constraints into a requirement specification of the system. Once the specification is agreed on, the team will begin timetabling the requirements. 
+	 Software systems Requirement Engineering is an important part of software development life-cycle as it extracts the key requirements necessary to build a software. 
+	 By having clear criteria, software engineers can easily analyse, implement and evaluate their system \cite{nuseibeh2000requirements}. 
+	 There are five key stages of requirement engineering. The first is the elicitation of requirements where the team identifies, reviews and understands the constraints of the system. 
+	 The second stage is analysing the constraints followed by writing these constraints into a requirement specification of the system. 
+	 Once the specification is agreed on, the team will begin timetabling the requirements. 
 	 
 %	 	\subitem {\bf Requirement Elicitation}: identifying, reviewing and understanding the constraints of the system.\\
 %	 	\subitem {\bf Requirement Analysis}: analysing the constraints of the system.\\
@@ -148,7 +191,8 @@ The following initial requirements come from the \textcolor{black}{\emph{Introdu
 \end{enumerate}
 
 \noindent
-After considering the available requirements, our team decided to go ahead and implement a number of ideas of how such requirements can be modeled. A description of each system along with an analysis of their benefits and pitfalls are discussed in the next section. 
+After considering the available requirements, our team decided to go ahead and implement a number of ideas of how such requirements can be modeled. 
+A description of each system along with an analysis of their benefits and pitfalls are discussed in the next section. 
 
 
 \subsection{Requirement Analysis}
@@ -176,13 +220,20 @@ Given the models analysed, we can define new requirements which are more precise
 \textbf{Reporting:} The system should report on the results of a run simulation according to a number of factors: how conjectured the roads were (percentages of road cells occupied by cars to empty road cells) and how long it took cars to get from A to B (in respect to the minimum time it would have taken them without any other cars).\\
 
 \noindent
-\textbf{Performance / response time:} The simulation should run without lag on a regular University computer (e.g. in MSc lab 534), i.e. 64-bit Inter Core2 Quad CPU @ 2.5GHz for a medium-size simulation. However, when the complexity increases to more than 500x500 cells and 250 cars, the system is allowed to show a reasonable decrease in performance. With 1000x1000 cells and 500 cars, system is not guaranteed to continue responding to user input or show feedback on its state.\\
+\textbf{Performance / response time:} The simulation should run without lag on a regular University computer (e.g. in MSc lab 534), i.e. 64-bit Inter Core2 Quad CPU @ 2.5GHz for a medium-size simulation. 
+However, when the complexity increases to more than 500x500 cells and 250 cars, the system is allowed to show a reasonable decrease in performance. 
+With 1000x1000 cells and 500 cars, system is not guaranteed to continue responding to user input or show feedback on its state.\\
 
 \noindent
-\textbf{Testability:} The code for the project must be written by programmers with a fact in mind that it will have to be tested using a unit test framework. For example, when writing in Java, the unit-testing framework would be JUnit. Tests might be written beforehand to promote test-driven development, but it is not compulsory. On the other hand, it is required that every method has a corresponding test code written for it to make sure it works correctly in a variety of situations, such as boundary and corner conditions, therefore edge-cases must be tested.\\
+\textbf{Testability:} The code for the project must be written by programmers with a fact in mind that it will have to be tested using a unit test framework. For example, when writing in Java, the unit-testing framework would be JUnit. 
+Tests might be written beforehand to promote test-driven development, but it is not compulsory. 
+On the other hand, it is required that every method has a corresponding test code written for it to make sure it works correctly in a variety of situations, such as boundary and corner conditions, therefore edge-cases must be tested.\\
 
 \noindent 
-\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\textcolor{red}{ref: http://www.nngroup.com/articles/ten-usability-heuristics/}] should be considered and applied for implementation of user interface, for example there should be a match between the system and real world so users understand the analogy. This means that cars in the simulation should look like cars and the designs for road and roundabouts must be as realistic as possible. Also, help should be provided for users with explanations of how to use the simulation engine. A heuristic testing for all the 10 principles must be performed in the end of the UI’s development life-cycle by an expert. \\
+\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\textcolor{red}{ref: http://www.nngroup.com/articles/ten-usability-heuristics/}] should be considered and applied for implementation of user interface, for example there should be a match between the system and real world so users understand the analogy. 
+This means that cars in the simulation should look like cars and the designs for road and roundabouts must be as realistic as possible. 
+Also, help should be provided for users with explanations of how to use the simulation engine. 
+A heuristic testing for all the 10 principles must be performed in the end of the UI’s development life-cycle by an expert. \\
 
 \noindent 
 \textbf{Portability:} The system should be able to run on a computer with JVM installed (thus ensuring that the program can be started on any device which supports Java) or as an applet on a web-page. \\
@@ -191,10 +242,13 @@ Given the models analysed, we can define new requirements which are more precise
 \textbf{Maintainability:} The code should make use of interfaces and appropriate design patterns to make sure that all programmers can understand it and make required changes (refactor it) easily.\\
 
 \noindent 
-\textbf{Extensibility:} It should be possible to introduce new features into the system without having to restructure the engine’s core if additional requirements emerge. For example an appropriate level of abstraction should be used to ensure that a cyclist lane occupied by cyclists, taxis, buses and motorbikes can be incorporated into the system at the later stages of development.\\
+\textbf{Extensibility:} It should be possible to introduce new features into the system without having to restructure the engine’s core if additional requirements emerge. 
+For example an appropriate level of abstraction should be used to ensure that a cyclist lane occupied by cyclists, taxis, buses and motorbikes can be incorporated into the system at the later stages of development.\\
 
 \noindent
-\textbf{Documentation:} Every public method must be documented in the source code in Javadoc-style, including the purpose of the function, description of each parameter and return value, as well as clarification of exceptions using @param, @return, and @throws tags. @author and @version tags must be specified for each class. Documentation of a private method is encouraged when it can help other people working on the project to understand its purpose. Finally, UML diagrams (use-case, class and sequence at least) must be created in the design stage to make sure the principles of the overall model are clearly conveyed to shareholders and the team of developers.  
+\textbf{Documentation:} Every public method must be documented in the source code in Javadoc-style, including the purpose of the function, description of each parameter and return value, as well as clarification of exceptions using @param, @return, and @throws tags. @author and @version tags must be specified for each class. 
+Documentation of a private method is encouraged when it can help other people working on the project to understand its purpose. 
+Finally, UML diagrams (use-case, class and sequence at least) must be created in the design stage to make sure the principles of the overall model are clearly conveyed to shareholders and the team of developers.  
 
 \subsubsection{Functional Requirements}
 {\bf Map Designer}
@@ -236,14 +290,20 @@ Given the models analysed, we can define new requirements which are more precise
 \end{enumerate}
 
 \subsection{Architectural Patterns}
-Whenever a team designs a system, there are many different ways to do it and even with clear specifications it can be a challenge to decide which direction is best. Consequently, a software architect can make use of design patterns -- the proven good design structures which have emerged from hard-won architectural knowledge \cite{bass2007software} -- to decide their approach. In our system, we will implement a number of design patterns to make sure we use appropriate tested solutions to save time and help us work well as a team. 
+Whenever a team designs a system, there are many different ways to do it and even with clear specifications it can be a challenge to decide which direction is best. 
+Consequently, a software architect can make use of design patterns -- the proven good design structures which have emerged from hard-won architectural knowledge \cite{bass2007software} -- to decide their approach. 
+In our system, we will implement a number of design patterns to make sure we use appropriate tested solutions to save time and help us work well as a team. 
 
 
 \subsubsection{Layered Pattern Solution}
-Complex software systems usually require a clear separation of services so that different modules can be developed and maintained by different team members. We will use a layered pattern to clearly show which parts make up the whole system and assign modules to each programmer in our group. 
+Complex software systems usually require a clear separation of services so that different modules can be developed and maintained by different team members. 
+We will use a layered pattern to clearly show which parts make up the whole system and assign modules to each programmer in our group. 
 
 
-The layered pattern divides the software into units called layers \cite{bass2007software}. A layer can include a number of modules which together form a cohesive set of services. Layers completely partition a software system and each partition is exposed through a public interface. Furthermore, the ordering is strict, which means that layers above are allowed to use services from layers below but not the other way around, i.e. a unidirectional relations rule must be ensured among the layers. One of the disadvantages of this pattern is that the addition of new layers can add up-front costs and complexity to a system. However, we will design it once (at this stage) since we are not planning to add new layers to our software. Please see figure \ref{Layers} for a diagram of our layered pattern. 
+The layered pattern divides the software into units called layers \cite{bass2007software}. 
+A layer can include a number of modules which together form a cohesive set of services. 
+Layers completely partition a software system and each partition is exposed through a public interface. Furthermore, the ordering is strict, which means that layers above are allowed to use services from layers below but not the other way around, i.e. a unidirectional relations rule must be ensured among the layers. One of the disadvantages of this pattern is that the addition of new layers can add up-front costs and complexity to a system. 
+However, we will design it once (at this stage) since we are not planning to add new layers to our software. Please see figure \ref{Layers} for a diagram of our layered pattern. 
 
 \begin{figure}[H]
 	\centering
@@ -253,7 +313,17 @@ The layered pattern divides the software into units called layers \cite{bass2007
 		\label{Layers}
 \end{figure}
 
-Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine \textcolor{red}{[glossary]}. Secondly, the data layer is responsible for the handling of data from the real world, e.g. how many cars are coming from different entry points at each point in time. This data could be gathered from cameras installed along the roads or from the mobile apps of drivers who wish to participate in helping to gather statistics about traffic conjectures \cite{NCTA}. Although it would be very challenging to have our system be able to read information in a similar way, it would be \textcolor{red}{useful} to allow users to be able to specify the probability a car will enter a given junction. This will allow the user to correctly model their own networks and design policies to improve problems. Thirdly, the Simulation Model layer uses the provided information about cars currently using the road network and attempts to predict future states of the network. A number of policies will be used in a simulation and one of the aims of this project is to find the most appropriate policy by comparing their performance, thus statistics and policies are two essential sub-layers. The Simulation Engine will also move the cars and switch colours on the traffic lights, so control is the third sub-layer. Finally, the state of the model needs to be presented to the user and updated every time a change happens. Therefore, the final layer in our design is the UI layer, which will acquire information from the Simulation Engine layer and render it on the screen (see next section). Development of the GUI can take a long time because it is important for a programmer who is working on the model to see what is going on and to check if his or her code is working correctly (e.g. if a car truly changes lanes). Therefore, a command line output can be used which represents a road network using symbols, such as in the following example where $c$ stands for empty cell, $r$ for road and $v$ for vehicle: \\
+Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine \textcolor{red}{[glossary]}. 
+Secondly, the data layer is responsible for the handling of data from the real world, e.g. how many cars are coming from different entry points at each point in time. 
+This data could be gathered from cameras installed along the roads or from the mobile apps of drivers who wish to participate in helping to gather statistics about traffic conjectures \cite{NCTA}. 
+Although it would be very challenging to have our system be able to read information in a similar way, it would be \textcolor{red}{useful} to allow users to be able to specify the probability a car will enter a given junction. 
+This will allow the user to correctly model their own networks and design policies to improve problems. Thirdly, the Simulation Model layer uses the provided information about cars currently using the road network and attempts to predict future states of the network. 
+A number of policies will be used in a simulation and one of the aims of this project is to find the most appropriate policy by comparing their performance, thus statistics and policies are two essential sub-layers. 
+The Simulation Engine will also move the cars and switch colours on the traffic lights, so control is the third sub-layer. 
+Finally, the state of the model needs to be presented to the user and updated every time a change happens. 
+Therefore, the final layer in our design is the UI layer, which will acquire information from the Simulation Engine layer and render it on the screen (see next section). 
+Development of the GUI can take a long time because it is important for a programmer who is working on the model to see what is going on and to check if his or her code is working correctly (e.g. if a car truly changes lanes). 
+Therefore, a command line output can be used which represents a road network using symbols, such as in the following example where $c$ stands for empty cell, $r$ for road and $v$ for vehicle: \\
 
 $$
 \begin{matrix}
@@ -264,12 +334,19 @@ $$
 \end{matrix}
 $$
 
-To sum up, the Layered Pattern Solution helps us to clearly define underlying critical components of the system (OS, hardware, JVM) and create a separation of responsibilities by partitioning the system into a number of modules. By drawing different layers, we can see how services depend on each other and what interfaces we need to specify between them. Because the relations between layers is unidirectional, it is clear what parts of the system depend on each other (e.g. UI depends on the Simulation Model which depends on the data, and all three depend on the JVM). Tasks can now be assigned to different programmers who will be working on whichever layer they prefer based on their experience and interest. 
+To sum up, the Layered Pattern Solution helps us to clearly define underlying critical components of the system (OS, hardware, JVM) and create a separation of responsibilities by partitioning the system into a number of modules. 
+By drawing different layers, we can see how services depend on each other and what interfaces we need to specify between them. 
+Because the relations between layers is unidirectional, it is clear what parts of the system depend on each other (e.g. UI depends on the Simulation Model which depends on the data, and all three depend on the JVM).
+Tasks can now be assigned to different programmers who will be working on whichever layer they prefer based on their experience and interest. 
 
 \subsubsection{Model-View-Controller}
-The second architecture pattern we will make use of is the MVC module pattern which breaks the system into three components. These are: the model which represents application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
+The second architecture pattern we will make use of is the MVC module pattern which breaks the system into three components. 
+These are: the model which represents application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
 
-The MVC uses notifies relation to connect instances of model, view and controller, i.e. elements are notified of a state change. The restrictions of this pattern are that at least one instance of each element must be created, and the model component should not interact directly with the controller. Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexity for simple programs \cite{bass2007software}. In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine, therefore we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
+The MVC uses notifies relation to connect instances of model, view and controller, i.e. elements are notified of a state change. 
+The restrictions of this pattern are that at least one instance of each element must be created, and the model component should not interact directly with the controller. 
+Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexity for simple programs \cite{bass2007software}. 
+In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine, therefore we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
 
    \begin{figure}[p]
    	\centering
@@ -305,7 +382,13 @@ The MVC uses notifies relation to connect instances of model, view and controlle
 %	\caption{An example MVC structure from \cite{bass2007software}}
 %\end{figure}
 
-   Our MVC design differs from the design pattern in one way: the controller does not need to change between views because there’s only going to be one view (the representation of the map). It’s allowed to deviate from design pattern structures slightly, to if it suits system’s needs and can enhance performance. In every other way, our MVC is same as in pattern: the model is responsible for running the traffic simulation, i.e. updating traffic lights, positioning cars and sending notifications of the updates to the view. Upon receiving the notification, the view queries the model and receives its state in response. When the user wants to pause (or start, stop, restart) simulation, he or she clicks on certain buttons in the GUI, and the gesture is sent to the controller, which translates it into appropriate message for the model. The model performs necessary transformations (e.g. going back to the initial state in case of a restart) and notifies the view about the update. The overall diagram for the MVC and a sequence diagram for a typical run of a simulation are presented in diagrams \ref{OurMvc} and \ref{SequenceDiagram}. \\
+   Our MVC design differs from the design pattern in one way: the controller does not need to change between views because there’s only going to be one view (the representation of the map). 
+   It’s allowed to deviate from design pattern structures slightly, to if it suits system’s needs and can enhance performance. 
+   
+   In every other way, our MVC is same as in pattern: the model is responsible for running the traffic simulation, i.e. updating traffic lights, positioning cars and sending notifications of the updates to the view. Upon receiving the notification, the view queries the model and receives its state in response. 
+   When the user wants to pause (or start, stop, restart) simulation, he or she clicks on certain buttons in the GUI, and the gesture is sent to the controller, which translates it into appropriate message for the model. 
+   The model performs necessary transformations (e.g. going back to the initial state in case of a restart) and notifies the view about the update. 
+   The overall diagram for the MVC and a sequence diagram for a typical run of a simulation are presented in diagrams \ref{OurMvc} and \ref{SequenceDiagram}. \\
    
 \textcolor{red}{Problems with UML can three of them be combined on the same page to save space. Explain them here.}
 
@@ -313,7 +396,10 @@ The MVC uses notifies relation to connect instances of model, view and controlle
 \textcolor{red}{How can we explain the attributes above if some have already been described in the above functional requirements\\
 }
 
-Once we defined our functional and non-functional requirements, it was clear that there were a large number of requirements. Although we would like to include every attribute in our system, in order to clearly manage the requirements, we needed to know in what order we should complete them. This would help in scheduling a timetable for each because we would be able to indentify which elements were dependant on the completion of another attribute. For example, to build dynamic traffic lights, which would change colour based on the number of cars passing by it, we would first need traffic lights which vehicles would respond to and which could change colour based on a timer. 
+Once we defined our functional and non-functional requirements, it was clear that there were a large number of requirements. 
+Although we would like to include every attribute in our system, in order to clearly manage the requirements, we needed to know in what order we should complete them. 
+This would help in scheduling a timetable for each because we would be able to indentify which elements were dependant on the completion of another attribute. 
+For example, to build dynamic traffic lights, which would change colour based on the number of cars passing by it, we would first need traffic lights which vehicles would respond to and which could change colour based on a timer. 
 Hence in our specification of the requirement we have given to each attribute a priority:\\
 
 \noindent
@@ -324,7 +410,9 @@ Hence in our specification of the requirement we have given to each attribute a 
 \textcolor{MidnightBlue}{\bf Optional} - a requirement is categorised as optional if it's inclusion would be an important benefit to the overall system but without it we will still achieve our goals.\\
 
 \noindent
-\textcolor{MidnightBlue}{\bf Extra} - a requirement is defined as extra for two reasons. The first is that it is an unnecessary attribute but would build a more realistic simulation. The second reason is that although we might feel the attribute is important it would be too time consuming to build in the given time frame.\\\\
+\textcolor{MidnightBlue}{\bf Extra} - a requirement is defined as extra for two reasons. 
+The first is that it is an unnecessary attribute but would build a more realistic simulation. 
+The second reason is that although we might feel the attribute is important it would be too time consuming to build in the given time frame.\\\\
 
 %\begin{itemize}
 %	\item \textcolor{MidnightBlue}{Necessary} - a requirement is prioritised as necessary if it is a core component of simulation which deem to be necessary to achieve our original goals. 
@@ -334,7 +422,7 @@ Hence in our specification of the requirement we have given to each attribute a 
 
 
 
-\begin{table}[h] 
+\begin{table}[H] 
 	\centering
 	\label{PriorityListing}
 	\begin{tabular}{|c|c|c|}
@@ -353,7 +441,7 @@ Hence in our specification of the requirement we have given to each attribute a 
 \end{table}
 
 \textcolor{red}{Add intro to section, explanation of table and Nur's Gantt diagram.}\\\\
-\begin{table}
+\begin{table}[H]
 	\centering
 	\label{TimetableForTheProject}
 \begin{tabular}{|c|c|c|c|c|}
@@ -377,10 +465,94 @@ Hence in our specification of the requirement we have given to each attribute a 
 \caption{Timetable for the project}
 \end{table}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{"G Chart"}
+\end{figure}
+
 %todo	\textcolor{blue}{Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effect that had on the design. You may also wish to mention the impact of team-working on your requirements and design.	}
 
 \section{Implementation}
 	%todo \textcolor{blue}{Describe the most significant implementation details, focusing on those where unusual or detailed solutions were required. Quote code fragments where necessary, but remember that the full source code will be included as an appendix. Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackle}
+	In this section, we describe how we approached the implementation stage of our project. 
+	We will start with waterfall approach to implement the initial “must” requirements from the requirements document using designs such as Architectural Patterns and UML diagrams from the previous sections, and make use of Agile approach if we have time to include optional non-crucial requirements, such as emergency vehicles and behaviour of drivers. 
+	
+	
+	\subsection{Project Structure}
+	As defined in the design stage, our project will be build around a number of components: (a) data module which simulates appearance of cars, (b) model module which is responsible for controlling the state of a grid, e.g. moving cars and changing colours of traffic light, (c) UI to display to the user the current state of road network, and (d) statistics to assess traffic policies. 
+	For each of the following, we create a package in our project to separate responsibilities. 
+	The outline and short description of each package is presented below. Finally, because we work as a team of programmers, each person has picked a package to work on, so we can focus on one thing at a time and allow other people to develop their ideas fully, making sure we have a common vision of the final system which meets the requirements, and deliver the working, tested program on time. 
+	
+	\subsubsection{Core Package}
+	The core package comprises the essential classes required for the simulation system to work. They include: IGrid interface and Grid implementation, ICell and Cell, ICar and Car, ITrafficLight and TrafficLight, and others (more detailed description can be found in documentation section). 
+	We use interfaces a lot to make sure our programming is not bound to concrete implementations but rather to methods provided by an interface. 
+	This way a programmer working with IGrid in View package can safely cooperate with a programmer working with IGrid in Model package, without fearing that at some point of time a method might be refactored to have a different name or do something differently to what is expected from it. 
+	Furthermore, the Core package has the Program class which includes main method to run the application.\\
+	
+	\noindent
+	Person responsible: Anton. 
+
+\subsubsection{Model Package}
+The Model package consists of the Model class which has a number of methods to control the state of the simulation, such as change maps as a response to user input, pause, start and save simulations. 
+Once a grid is loaded, the logic of changing positions of cars and colour of traffic lights is defined in the IGridController interface and implemented the GridController class.\\
+
+\noindent
+Person responsible: Nur. 
+
+\subsubsection{View Package}
+The View package is maintained separately from model to ensure separation of responsibilities and to abstract the business logic from representation as specified in designs. 
+It uses JFrame to create a window and JPanel to place various components on the stage, such as graphical representation of the map (GridPane), JMenu, logo and statistics graphs. 
+The view depends on resources, such as images of cars, empty cells and roads and updates when there’s a change in the model.\\
+
+\noindent
+Person responsible: Zaki.
+
+\subsubsection{Statistics Package}
+\textcolor{red}{TODO}
+
+\subsubsection{Events Package}
+Because we are using the layered design pattern, we needed to find a way to pass messages from lower layers to upper layers. In figure 1.2, the structure is as follows: Data Layer -> Model Layer -> UI Layer. 
+A common way to create messages and pass them between classes is by using an Observer pattern, and Events package contains classes and interfaces to do that: DataEvent is the object (body) of an event (e.g. a new car Event will contain coordinates of a new car in its data field), EventDispatchable is an interface which has to be implemented by a class which wants to dispatch messages and EventListener is an abstract class with methods which can be used to listen to messages.\\
+
+\noindent
+Person responsible: Anton.
+
+\subsubsection{Test Package}
+The Test package includes tests for every method in other packages written in JUnit testing framework. 
+Each member of the team has to write  tests for their code as specified in the non-functional requirements specification.\\
+
+\noindent
+Person responsible: Nur, Zaki, Anton
+
+\subsection{Setting Up a Common IDE}
+
+Since we are using version control system git, we can maintain the main remote repository in which all the code will go. 
+When people make changes to the code, they commit it to the remote branch on github, and others fetch it to keep up-to-date version of the system in local repository. 
+We are also using Eclipse IDE, so we can make it update the files in the project folder when a commit with changes is pulled from github to the local computer.\\
+
+\noindent
+To accomplish this task, one of us creates a new project in Eclipse in the git folder (Software/Final Model/Java\_SimulationEngine). 
+Then each programmer on the team creates a folder on his local computer which will serve as his/her local git:\\
+
+mkdir sim\\
+
+cd sim\\
+
+\noindent
+Then a team member initialises the git in this folder and adds a remote origin from SimulationEngine branch:\\
+
+\noindent
+git remote add -t SimulationEngine -f origin https://github.com/RochelleA/team\_we\_got\_this.git\\
+
+\noindent
+Finally, we download all the files which we have in the repo:\\
+
+\noindent
+git checkout SimulationEngine\\
+
+\noindent
+After these steps, the sim folder looks like this: \\
+\textcolor{red}{Should we add the pics}
 
 Final Sprint - traffic signals, statistics and UI. 
 
@@ -395,16 +567,35 @@ Final Sprint - traffic signals, statistics and UI.
 In a group project team work plays a big part in the successes and failures of a project. In this section we discuss what roles each of the group members had and how this helped or hindered the project. We also discuss how the group handled using github to work as a team and what we have learned through this experience. 
 
 \subsection{Meetings}
- In the start we met twice a week to discuss the project. This was a crucial part of the project and need every team member. It was here that we faced our first problems as a group. This was a lack of communication and continued to be an issue for the group until the end of the project. At first we struggled to find an instant message application that could be used by all members of the group. For a few weeks we would use a combination of both Whatapp and text messages to communicate but this caused issue because sometimes we would only put the message on the group Whatapp. This meant that some members of the team would not get the messages and would miss the group meetings. Consequently, we need a new form of communication and we choose slack as an alternative which every member of the group was happy to use. However, again we struggles to be consistent with our means of communication and it began to hold the group back. Finally a decision was made that all important messages which needed to be read by all members of the group would be sent my KCL email as this was an application that every member had and would heck frequently. Although this worked well for us, it had it's drawbacks. The main problem was that it wasn't an instantaneous as a instant message and so we would have to leave at least 24 hours for people to look at their emails. Alongside this, Rochelle as project coordinator would send our calendar request for all meetings so each member of the team knew when every meeting was. This worked a lot better for our group as no members of the group missed the team meetings as a result of not knowing they were taking place. 
+ In the start we met twice a week to discuss the project. 
+ This was a crucial part of the project and need every team member. 
+ It was here that we faced our first problems as a group. 
+ This was a lack of communication and continued to be an issue for the group until the end of the project. 
+ At first we struggled to find an instant message application that could be used by all members of the group. 
+ For a few weeks we would use a combination of both Whatapp and text messages to communicate but this caused issue because sometimes we would only put the message on the group Whatapp. 
+ This meant that some members of the team would not get the messages and would miss the group meetings. 
+ Consequently, we need a new form of communication and we choose slack as an alternative which every member of the group was happy to use. 
+ However, again we struggles to be consistent with our means of communication and it began to hold the group back. 
+ Finally a decision was made that all important messages which needed to be read by all members of the group would be sent my KCL email as this was an application that every member had and would heck frequently. 
+ Although this worked well for us, it had it's drawbacks. 
+ The main problem was that it wasn't an instantaneous as a instant message and so we would have to leave at least 24 hours for people to look at their emails. 
+ Alongside this, Rochelle as project coordinator would send our calendar request for all meetings so each member of the team knew when every meeting was. 
+ This worked a lot better for our group as no members of the group missed the team meetings as a result of not knowing they were taking place. 
  
- Another way we tried to insure we making the best use of our weekly meetings was to set an agenda at the start of every meeting. This allowed every member of the group to bring to attention any issue they were having and also helped us to structure our meetings. At the end of every meeting the project co-ordinator would create a report of the minutes of the meeting. This include the agenda, discussion point- what was discussed in the meeting and action points - what each member of the team needed to do before the next meeting. These reports were upload to github so that every member could look at it if they had to clarify anything.
+ Another way we tried to insure we making the best use of our weekly meetings was to set an agenda at the start of every meeting. 
+ This allowed every member of the group to bring to attention any issue they were having and also helped us to structure our meetings. 
+ At the end of every meeting the project co-ordinator would create a report of the minutes of the meeting. This include the agenda, discussion point- what was discussed in the meeting and action points - what each member of the team needed to do before the next meeting. 
+ These reports were upload to github so that every member could look at it if they had to clarify anything.
  
  Once we were clearly of the specification of system and we were ready to start designing we gave everyone the components of the project they were to work on. Then in the weekly meeting which were decreased to once a week we would feed back on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model wasn't suited to our project and we began to follow the agile scrum method. \textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implentation section.}
  
  
 	\subsection{Roles and Subgroups}
 	
-	As a team we began by discussing what we would all like to gain from the project, where we felt we would be best used and why. This allowed us to delegate roles and task based on what would be most advantageous to the team. Whilst these roles were formed at the start of the project, throughout its duration these were adapted to meet the needs at that time. As a group we tried hard to be as flexible as possible as we realised the demands of others.
+	As a team we began by discussing what we would all like to gain from the project, where we felt we would be best used and why. 
+	This allowed us to delegate roles and task based on what would be most advantageous to the team. 
+	Whilst these roles were formed at the start of the project, throughout its duration these were adapted to meet the needs at that time. 
+	As a group we tried hard to be as flexible as possible as we realised the demands of others.
 	The main roles of group members are as follows:
 	
 	\begin{description}
