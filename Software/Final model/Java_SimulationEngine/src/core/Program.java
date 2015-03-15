@@ -21,7 +21,7 @@ public class Program {
 
 	    ds.addEventListener(model);
 	    
-	   // MVCController c = new MVCController(model, ds);
+	    MVCController c = new MVCController(model, ds);
 	    tg.setMVCController(c);
 	    	    
 	    
