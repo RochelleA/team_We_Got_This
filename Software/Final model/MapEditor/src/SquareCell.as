@@ -16,6 +16,8 @@ package
 		public static const defaultFill:SolidColor = new SolidColor(0xffffff,1);
 		public static const roadFill:SolidColor = new SolidColor(0x3b5f91);
 		
+		public var prevType:int;
+		
 		/**
 		 * An extension to a simple cell which can be displayed as a Rectangle
 		 * for which width and height are the same, i.e. a square.
