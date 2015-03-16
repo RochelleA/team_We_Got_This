@@ -48,7 +48,10 @@
 			
 			protected function globalMouseUp(event:MouseEvent):void
 			{
-				squareGrid.mouseUp();
+				//if(event.target != squareGrid){
+				//	squareGrid.mouseUp();
+				//}
+				
 			}
 			
 			public static function drawRb():SquareGrid{
@@ -143,12 +146,16 @@
 				<s:Label text="Eraser"/>
 			</s:HGroup>
 			
-			<s:VGroup id="rbGroup">
+			<s:VGroup id="rbGroup" visible="false">
 				<s:Label text="Roundabout" fontSize="18"/>
-				<local:SquareGrid id="roundAbout" />
+				<local:SquareGrid id="roundAbout"/>
 			</s:VGroup>
 			
-			<s:TextArea id="log"/>
+			<s:VGroup>
+				<s:Label text="Log" fontSize="18"/>
+				<s:TextArea id="log"/>
+			</s:VGroup>
+			
 			
 		</s:VGroup>
 		
