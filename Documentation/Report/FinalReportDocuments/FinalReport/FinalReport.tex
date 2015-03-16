@@ -81,7 +81,7 @@
 	The first, Road-following, keeps the vehicle on the road whilst the second, Intersection/Changing Lanes, ensures the driver adjusts its speed before changing its direction or reaching an intersection. 
 	The Traffic Lights behaviour ensures a car stops at a red or yellow traffic light if that traffic light applies to it.  
 	Another necessary behaviour implemented to simulate realistic driving is Car-following. 
-	This behaviour requires that a vehicle adjust its speed if the car in front is traveling at a slower speed. 
+	This behaviour requires that a vehicle adjust its speed if the car in front is travelling at a slower speed. 
 	The behaviour, Switching Lanes, allows a car to change into another lane in order to overtake a slower car. 
 	Applying Other Traffic Rules is a behaviour which allows the simulation to model other rules such as maximum speeds and one-way streets such that drivers will exhibit the necessary actions to comply with these rules. 
 	Finally, the Collision Detection and Emergency Breaking behaviour alerts the car when it is about to crash into and object. 
@@ -191,18 +191,11 @@ The following initial requirements come from the \textcolor{black}{\emph{Introdu
 \end{enumerate}
 
 \noindent
-After considering the available requirements, our team decided to go ahead and implement a number of ideas of how such requirements can be modeled. 
-A description of each system along with an analysis of their benefits and pitfalls are discussed in the next section. 
+After considering the available requirements, our team decided to go ahead and implement a number of ideas of how such requirements can be modelled. A description of each system along with an analysis of their benefits and pitfalls are discussed in the next section. 
 
 
 \subsection{Requirement Analysis}
-\textcolor{red}{Kim will fill in this bit by the end of this week.}\\
 \noindent
-\textcolor{green}{We planned to first build the road and get the cars to properly drive on them with a basic intersection. Our first working model was hard coded to depend on the size of the map and used traffic lights to regulate the flow of traffic. We decided to move on from this to use a grid based model in which we would add in a roundabout. The first model would need to be adapted whenever the map changed. Also a roundabout would have been difficult to implement in this way since the cars have x- and y-coordinates. Though a grid is discrete, we would attempt to make it as continuous as possible by making the squares of the grid as small as possible. We would first implement the roundabout with no traffic lights, attempt to break it by creating a heavy flow from one direction which in turn would block cars from entering at the next junction. We would then fix this problem by adding in traffic lights to regulate the flow of cars into the roundabout. We also planned to have multiple lanes leading into and out of the roundabout as well as a timer to start and let it run for a set amount of time.	
-	If we finished with the necessary requirements of our simulation we planned to add in the requirements we designated as optional. In our research we came across a special type of roundabout called a spiral roundabout that has been implemented in northern London. In this type of roundabout a car need only to enter into the designated lane of the roundabout and it need never change lanes to exit. See figure (INSERT REF TO SP ROUNDABOUT DRAWING). One problem we foresaw with a normal roundabout was giving the intelligent to cars for when to change lanes and not cause accidents. The spiral roundabout was our solution to this problem. We also hoped to be able to implement emergency vehicles which could bypass the traffic lights and change lanes to get around cars in its way. Our last optional requirement was dynamic traffic lights which would depend on the number of cars coming from each junction into the roundabout.
-	If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as 'extra.' This included different types of vehicles such as buses, places for cars to park, a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give the cars behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
-	We thought that creating categories like this would give us a step-ladder approach to first get the basics and then go for the slightly more advanced version before adding in extra elements.}
-
 \begin{enumerate}
 	
 	\item state automaton or discrete
@@ -211,6 +204,29 @@ A description of each system along with an analysis of their benefits and pitfal
 	[screenshot] [brief description]
 
 \end{enumerate}
+
+\subsubsection{Initial Designs}
+As a first task we decided to let each member brainstorm a different way to complete the assignment. We would then evaluate each approach and proceed with the one that seemed the most appropriate.
+
+
+	The first option we considered was using a hexagon matrix. Essentially, the matrix would work in the same way as a normal matrix with square-shaped cells, but instead our matrix would have hexagon-shaped cells. In this way each cell would still have row and column coordinates in the matrix to track the position of cars. This method would even allow us to check the adjoining cells for cars to prevent collisions. We thought the hexagon-shaped cells would allow us to better simulate a roundabout than square-shaped cells would. In the working simple model using this method, we had achieved working traffic lights. If a light was green for straight ahead only, the cars who wanted to go straight would go while the cars who wanted to turn left would stay stopped at the light. In this simple model we had not yet enabled cars to respond to other cars. Thus if a car was travelling at a faster speed than the car in front of it, it would pass through it. When attempting to implement this as a trial of the model, we decided that a hexagon matrix was an unnecessary complication.
+    
+    The second option we came up with also used a matrix and was based on the cell automation model \cite{namekawa2005general}. In this model each cell of a matrix is given attributes and properties. The attributes included the width, height, and type of cell whilst the properties would give information about whether or not the cell is occupied by a vehicle. The most important feature we would include in each cell was information on its neighbouring cells so that cars could make dynamic decisions about where they would go at each tick of the clock in the simulation.
+    
+    The third option was actually the first working simulation that the group created. In this simulation, pixels are recoloured every thirty milliseconds to show the movement of cars across the map (\textcolor{red}{see figure \ref{NurModel}}). The entry points, exit points, and changing lanes were all dependent on the size of the static map. We had this simulation working very quickly, but we questioned whether it would be dynamic enough to adapt to our growing plans without getting overly complicated. In particular, we were concerned that this approach would hold us back as we tried to develop a multi-lane roundabout where cars would need to know when to change lanes to exit. This model originally had a similar problem with collisions as mentioned in option two where faster cars would pass through slower cars. We were able to implement a level of intelligence in the cars -- faster cars could respond to a slower car in front of them by overtaking in the right lane. If, however, the cars were already in the right-hand lane, the car would merely slow down and match the slower speed of the car in front of them while keeping a safe distance.
+    
+    The final option we considered was a mathematical approach on a continuous model in which our map was represented by several parametric equations dependent on time (\textcolor{red}{see figure \ref{KimModel}}). In this way, each car would have its position denoted by a set of coordinates $(x,y)$. The parametric equation used to calculate the car's next position at each time step would be determined using its current position and the intended direction of travel. This solution would simplify the problem of the  multi-lane roundabout in the previous approach by merely using two sets of parametric equations for two concentric circles. Although this approach would allow us to accurately calculate where each car is at any given time, it would be difficult to come up with an efficient way to check for nearby vehicles. For this reason and other difficulties we foresaw, we decided this implementation would be unnecessarily time-consuming.  
+
+
+\subsubsection{Foreseen Difficulties}
+
+\textcolor{red}{Kim will add commentary on the changing lanes and traffic jam diagrams}
+
+\subsubsection{[insert name]}
+\textcolor{green}{\indent We planned to first build the road and get the cars to properly drive on them with a basic intersection. Our first working model was hard coded to depend on the size of the map and used traffic lights to regulate the flow of traffic. We decided to move on from this to use a grid based model in which we would add in a roundabout. The first model would need to be adapted whenever the map changed. Also a roundabout would have been difficult to implement in this way since the cars have x- and y-coordinates. Though a grid is discrete, we would attempt to make it as continuous as possible by making the squares of the grid as small as possible. We would first implement the roundabout with no traffic lights, attempt to break it by creating a heavy flow from one direction which in turn would block cars from entering at the next junction. We would then fix this problem by adding in traffic lights to regulate the flow of cars into the roundabout. We also planned to have multiple lanes leading into and out of the roundabout as well as a timer to start and let it run for a set amount of time.	
+\newline\indent	If we finished with the necessary requirements of our simulation we planned to add in the requirements we designated as optional. In our research we came across a special type of roundabout called a spiral roundabout that has been implemented in northern London. In this type of roundabout a car need only to enter into the designated lane of the roundabout and it need never change lanes to exit. See figure (INSERT REF TO SP ROUNDABOUT DRAWING). One problem we foresaw with a normal roundabout was giving the intelligent to cars for when to change lanes and not cause accidents. The spiral roundabout was our solution to this problem. We also hoped to be able to implement emergency vehicles which could bypass the traffic lights and change lanes to get around cars in its way. Our last optional requirement was dynamic traffic lights which would depend on the number of cars coming from each junction into the roundabout.
+\newline\indent	If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as 'extra.' This included different types of vehicles such as buses, places for cars to park, a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give the cars behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
+\newline\indent	We thought that creating categories like this would give us a step-ladder approach to first get the basics and then go for the slightly more advanced version before adding in extra elements.}
 
 \subsection{Requirement Specification and Verification}
 
@@ -307,7 +323,7 @@ However, we will design it once (at this stage) since we are not planning to add
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Layers.png}
+	%%\includegraphics[width=0.7\textwidth]{Layers.png}
 
 	\caption{Layered pattern of the simulation}
 		\label{Layers}
@@ -341,25 +357,25 @@ Tasks can now be assigned to different programmers who will be working on whiche
 
 \subsubsection{Model-View-Controller}
 The second architecture pattern we will make use of is the MVC module pattern which breaks the system into three components. 
-These are: the model which represents application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
+The three components are the model which represents the application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
 
-The MVC uses notifies relation to connect instances of model, view and controller, i.e. elements are notified of a state change. 
+\textcolor{red}{The MVC uses notifies relation to connect instances of model, view and controller}, i.e. elements are notified of a state change. 
 The restrictions of this pattern are that at least one instance of each element must be created, and the model component should not interact directly with the controller. 
-Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexity for simple programs \cite{bass2007software}. 
-In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine, therefore we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
+Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexities for simple programs \cite{bass2007software}. 
+In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine. Therefore, we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
 
    \begin{figure}[p]
    	\centering
    	   	\begin{subfigure}{\textwidth}
    	   		\centering
-   	   		\includegraphics[width=0.75\textwidth]{MVCExample.jpg}
+   	   		%%\includegraphics[width=0.75\textwidth]{MVCExample.jpg}
    	   		\caption{An example MVC structure from \cite{bass2007software}}
    	   	\end{subfigure}	
    	   	\par \bigskip
    	\begin{subfigure}{\textwidth}
    		\centering
-   		\includegraphics[width=0.75\textwidth]{mvc}
-   		\caption{The MVC design for out simulation}
+   		%%\includegraphics[width=0.75\textwidth]{mvc}
+   		\caption{The MVC design for our simulation}
    		\label{OurMvc}
    	\end{subfigure}
    	
@@ -369,7 +385,7 @@ In spite of that, our system is not that simple and a number of people will be w
    	\begin{figure}
    		\vspace{-35pt}
    		\centering
-   		\includegraphics[width=1.15\textwidth]{SequenceDiagram}
+   		%%\includegraphics[width=1.15\textwidth]{SequenceDiagram}
    		\caption{The sequence diagram of an example run of the simulation}
    		\label{SequenceDiagram}
    	\end{figure}
@@ -382,11 +398,11 @@ In spite of that, our system is not that simple and a number of people will be w
 %	\caption{An example MVC structure from \cite{bass2007software}}
 %\end{figure}
 
-   Our MVC design differs from the design pattern in one way: the controller does not need to change between views because there’s only going to be one view (the representation of the map). 
-   It’s allowed to deviate from design pattern structures slightly, to if it suits system’s needs and can enhance performance. 
+   Our MVC design differs from the design pattern in one way: the controller does not need to change between views because there is only going to be one view (the representation of the map). 
+   It is allowed to deviate from the design pattern structures slightly so that it can suit the system's needs and enhance performance. 
    
-   In every other way, our MVC is same as in pattern: the model is responsible for running the traffic simulation, i.e. updating traffic lights, positioning cars and sending notifications of the updates to the view. Upon receiving the notification, the view queries the model and receives its state in response. 
-   When the user wants to pause (or start, stop, restart) simulation, he or she clicks on certain buttons in the GUI, and the gesture is sent to the controller, which translates it into appropriate message for the model. 
+   In every other way, our MVC is the same as in the design pattern: the model is responsible for running the traffic simulation, i.e. updating traffic lights, positioning cars and sending notifications of the updates to the view. Upon receiving the notification, the view queries the model and receives its state in response. 
+   When the user wants to pause (start, stop, or restart) the simulation, he or she clicks on certain buttons in the GUI and the gesture is sent to the controller which translates it into an appropriate message for the model. 
    The model performs necessary transformations (e.g. going back to the initial state in case of a restart) and notifies the view about the update. 
    The overall diagram for the MVC and a sequence diagram for a typical run of a simulation are presented in diagrams \ref{OurMvc} and \ref{SequenceDiagram}. \\
    
@@ -398,19 +414,19 @@ In spite of that, our system is not that simple and a number of people will be w
 
 Once we defined our functional and non-functional requirements, it was clear that there were a large number of requirements. 
 Although we would like to include every attribute in our system, in order to clearly manage the requirements, we needed to know in what order we should complete them. 
-This would help in scheduling a timetable for each because we would be able to indentify which elements were dependant on the completion of another attribute. 
-For example, to build dynamic traffic lights, which would change colour based on the number of cars passing by it, we would first need traffic lights which vehicles would respond to and which could change colour based on a timer. 
+This would help in creating a schedule for each requirement to be completed so that we could identify which elements were dependent on the completion of another. 
+For example, when building dynamic traffic lights, which would change colour based on the number of cars passing by it, we would first need traffic lights that vehicles would respond to and that would change colour based on a timer. 
 Hence in our specification of the requirement we have given to each attribute a priority:\\
 
 \noindent
 \textcolor{MidnightBlue}{\bf Necessary}
-- a requirement is prioritised as necessary if it is a core component of simulation which deem to be necessary to achieve our original goals.\\
+- a requirement is prioritised as necessary if it is a core component of the simulation which is deemed to be necessary to achieve our original goals.\\
 
 \noindent
-\textcolor{MidnightBlue}{\bf Optional} - a requirement is categorised as optional if it's inclusion would be an important benefit to the overall system but without it we will still achieve our goals.\\
+\textcolor{MidnightBlue}{\bf Optional} - A requirement is categorised as optional if its inclusion would be an important benefit to the overall system but without it we will still achieve our goals.\\
 
 \noindent
-\textcolor{MidnightBlue}{\bf Extra} - a requirement is defined as extra for two reasons. 
+\textcolor{MidnightBlue}{\bf Extra} - A requirement is defined as extra for two reasons. 
 The first is that it is an unnecessary attribute but would build a more realistic simulation. 
 The second reason is that although we might feel the attribute is important it would be too time consuming to build in the given time frame.\\\\
 
@@ -448,8 +464,8 @@ The second reason is that although we might feel the attribute is important it w
 	\hline {\bf Name} & {\bf Priority} & {\bf Start} & {\bf End} & {\bf Dependency} \\ 
 	\hline 1. Road & Necessary &  &  &  \\ 
 	\hline 2. Cars& Necessary &  &  &  \\ 
-	\hline 3. Roundabouts & Necessary &  &  & 1 \\ 
-	\hline 4. Multiple Lane & Necessary &  &  & 1 \\ 
+	\hline 3. Roundabout & Necessary &  &  & 1 \\ 
+	\hline 4. Multiple Lanes & Necessary &  &  & 1 \\ 
 	\hline 5. Traffic Lights & Necessary &  &  &  \\ 
 	\hline 6.  Car Timer & Necessary &  &  & 2 \\ 
 	\hline 7. Spiral Roundabout & Optional &  &  & 3 \\ 
@@ -467,7 +483,7 @@ The second reason is that although we might feel the attribute is important it w
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{"G Chart"}
+	%%\includegraphics[width=\textwidth]{"G Chart"}
 \end{figure}
 
 %todo	\textcolor{blue}{Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effect that had on the design. You may also wish to mention the impact of team-working on your requirements and design.	}
@@ -475,34 +491,34 @@ The second reason is that although we might feel the attribute is important it w
 \section{Implementation}
 	%todo \textcolor{blue}{Describe the most significant implementation details, focusing on those where unusual or detailed solutions were required. Quote code fragments where necessary, but remember that the full source code will be included as an appendix. Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackle}
 	In this section, we describe how we approached the implementation stage of our project. 
-	We will start with waterfall approach to implement the initial “must” requirements from the requirements document using designs such as Architectural Patterns and UML diagrams from the previous sections, and make use of Agile approach if we have time to include optional non-crucial requirements, such as emergency vehicles and behaviour of drivers. 
+	We will start with the waterfall approach to implement the initial ``must'' requirements from the requirements document. This will be implemented with the help of designs such as Architectural Patterns and UML diagrams from the previous sections. We will make use of the Agile approach if we have time to include optional, non-crucial requirements such as emergency vehicles and behaviour of drivers. 
 	
 	
 	\subsection{Project Structure}
-	As defined in the design stage, our project will be build around a number of components: (a) data module which simulates appearance of cars, (b) model module which is responsible for controlling the state of a grid, e.g. moving cars and changing colours of traffic light, (c) UI to display to the user the current state of road network, and (d) statistics to assess traffic policies. 
-	For each of the following, we create a package in our project to separate responsibilities. 
-	The outline and short description of each package is presented below. Finally, because we work as a team of programmers, each person has picked a package to work on, so we can focus on one thing at a time and allow other people to develop their ideas fully, making sure we have a common vision of the final system which meets the requirements, and deliver the working, tested program on time. 
+	As defined in the design stage, our project was built around a number of components: (a) data module which simulates appearance of cars, (b) model module which is responsible for controlling the state of a grid, e.g. moving cars and changing colours of traffic lights, (c) UI to display to the user the current state of the road network, and (d) statistics to assess traffic policies. 
+	For each of the following, we created a package in our project to separate responsibilities. 
+	The outline and short description of each package is presented below. Finally, because we worked as a team of programmers, each person picked a package to work on, which allowed us to focus on one thing at a time and to develop ideas fully. This made sure we had a common vision of the final system which would meet the requirements and deliver the working, tested program on time. 
 	
 	\subsubsection{Core Package}
-	The core package comprises the essential classes required for the simulation system to work. They include: IGrid interface and Grid implementation, ICell and Cell, ICar and Car, ITrafficLight and TrafficLight, and others (more detailed description can be found in documentation section). 
-	We use interfaces a lot to make sure our programming is not bound to concrete implementations but rather to methods provided by an interface. 
-	This way a programmer working with IGrid in View package can safely cooperate with a programmer working with IGrid in Model package, without fearing that at some point of time a method might be refactored to have a different name or do something differently to what is expected from it. 
-	Furthermore, the Core package has the Program class which includes main method to run the application.\\
+	The core package comprises the essential classes required for the simulation system to work. They include IGrid interface and Grid implementation, ICell and Cell, ICar and Car, ITrafficLight and TrafficLight, and others (a more detailed description can be found in the documentation section). 
+	We use interfaces often to make sure our programming is not bound to concrete implementations but rather to methods provided by an interface. 
+	This way a programmer working with IGrid in the View package can safely cooperate with a programmer working with IGrid in the Model package without fearing that at some point in time a method might be refactored to have a different name or do something differently than what is expected from it. 
+	Furthermore, the Core package has the Program class which includes the main method to run the application.\\
 	
 	\noindent
 	Person responsible: Anton. 
 
 \subsubsection{Model Package}
-The Model package consists of the Model class which has a number of methods to control the state of the simulation, such as change maps as a response to user input, pause, start and save simulations. 
-Once a grid is loaded, the logic of changing positions of cars and colour of traffic lights is defined in the IGridController interface and implemented the GridController class.\\
+The Model package consists of the Model class, which has a number of methods to control the state of the simulation such as change maps as a response to user input and pause, start and save simulations. 
+Once a grid is loaded, the logic of changing the positions of cars and the colour of traffic lights is defined in the IGridController interface and implemented in the GridController class.\\
 
 \noindent
 Person responsible: Nur. 
 
 \subsubsection{View Package}
-The View package is maintained separately from model to ensure separation of responsibilities and to abstract the business logic from representation as specified in designs. 
-It uses JFrame to create a window and JPanel to place various components on the stage, such as graphical representation of the map (GridPane), JMenu, logo and statistics graphs. 
-The view depends on resources, such as images of cars, empty cells and roads and updates when there’s a change in the model.\\
+The View package is maintained separately from the Model package to ensure separation of responsibilities and to abstract the business logic from representation as specified in the designs. 
+It uses JFrame to create a window and JPanel to place various components on the stage, for example graphical representation of the map (GridPane), JMenu, logo and statistics graphs. 
+The view depends on resources such as images of cars, empty cells and roads and updates when there is a change in the model.\\
 
 \noindent
 Person responsible: Zaki.
@@ -511,8 +527,8 @@ Person responsible: Zaki.
 \textcolor{red}{TODO}
 
 \subsubsection{Events Package}
-Because we are using the layered design pattern, we needed to find a way to pass messages from lower layers to upper layers. In figure 1.2, the structure is as follows: Data Layer -> Model Layer -> UI Layer. 
-A common way to create messages and pass them between classes is by using an Observer pattern, and Events package contains classes and interfaces to do that: DataEvent is the object (body) of an event (e.g. a new car Event will contain coordinates of a new car in its data field), EventDispatchable is an interface which has to be implemented by a class which wants to dispatch messages and EventListener is an abstract class with methods which can be used to listen to messages.\\
+Because we are using the layered design pattern, we needed to find a way to pass messages from lower layers to higher layers. In figure 1.2, the structure is as follows: Data Layer --\textgreater Model Layer --\textgreater UI Layer. 
+A common way to create messages and pass them between classes is by using an Observer pattern, the Events package contains classes and interfaces to do that: DataEvent is the object (body) of an event (e.g. a new car Event will contain coordinates of a new car in its data field), EventDispatchable is an interface which has to be implemented by a class which wants to dispatch messages and EventListener is an abstract class with methods which can be used to listen to messages.\\
 
 \noindent
 Person responsible: Anton.
@@ -526,20 +542,20 @@ Person responsible: Nur, Zaki, Anton
 
 \subsection{Setting Up a Common IDE}
 
-Since we are using version control system git, we can maintain the main remote repository in which all the code will go. 
-When people make changes to the code, they commit it to the remote branch on github, and others fetch it to keep up-to-date version of the system in local repository. 
-We are also using Eclipse IDE, so we can make it update the files in the project folder when a commit with changes is pulled from github to the local computer.\\
+Since we are using the version control system, Git, we can maintain the main remote repository in which all the code will go. 
+When people make changes to the code, they commit it to the remote branch on GitHub, and others fetch it to keep an up-to-date version of the system in the local repository. 
+We are also using Eclipse IDE so we can make it update the files in the project folder when a commit with changes is pulled from GitHub to the local computer.\\
 
 \noindent
-To accomplish this task, one of us creates a new project in Eclipse in the git folder (Software/Final Model/Java\_SimulationEngine). 
-Then each programmer on the team creates a folder on his local computer which will serve as his/her local git:\\
+To accomplish this task, one of us creates a new project in Eclipse in the Git folder (Software/Final Model/Java\_SimulationEngine). 
+Then each programmer on the team creates a folder on his local computer which will serve as his/her local Git:\\
 
 mkdir sim\\
 
 cd sim\\
 
 \noindent
-Then a team member initialises the git in this folder and adds a remote origin from SimulationEngine branch:\\
+Then a team member initialises the Git in this folder and adds a remote origin from the SimulationEngine branch:\\
 
 \noindent
 git remote add -t SimulationEngine -f origin https://github.com/RochelleA/team\_we\_got\_this.git\\
@@ -564,37 +580,37 @@ Final Sprint - traffic signals, statistics and UI.
 %todo		\textcolor{blue}{unit testing evidence screenshots, description of typical bugs.}
 
 \section{Team Work}
-In a group project team work plays a big part in the successes and failures of a project. In this section we discuss what roles each of the group members had and how this helped or hindered the project. We also discuss how the group handled using github to work as a team and what we have learned through this experience. 
+In a group project, team work plays a big part in the successes and failures of the project. In this section we discuss what roles each of the group members had and how this helped or hindered the project. We also discuss how the group handled using GitHub to work as a team and what we have learned through this experience. 
 
 \subsection{Meetings}
- In the start we met twice a week to discuss the project. 
- This was a crucial part of the project and need every team member. 
+ In the beginning we met twice a week to discuss the project. 
+ This was a crucial part of the project and needed every team member. 
  It was here that we faced our first problems as a group. 
- This was a lack of communication and continued to be an issue for the group until the end of the project. 
+ There was a lack of communication which continued to be an issue for the group until the end of the project. 
  At first we struggled to find an instant message application that could be used by all members of the group. 
- For a few weeks we would use a combination of both Whatapp and text messages to communicate but this caused issue because sometimes we would only put the message on the group Whatapp. 
+ For a few weeks we used a combination of both WhatsApp and text messages to communicate, but this caused issues when we would only put the message on the group WhatsApp. 
  This meant that some members of the team would not get the messages and would miss the group meetings. 
- Consequently, we need a new form of communication and we choose slack as an alternative which every member of the group was happy to use. 
- However, again we struggles to be consistent with our means of communication and it began to hold the group back. 
- Finally a decision was made that all important messages which needed to be read by all members of the group would be sent my KCL email as this was an application that every member had and would heck frequently. 
- Although this worked well for us, it had it's drawbacks. 
- The main problem was that it wasn't an instantaneous as a instant message and so we would have to leave at least 24 hours for people to look at their emails. 
- Alongside this, Rochelle as project coordinator would send our calendar request for all meetings so each member of the team knew when every meeting was. 
- This worked a lot better for our group as no members of the group missed the team meetings as a result of not knowing they were taking place. 
+ Consequently, we needed a new form of communication and we chose Slack as an alternative which every member of the group was happy to use. 
+ However, again we struggled to be consistent with our means of communication and it began to hold the group back. 
+ Finally a decision was made that all important messages which needed to be read by all members of the group would be sent by KCL email as this was an application that every member had and would check frequently. 
+ Although this worked well for us, it had its drawbacks. 
+ The main problem was that it was not as instantaneous as an instant message and we would have to leave at least 24 hours for people to check their emails. 
+ Alongside this, Rochelle, as project coordinator would send out a calendar request for all meetings so each member of the team knew when every meeting was. 
+ This worked much better as no member of the group missed the team meetings as a result of not knowing they were taking place. 
  
- Another way we tried to insure we making the best use of our weekly meetings was to set an agenda at the start of every meeting. 
+ Another way we tried to ensure we were making the best use of our weekly meetings was to set an agenda at the start of every meeting. 
  This allowed every member of the group to bring to attention any issue they were having and also helped us to structure our meetings. 
- At the end of every meeting the project co-ordinator would create a report of the minutes of the meeting. This include the agenda, discussion point- what was discussed in the meeting and action points - what each member of the team needed to do before the next meeting. 
- These reports were upload to github so that every member could look at it if they had to clarify anything.
+ At the end of every meeting the project co-ordinator would create a report of the minutes of the meeting. This included the agenda, discussion point -- what was discussed in the meeting, and action points -- what each member of the team needed to do before the next meeting. 
+ These reports were uploaded to GitHub so that every member could look at it if they needed to clarify anything.
  
- Once we were clearly of the specification of system and we were ready to start designing we gave everyone the components of the project they were to work on. Then in the weekly meeting which were decreased to once a week we would feed back on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model wasn't suited to our project and we began to follow the agile scrum method. \textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implentation section.}
+ Once we were clear of the specifications of the system and we were ready to start designing, we gave everyone the components of the project they were to work on. Then, in the weekly meetings which were decreased to once a week, we would give feedback on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model was not suited to our project and we began to follow the agile scrum method instead. \textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implementation section.}
  
  
 	\subsection{Roles and Subgroups}
 	
-	As a team we began by discussing what we would all like to gain from the project, where we felt we would be best used and why. 
-	This allowed us to delegate roles and task based on what would be most advantageous to the team. 
-	Whilst these roles were formed at the start of the project, throughout its duration these were adapted to meet the needs at that time. 
+	As a team, we began by discussing what we would all like to gain from the project, where we felt we would be best used and why. 
+	This allowed us to delegate roles and tasks based on what would be most advantageous to the team. 
+	Whilst these roles were formed at the start of the project, throughout its duration these were adapted to meet the needs as they changed. 
 	As a group we tried hard to be as flexible as possible as we realised the demands of others.
 	The main roles of group members are as follows:
 	
