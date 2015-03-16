@@ -8,6 +8,9 @@ package
 		protected var _trafficLights:Array;
 		protected var _cars:Array;
 		
+		protected var gridWidth:int;
+		protected var gridHeight:int;
+		
 		public function TrafficGrid()
 		{
 			super();
@@ -28,6 +31,8 @@ package
 				}
 				cells[i] = row;
 			}
+			this.gridWidth = width;
+			this.gridHeight = height;
 		}
 		
 		public function get cells():Array

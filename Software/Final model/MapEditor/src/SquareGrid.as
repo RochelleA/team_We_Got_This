@@ -10,15 +10,17 @@ package
 		
 		private var currentX:int, currentY:int;
 		
-		private var lineCells:Array = new Array();
-
+		private var tempCells:Array = new Array();
+		
+		private var dragginRoundabout:Boolean = true;
+		
 		public function SquareGrid()
 		{
 			trace('create');
 			super();
 		}
 		
-		override public function init(width:int, height:int):void
+		public function initWithTooltip(width:int, height:int, showTooltip:Boolean = true):void
 		{
 			trace('init');
 						
@@ -27,16 +29,23 @@ package
 			for(var i:int=0; i<height; i++){
 				var row:Array = new Array(width);
 				for (var j:int=0; j<width; j++){
-					var cell:ISquareCell = new SquareCell(j, i, side);
+					var cell:SquareCell = new SquareCell(j, i, side);
 					cell.addEventListener(MouseEvent.CLICK, onCellClick);
 					this.addElement(cell);
 					cell.x = j * side;
 					cell.y = i * side;
 					
+					if(!showTooltip){
+						cell.toolTip = "";
+					}
+					
 					row[j] = cell;
 				}
 				cells[i] = row;
 			}
+			
+			this.gridWidth = width;
+			this.gridHeight = height;
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -62,24 +71,63 @@ package
 					cell.prevType = cell.type;
 				}
 			}
-			
+			log('123');
 			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			
+		}
+		
+		private function log(s:String):void{
+			(this.parentApplication as MapEditor).log.text = (this.parentApplication as MapEditor).log.text+"\n"+s;
 		}
 		
 		protected function onMouseMove(event:MouseEvent):void
 		{
 			if(event.target is ICell){
-				var c:ICell = event.target as ICell;
-				
-				if(currentX != c.xPos || currentY != c.yPos){
+				var c:ICell = event.target as ICell;			
+				if(currentX == c.xPos && currentY == c.yPos){
+					return;
+				}else{
 					currentX = c.xPos;
 					currentY = c.yPos;
+					log('change cell: '+currentX+' '+currentY);
+					
+				}
+				
+				if(dragginRoundabout){
+					putRoundabout(c.xPos,c.yPos);
+				}else{ //plot a line
 					trace('mouse move', c.xPos,c.yPos);
 					
 					plotLine2(downX, downY, c.xPos, c.yPos);
 				}
-				
+			}
+		}
+		private function putRoundabout(x:int, y:int):void{
+			eraseCells(tempCells);
+			tempCells.length = 0;
+			//log('1234');
+			var rb:SquareGrid = (this.parentApplication as MapEditor).rb;
+			//log(rb.cells.length.toString());
+			//return;
+			
+			if(x+10>this.gridWidth){
+				x = this.gridWidth - 10;
+			}
+			if(y+10>this.gridHeight){
+				y = this.gridHeight - 10;
+			}
+			log(x+','+this.gridWidth);
+			for each (var row:Array in rb.cells){
+				for each (var cell:SquareCell in row){
+					if(cell.type == Cell.ROAD){
+						var gridCell:SquareCell = this.cells[y+cell.yPos][x+cell.xPos] as SquareCell;
+						//gridCell.prevType = cell.type;
+						gridCell.type = Cell.ROAD;
+						tempCells.push(gridCell);
+					}
+					
+					//cell.prevType = cell.type;
+				}
 			}
 		}
 		
@@ -106,8 +154,8 @@ package
 		 */
 		private function plotLine2(x1:int, y1:int, x2:int, y2:int):void {
 			trace('plot line');
-			eraseCells(lineCells);
-			lineCells.length = 0;
+			eraseCells(tempCells);
+			tempCells.length = 0;
 			
 			// If slope is outside the range [-1,1], swap x and y
 			var xy_swap:Boolean = false;
@@ -142,9 +190,9 @@ package
 				
 			for (x = x1; x < x2; x++) {
 				if (xy_swap){
-					lineCells.push(this._cells[x][y]); //view.setPixel(y,x);
+					tempCells.push(this._cells[x][y]); //view.setPixel(y,x);
 				}else{
-					lineCells.push(this._cells[y][x]); //else view.setPixel(x,y);
+					tempCells.push(this._cells[y][x]); //else view.setPixel(x,y);
 				}				
 				
 				e += m_num;
@@ -164,13 +212,13 @@ package
 			}
 				
 			if (xy_swap){
-				lineCells.push(this._cells[x][y]); //view.setPixel(y,x)
+				tempCells.push(this._cells[x][y]); //view.setPixel(y,x)
 			}else{
-				lineCells.push(this._cells[y][x]); //else view.setPixel(x,y);
+				tempCells.push(this._cells[y][x]); //else view.setPixel(x,y);
 			}
 				//view.setPixel(y,x);
 			//else view.setPixel(x,y);
-			drawCells(lineCells);
+			drawCells(tempCells);
 				
 		}
 		
@@ -201,7 +249,7 @@ package
 		
 		public function mouseUp():void
 		{
-			lineCells.length = 0;
+			tempCells.length = 0;
 			this.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		}
 	}

@@ -9,37 +9,33 @@
 			import mx.events.FlexEvent;
 			private var currentInstrument:String = "";
 			
+			public var rb:SquareGrid = MapEditor.drawRb();
+			
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
-				trace('click update');
-				// TODO Auto-generated method stub
-				//scroller.removeElement(squareGrid);
+
 				squareGrid = new SquareGrid();
 				squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
-				//scroller.invalidateDisplayList();
-				//scroller.addElement(squareGrid);
-				//squareGrid = null;
+				
 				scroller.viewport = squareGrid;
-				//trace(123);
+				
 			}
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
-				squareGrid.init(25,25);
+				squareGrid.initWithTooltip(25,25);
 				gridWidth.text = "25";
 				gridHeight.text = "25";
-//				var i:int = 0;
-//				i = 7.6;
-//				trace ( i);
-//				i = 7.3;
-//				trace(i);
+				
+				rbGroup.addElement(MapEditor.drawRb());
+				//roundAbout.initWithTooltip(10,10, false);
+				//drawRb(roundAbout);
 				
 			}
 			
 			protected function onInstrumentSelect(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
 				switch(event.currentTarget.id){
 					case "eraserInstr":
 						trace('sel eraser');
@@ -52,8 +48,68 @@
 			
 			protected function globalMouseUp(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
 				squareGrid.mouseUp();
+			}
+			
+			public static function drawRb():SquareGrid{
+				var grid:SquareGrid = new SquareGrid();
+				grid.initWithTooltip(10,10, false);
+				
+				grid.cells[0][3].type = Cell.ROAD;
+				grid.cells[0][4].type = Cell.ROAD;
+				grid.cells[0][5].type = Cell.ROAD;
+				grid.cells[0][6].type = Cell.ROAD;
+				
+				grid.cells[2][1].type = Cell.ROAD;
+				grid.cells[2][2].type = Cell.ROAD;
+				grid.cells[2][3].type = Cell.ROAD;
+				grid.cells[2][6].type = Cell.ROAD;
+				grid.cells[2][7].type = Cell.ROAD;
+				grid.cells[2][8].type = Cell.ROAD;
+				
+				grid.cells[3][0].type = Cell.ROAD;
+				grid.cells[3][1].type = Cell.ROAD;
+				grid.cells[3][2].type = Cell.ROAD;
+				grid.cells[3][7].type = Cell.ROAD;
+				grid.cells[3][8].type = Cell.ROAD;
+				grid.cells[3][9].type = Cell.ROAD;
+				
+				grid.cells[4][0].type = Cell.ROAD;
+				grid.cells[4][1].type = Cell.ROAD;
+				grid.cells[4][8].type = Cell.ROAD;
+				grid.cells[4][9].type = Cell.ROAD;
+				
+				grid.cells[5][0].type = Cell.ROAD;
+				grid.cells[5][1].type = Cell.ROAD;
+				grid.cells[5][8].type = Cell.ROAD;
+				grid.cells[5][9].type = Cell.ROAD;
+				
+				grid.cells[6][0].type = Cell.ROAD;
+				grid.cells[6][1].type = Cell.ROAD;
+				grid.cells[6][2].type = Cell.ROAD;
+				grid.cells[6][7].type = Cell.ROAD;
+				grid.cells[6][8].type = Cell.ROAD;
+				grid.cells[6][9].type = Cell.ROAD;
+				
+				grid.cells[7][1].type = Cell.ROAD;
+				grid.cells[7][2].type = Cell.ROAD;
+				grid.cells[7][3].type = Cell.ROAD;
+				grid.cells[7][6].type = Cell.ROAD;
+				grid.cells[7][7].type = Cell.ROAD;
+				grid.cells[7][8].type = Cell.ROAD;
+				
+				grid.cells[9][3].type = Cell.ROAD;
+				grid.cells[9][4].type = Cell.ROAD;
+				grid.cells[9][5].type = Cell.ROAD;
+				grid.cells[9][6].type = Cell.ROAD;
+				
+				for (var i:int = 2; i<8; i++){
+					grid.cells[1][i].type = Cell.ROAD;
+					grid.cells[8][i].type = Cell.ROAD;
+				}
+				
+				return grid;
+				
 			}
 			
 		]]>
@@ -86,6 +142,14 @@
 				<s:Rect width="20" height="20" fill="{SquareCell.defaultFill}" stroke="{SquareCell.defaultStroke}"/>
 				<s:Label text="Eraser"/>
 			</s:HGroup>
+			
+			<s:VGroup id="rbGroup">
+				<s:Label text="Roundabout" fontSize="18"/>
+				<local:SquareGrid id="roundAbout" />
+			</s:VGroup>
+			
+			<s:TextArea id="log"/>
+			
 		</s:VGroup>
 		
 		

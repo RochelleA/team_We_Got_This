@@ -17,6 +17,7 @@ package
 		public static const roadFill:SolidColor = new SolidColor(0x3b5f91);
 		
 		public var prevType:int;
+		public var partOfRoundabout:Boolean = false;
 		
 		/**
 		 * An extension to a simple cell which can be displayed as a Rectangle
