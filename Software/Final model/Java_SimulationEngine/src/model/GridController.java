@@ -34,6 +34,7 @@ public class GridController implements ActionListener, IGridController {
 		
 		/** The main timer. */
 		Timer mainTimer = new Timer(150, this);
+		private boolean iterating;
 	
 	/**
 	 * A class which controls the state of the grid and sends events on changes.
@@ -235,14 +236,7 @@ public class GridController implements ActionListener, IGridController {
 	
 	private void moveCar(){
 		
-		/**
-		 * A list of the car which currently on the map, the list will store all cars while they are not on the 
-		 * exit points.
-		 * 
-		 * Iterator is going through all the cars in the list, using while loop
-		 * 
-		 *  So that each car is moved
-		 */
+		iterating = true;
 	Iterator<ICar> i = listCars.iterator();
 	while(i.hasNext())
 	{
@@ -489,6 +483,8 @@ public class GridController implements ActionListener, IGridController {
 			}					
 		}
 	
+	iterating = false;
+	
 	}
 	
 	
@@ -500,8 +496,10 @@ public class GridController implements ActionListener, IGridController {
 	 */
 	public void actionPerformed (ActionEvent e){
 		//System.out.println("timer event");
-		moveCar();
-		model.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STEP));
+		if(!iterating){
+			moveCar();
+			model.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STEP));
+		}
 		
 	}
 
