@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,6 +50,8 @@ public class TestGrid01 implements EventListener {
 	private JFrame frame;
 	private JLabel modelStatusLabel;
 	private JLabel dataStatusLabel;
+	private ImageIcon icon_green;
+	private ImageIcon icon_red;
 	
     public TestGrid01(Model model, DataSimulator ds) {
     	
@@ -59,7 +62,7 @@ public class TestGrid01 implements EventListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        frame.setSize(new Dimension(750,500));
+        frame.setSize(new Dimension(850,500));
         
         
         setUpMenu();
@@ -77,21 +80,22 @@ public class TestGrid01 implements EventListener {
         System.out.println("rect:"+tp.getWidth() + ":"+tp.getHeight());
         
         //System.out.println("width: "+tp.getSize().width);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        
-        scrollPane.setSize(200,200);
-        
+                
         frame.add(scrollPane);
         
         JPanel listPane = new JPanel();
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
         
-        modelStatusLabel = new JLabel("Model Status: x");
-        dataStatusLabel = new JLabel("Data Status: x");
+        icon_green = new ImageIcon("images/16_circle_green.png");
+        icon_red = new ImageIcon("images/16_circle_red.png");
+        
+        modelStatusLabel = new JLabel("Model Status: x",icon_green,JLabel.LEFT);
+        dataStatusLabel = new JLabel("Data Status: x",icon_green,JLabel.LEFT);
         
         listPane.add(modelStatusLabel);
         listPane.add(dataStatusLabel);
+        
+        listPane.setPreferredSize(new Dimension(225,100));
         
         frame.add(listPane, BorderLayout.LINE_END);
         //frame.add(tp);
@@ -178,23 +182,40 @@ public class TestGrid01 implements EventListener {
     }
     
     private void setModelStatus(String status){
+    	String s = "Controller status: ";
     	if(status.equals(Model.STATUS_PAUSED)){
     		controlActionStart.setEnabled(true);
     		controlActionPause.setEnabled(false);
+    		this.modelStatusLabel.setIcon(icon_red);
+    		s += "Paused";
     	}else if(status.equals(Model.STATUS_RUNNING)){
     		controlActionStart.setEnabled(false);
     		controlActionPause.setEnabled(true);
+    		this.modelStatusLabel.setIcon(icon_green);
+    		s += "Running";
     	}
+    	this.modelStatusLabel.setText(s);
     }
     
     private void setDataStatus(boolean status){
+    	String s = "Data status: ";
     	if(status){
     		dataActionStart.setEnabled(false);
     		dataActionPause.setEnabled(true);
+    		this.dataStatusLabel.setIcon(icon_green);
+    		s += "Running";
     	}else{
     		dataActionStart.setEnabled(true);
     		dataActionPause.setEnabled(false);
+    		this.dataStatusLabel.setIcon(icon_red);
+    		s += "Paused";
     	}
+    	
+    	if(model.getStatus().equals(Model.STATUS_PAUSED)){
+    		dataActionStart.setEnabled(false);
+    		dataActionPause.setEnabled(false);
+    	}
+    	this.dataStatusLabel.setText(s);
     }
     
 

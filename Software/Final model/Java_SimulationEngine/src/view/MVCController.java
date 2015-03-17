@@ -32,7 +32,9 @@ public class MVCController {
 	}
 
 	public void dataStart() {
-		ds.setRunning(true);
+		if(!model.getStatus().equals(Model.STATUS_PAUSED)){
+			ds.setRunning(true);
+		}
 		
 	}
 
