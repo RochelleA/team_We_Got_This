@@ -12,17 +12,20 @@ public class Program {
 	public static void main(String[] args) {
 		Model model = new Model();
 		
-	    TestGrid01 tg = new TestGrid01(model);
-	    
-	    model.addEventListener(tg);
-	    
 	    DataSimulator ds = new DataSimulator(model.getGrid());
 	    ds.setRunning(true);
+	    
+	    TestGrid01 tg = new TestGrid01(model, ds);
+	    
+	    model.addEventListener(tg);
 
 	    ds.addEventListener(model);
+	    ds.addEventListener(tg); //fire status change events
 	    
 	    MVCController c = new MVCController(model, ds);
 	    tg.setMVCController(c);
+	    
+	    
 	    	    
 	    
 		

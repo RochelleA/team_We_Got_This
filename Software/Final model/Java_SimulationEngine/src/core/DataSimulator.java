@@ -2,8 +2,10 @@ package core;
 
 import java.util.Random;
 
+import events.DataEvent;
 import events.EventDispatchable;
 import events.NewCarEvent;
+import events.SimpleEvent;
 
 /**
  * A class to simulate appearances of cars on the map
@@ -68,6 +70,10 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 	
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
+		this.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.DATA_STATUS_CHANGE));
+	}
+	public boolean getRunning(){
+		return this.isRunning;
 	}
 	public void setDelay(int delay) {
 		this.delay = delay;

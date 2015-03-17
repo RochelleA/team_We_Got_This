@@ -30,4 +30,13 @@ public class MVCController {
 			ds.setRunning(false);
 		}
 	}
+
+	public void dataStart() {
+		ds.setRunning(true);
+		
+	}
+
+	public void dataPause() {
+		ds.setRunning(false);
+	}
 }

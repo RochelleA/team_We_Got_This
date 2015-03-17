@@ -12,10 +12,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import core.DataSimulator;
 import model.Model;
-
 import events.EventListener;
 import events.SimpleEvent;
+import events.DataEvent;
 
 /**
  * 
@@ -33,12 +34,17 @@ public class TestGrid01 implements EventListener {
 	private GridPane tp;
 	private MVCController c;
 	private Model model;
+	private DataSimulator ds;
+	
 	private JMenuItem controlActionStart;
 	private JMenuItem controlActionPause;
+	private JMenuItem dataActionStart;
+	private JMenuItem dataActionPause;
 	
-    public TestGrid01(Model model) {
+    public TestGrid01(Model model, DataSimulator ds) {
     	
     	this.model = model;
+    	this.ds = ds;
     	
         JFrame frame = new JFrame("«We-Got-This» Traffic Simulation Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +61,7 @@ public class TestGrid01 implements EventListener {
         JMenu fileMenu = new JMenu("File");
         JMenu viewMenu = new JMenu("View");
         JMenu controlMenu = new JMenu("Control");
-        JMenu debugMenu = new JMenu("Debug");
+        JMenu dataMenu = new JMenu("Data");
         JMenu helpMenu = new JMenu("Help");
         
         //Managing Buttons 
@@ -96,7 +102,7 @@ public class TestGrid01 implements EventListener {
         menuBar.add(fileMenu);
         menuBar.add(viewMenu);
         menuBar.add(controlMenu);
-        menuBar.add(debugMenu);
+        menuBar.add(dataMenu);
         menuBar.add(helpMenu);
         
         // Create and add simple menu item to one of the drop down menu
@@ -108,16 +114,26 @@ public class TestGrid01 implements EventListener {
         JMenuItem pasteAction = new JMenuItem("Paste");
         JMenuItem sizeAction = new JMenuItem("Adjust Size");
         JMenuItem browserAction = new JMenuItem("Open in Browser");
+       
         controlActionStart = new JMenuItem("Start");
         controlActionPause = new JMenuItem("Pause");
-        JMenuItem codeAction = new JMenuItem("Code Debug");
+        
+        dataActionStart = new JMenuItem("Start");
+        dataActionPause = new JMenuItem("Pause");
+        
         JMenuItem helpAction = new JMenuItem("F1 for Help");
         
         controlActionStart.addActionListener(new MenuActionListener());
         controlActionPause.addActionListener(new MenuActionListener());
         
+        dataActionStart.addActionListener(new MenuActionListener());
+        dataActionPause.addActionListener(new MenuActionListener());
+        
         controlActionStart.setAccelerator(KeyStroke.getKeyStroke('s'));
         controlActionPause.setAccelerator(KeyStroke.getKeyStroke('p'));
+        
+        dataActionStart.setAccelerator(KeyStroke.getKeyStroke('S'));
+        dataActionPause.setAccelerator(KeyStroke.getKeyStroke('P'));
 
       
         // Adding the respective menu with their respective Menu Items
@@ -131,7 +147,8 @@ public class TestGrid01 implements EventListener {
         viewMenu.add(browserAction);
         controlMenu.add(controlActionStart);
         controlMenu.add(controlActionPause);
-        debugMenu.add(codeAction);
+        dataMenu.add(dataActionStart);
+        dataMenu.add(dataActionPause);
         helpMenu.add(helpAction);
         
         tp = new GridPane();
@@ -140,12 +157,12 @@ public class TestGrid01 implements EventListener {
    
         frame.setVisible(true);
         
-        getModelStatus();
+        setModelStatus(this.model.getStatus());
+        setDataStatus(this.ds.getRunning());
 
     }
     
-    private void getModelStatus(){
-    	String status = this.model.getStatus();
+    private void setModelStatus(String status){
     	if(status.equals(Model.STATUS_PAUSED)){
     		controlActionStart.setEnabled(true);
     		controlActionPause.setEnabled(false);
@@ -155,34 +172,54 @@ public class TestGrid01 implements EventListener {
     	}
     }
     
+    private void setDataStatus(boolean status){
+    	if(status){
+    		dataActionStart.setEnabled(false);
+    		dataActionPause.setEnabled(true);
+    	}else{
+    		dataActionStart.setEnabled(true);
+    		dataActionPause.setEnabled(false);
+    	}
+    }
+    
 
 	@Override
 	public void handleSimpleEvent(SimpleEvent e) {
-		if(e.getType().equals(SimpleEvent.MODEL_STEP)){
+		String type = e.getType();
+		switch (type){
+		case SimpleEvent.MODEL_STEP:
 			tp.repaint();
-		}else if(e.getType().equals(SimpleEvent.MODEL_STATUS_CHANGE)){
+			break;
+		case SimpleEvent.MODEL_STATUS_CHANGE:
 			System.out.println("model status change");
-			getModelStatus();
+			setModelStatus(model.getStatus());
+			break;
+		case SimpleEvent.DATA_STATUS_CHANGE:
+			System.out.println("data status change");
+			setDataStatus(ds.getRunning());
+			break;
 		}
-		
 	}
 	
 	
 	class MenuActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent action) {
-			switch (action.getActionCommand()){
-				case "Start":
-					System.out.println("Start");
-					c.start();
-					break;
-				case "Pause":
-					System.out.println("Pause");
-					c.pause();
-					break;
-				default:
-					//c.pause();
-					System.out.println("Unimplemented control");
+			JMenuItem source = (JMenuItem)action.getSource();
+			if (source == controlActionStart){
+				System.out.println("Control Start");
+				c.start();
+			}else if(source == controlActionPause){
+				System.out.println("Control Pause");
+				c.pause();
+			}else if(source == dataActionStart){
+				c.dataStart();
+				//System.out.println("Data Start");
+			}else if(source == dataActionPause){
+				c.dataPause();
+				//System.out.println("Data Pause");
+			}else{
+				System.out.println("Unimplemented control");
 			}
 			
 		}
