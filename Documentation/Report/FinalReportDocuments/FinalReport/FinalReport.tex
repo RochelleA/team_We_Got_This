@@ -23,7 +23,7 @@
 	\textcolor{red}{What are our goals? We need to be able to say in two sentence what the goal of building our simulation is? }
 	
 	\pagebreak
-	..\section*{Introduction}
+	\section*{Introduction}
 	%todo	\textcolor{blue}{Describe the context for the work and the problem you are addressing. Briefly summarise what you achieved in the project.}
 	
 	\section{Literature Review}
@@ -197,7 +197,7 @@
 	
 	\subsection{Requirement Analysis}
 	
-	Once we had elicited the requirements we wanted our system to have, we needed to decide how to implement them. As a group there were several viable ideas and so we chose to take some time to explore each option. Each team member had two weeks to explore their idea and at the end of this period they presented to the group. This presentation included whether their option was discrete or continuous, the benefits of their implementation choice and the problems they had with it or they thought would occur. In this section we discuss these initial designs and analyse how each choice of implementation effected our final simulation. 
+	Once we had elicited the requirements we wanted our system to have, we needed to decide how to implement them. As a group there were several viable ideas and so we chose to take some time to explore each option. Each team member had two weeks to explore their idea and at the end of this period they presented it to the group. This presentation included whether their option was discrete or continuous, the benefits of their implementation choice and the problems they had with it or they thought would occur. In this section we discuss these initial designs and analyse how each choice of implementation effected our final simulation. 
 %	\noindent
 %	\begin{enumerate}
 %		
@@ -229,6 +229,7 @@
 		\caption{Using parametric equations to represent a network}
 		\label{KimModel}
 	\end{subfigure}
+    \caption{}
 \end{figure}
 	
 	The first option we considered was using a matrix made of hexagons to represent the network. In this way each cell would have row and column coordinates in the matrix to track the position of cars. We hoped that using this method would allow us to check the adjoining cells for cars to prevent collisions. We thought the hexagon-shaped cells would allow us to better simulate a roundabout than square-shaped cells would. In the working simple model using this method, we had achieved working traffic lights. If a light was green for straight ahead only, the cars who wanted to go straight would go while the cars who wanted to turn left would stay stopped at the light. In this simple model we had not yet enabled cars to respond to other cars. Thus if a car was travelling at a faster speed than the car in front of it, it would pass through it. When attempting to implement this as a trial of the model, we decided that a hexagon matrix was an unnecessary complication but there was potential in the use of a matrix to represent the network. 
@@ -241,25 +242,36 @@
 	
 	\subsubsection{Possible Scenarios and Policies}
 	
-	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. All of the members of our team had agreed that we wanted one of the options for a user to be a multi-lane roundabout. However, there we foresaw several problems in implementing it. 
+	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. All members of our team had agreed that we wanted one of the  a multi-lane roundabout in our simulation. However, we foresaw several problems that could occur when implementing it. 
 	
-	\begin{figure}
-		\centering
-		\begin{subfigure}{5 cm}
-			\centering
-			\includegraphics[width=\textwidth]{CarCrash3}
-			\caption{Issue with exiting a multi-lane roundabout}
-			\label{CarCrash3}
-		\end{subfigure}
-		\begin{subfigure}{5 cm}
-			\centering
-			\includegraphics[width=\textwidth]{spiralRoundabout}
-			\caption{Possible two lane spiral roundabout}
-			\label{SpiralRoundabout}
-			\end{subfigure}
-	\end{figure}
-	
-	As our groups focus was on multi-lane roundabouts one of the the problem which exist in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In the figure \ref{CarCrash3}, we can see that  the grey car has approached the roundabout with its final destination being exit 4 and at about the same time a blue car has approached the roundabout with it final destination being exit 1. In this scenario a problem arise because the grey car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real-life the driver of the grey car would anticipate this problem and either adjust it's speed so the blue car could proceed before it or the blue car would give way to the grey car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decide to research problem in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which insures that the lane the person enters the roundabout in will lead them directly to the correct exit without them having to change lanes on the roundabout. We decided we would also like to model this solution as it is a new a unique solution to a problem which has existed for many years. 
+\begin{figure}
+    \centering
+    \begin{subfigure}[h]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{CarCrash3}
+        \caption{Issue with exiting a multi-lane roundabout}
+        \label{carCrash3}
+    \end{subfigure}%
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+      %(or a blank line to force the subfigure onto a new line)
+      %%LEAVE THIS WHOLE COMMENTED AREA HERE OR THE PICS GO FUNNY IDK WHY
+    \begin{subfigure}[h ]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{SteadyFlow}
+        \caption{Traffic jam caused by a steady flow of cars}
+        \label{steadyFlow}
+    \end{subfigure}
+    \caption{}
+\end{figure}
+
+\begin{figure}[h]
+     \centering \includegraphics[width=.6\textwidth]{spiralRoundabout}
+        \caption{Possible two lane spiral roundabout}
+        \label{spiralRoundabout}
+\end{figure}
+	 
+	As our groups focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In the figure \ref{CarCrash3}, we can see that  the grey car has approached the roundabout with its final destination being exit 4 and not long after the blue car has approached the roundabout with its final destination being exit 1. In this scenario a problem arises because the grey car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real-life the driver of the grey car would anticipate this problem and either adjust it's speed so the blue car could proceed before it or the blue car would give way to the grey car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decide to research problems in existing roundabouts in London \textcolor{red}{(Need reference for research?)}. During the research we came across a solution to a dangerous roundabout which was trialled in north London. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which insures that the lane the person enters the roundabout in will lead them directly to the correct exit without them having to change lanes on the roundabout. We decided we would also like to model this solution as it is a new a unique solution to a problem which has existed for many years. 
+    
+    
+As we intended to create a multi-lane roundabout with four junctions, we considered the situation where a large amount of cars is entering the roundabout from one junction. If we first implement the roundabout without traffic lights, we could try to ``break'' it by creating a steady flow of cars from one direction thereby blocking cars from entering the roundabout at the next junction. In figure \ref{steadyFlow}, a steady flow of cars is entering the roundabout from the fourth junction and are exiting at the second junction. This means that cars waiting to enter the roundabout from the first junction must keep waiting until the steady flow of cars lets up, thus creating a traffic jam. One solution to this problem would be to then implement traffic lights on this roundabout to regulate the number of cars entering at each junction. A timer-based traffic light would allow cars to enter the roundabout for a certain amount of time. A dynamic traffic light would depend on the number of cars coming into the roundabout from each direction. The traffic light would stay green longer for the junction which has the steady flow of cars, but it would also stop this flow to allow the cars at the other junctions to enter the roundabout. Either type of traffic light is a viable solution to this problem.
 
 
 	\subsection{Requirement Specification and Verification}
@@ -491,6 +503,20 @@
 	\end{table}
 	
 	\textcolor{red}{Add intro to section, explanation of table and Nur's Gantt diagram.}\\\\
+    
+    
+Table \ref{requirements} displays the requirements we wanted in our simulation broken down into the categories of Necessary, Optional, and Extra. 
+
+We decided that the best way to build our system would be to start with the basics and build up. First, we would implement cars on a road at a basic intersection with a timer-based traffic light. Then we would add multiple lanes with intelligence in the cars to know when they can change lanes, as we did in the first simulation mentioned in section \ref{ssb:initial designs}. From there we hoped to add the roundabout and the car timer. The car timer would measure the time it takes for each car to complete its journey from start to end. We can then use this information to calculate the statistics. 
+
+If all the necessary requirements were finished, we hoped to implement the spiral roundabout to solve the changing lanes in a multi-lane roundabout problem. If we could add emergency vehicles vehicles such as ambulances, police cars and fire engines, we wanted them to be able to bypass the traffic lights and also have the other cars be able to respond to them by getting out of the way. As part of the Optional requirements we also hoped to make our traffic lights dynamic so that they would depend on the number of cars coming into each junction.
+
+
+If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as Extra. This included different types of vehicles such as buses, places for cars to park, and a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give each car a behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
+\newline\indent	We thought that creating categories like this would give us a step-ladder approach to first complete the basics, fine tune what is already there to make it more advanced, and finally add even more elements to make it as realistic as possible.
+
+    
+    
 	\begin{table}[H]
 		\centering
 		\label{TimetableForTheProject}
