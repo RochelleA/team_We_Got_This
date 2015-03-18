@@ -56,10 +56,10 @@ public class Model extends EventDispatchable implements EventListener {
 	public IGrid parseMap(String filename){
 		//* - entry
 		//! - exit
-		String[] eastRoad = new String[] {"1","1*", "1!"};
-		String[] westRoad = new String[] {"2","2*", "2!"};
-		String[] northRoad = new String[] {"3","3*", "3!"};
-		String[] southRoad = new String[] {"4","4*", "4!"};
+		String[] eastRoad = new String[] {"1","1*", "1!", "16"};
+		String[] westRoad = new String[] {"2","2*", "2!", "26"};
+		String[] northRoad = new String[] {"3","3*", "3!", "38"};
+		String[] southRoad = new String[] {"4","4*", "4!", "48"};
 		
 		IGrid rgrid = null; //return grid 
 		try {	

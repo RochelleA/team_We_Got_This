@@ -12,24 +12,24 @@ import core.CellType;
 import core.Direction;
 import core.ICar;
 import core.IGrid;
+import core.ITrafficLight;
+import core.TrafficLight;
+import core.TrafficLightColour;
 import events.SimpleEvent;
 
 public class GridController implements ActionListener, IGridController {
-	
-		int mCase;
-		int ranEnt;
-	
+		
 		private Model model;
 		private String status;
+		private ITrafficLight trLight;
 		
 		IGrid grid;
 		
-		// = model.getGrid();
-		//creating the cars
-		//Thread carsFactory = new Thread(this);
+	
 		
 		//array of the cars
 		List<ICar> listCars = new ArrayList<ICar>();
+		
 		
 		
 		/** The main timer. */
@@ -42,6 +42,8 @@ public class GridController implements ActionListener, IGridController {
 	public GridController(IGrid grid, Model m){
 		this.grid = grid;
 		this.model = m;
+		trLight = new TrafficLight();
+		trLight.getColour();
 		this.setStatus(Model.STATUS_PAUSED);
 
 	}
@@ -65,53 +67,50 @@ public class GridController implements ActionListener, IGridController {
 				//if the circle is on the right hand side of the driver and there is a grass on the left side, then the car knows it should drive to North-East
 				if((Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()+4) 
 				|| Direction.CIRCLE==grid.getCellDirection(myCar.getX()+1,  myCar.getY()+1) && (CellType.EMPTY==grid.getCellType(myCar.getX()-3,  myCar.getY()-2))) && (Direction.SOUTH!=grid.getCellDirection(myCar.getX()+1,  myCar.getY()-5)) )
-				{		System.out.println("NORTH-EAST");
+				{		
 					driveNorthEast(myCar);
 				}
 			   
 				//if the circle on right side and the road to North and South on left side then go to East
 			   	else if((Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()+2) && (Direction.NORTH==grid.getCellDirection(myCar.getX(),  myCar.getY()-5))) 
 			   			|| (Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()+2) && (Direction.SOUTH==grid.getCellDirection(myCar.getX()+1,  myCar.getY()-5) || Direction.NORTH==grid.getCellDirection(myCar.getX()+2,  myCar.getY()-5))) )
-				{		System.out.println("EAST");
+				{	
 					driveEast(myCar);
 				}
 				
 				//if circle on right side and grass on left side then go to EAST-South
 			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+3) && (CellType.EMPTY==grid.getCellType(myCar.getX()+5,  myCar.getY())))
-				{		System.out.println("EAST -SOUTH  ");
+				{		
 					driveEastSouth(myCar);
 				}
 			
 				//if the circle is on the right side and road to WEST and EAST on the left side then go to SOUTH
 			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-3,  myCar.getY()-1) && (Direction.EAST==grid.getCellDirection(myCar.getX()+5,  myCar.getY())) || Direction.WEST==grid.getCellDirection(myCar.getX()+5,  myCar.getY()+1))
-				{	System.out.println(" SOUTH ");
+				{	
 					driveSouth(myCar);		
 				}
 				
 				//if the circle is on left-top and the grass is on right, then go to SOUTH-WEST
 				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()-3,  myCar.getY()) && (CellType.EMPTY==grid.getCellType(myCar.getX(),  myCar.getY()+5)))
-				{	System.out.println(" SOUTH - WEST ");
+				{	
 					driveSouthWest(myCar);
 				}
 				
 				//if the circle is on top and the roads to NORTH and SOUTH down then drive WEST
 				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()-3) && (Direction.NORTH==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+5)) || Direction.SOUTH==grid.getCellDirection(myCar.getX()-1,  myCar.getY()+5))
 				{
-					System.out.println(" WEST ");
 					driveWest(myCar);
 				}
 				
 				//if the circle is on right-top and grass is on left, then drive WEST-NORTH
 				else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX(),  myCar.getY()-3) && (CellType.EMPTY==grid.getCellType(myCar.getX()-1,  myCar.getY()+5)))
 				{
-					System.out.println(" WEST NORTH  ");
 					driveWestNorth(myCar);
 				}
 				
 				//if the circle is on the right side and road to WEST and EAST on the left side then go to NORTH
 			   	else if(Direction.CIRCLE==grid.getCellDirection(myCar.getX()+4,  myCar.getY()-2))// && (Direction.EAST==grid.getCellDirection(myCar.getX()-5,  myCar.getY())) || Direction.WEST==grid.getCellDirection(myCar.getX()-5,  myCar.getY()))
 				{
-			   		System.out.println("**************88");
 					driveNorth(myCar);		
 				}
 				
@@ -127,8 +126,6 @@ public class GridController implements ActionListener, IGridController {
 			grid.placeCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()+myCar.getSpeed());
 			//going to SOUTH
-			
-			System.out.println("SOUTH");
 		}	
 	}
 	
@@ -193,7 +190,6 @@ public class GridController implements ActionListener, IGridController {
 			grid.placeCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()-myCar.getSpeed());
 			//going to NORTH
-			System.out.println("NORTH");
 		}	
 	}
 	
@@ -261,22 +257,28 @@ public class GridController implements ActionListener, IGridController {
 			{
 
 				case EAST:
+					if(((grid.getCellDirection((myCar.getX()+1), myCar.getY())==Direction.JUNCTION) && trLight.getColour()==TrafficLightColour.GREEN)){
+					break;}
 					driveEast(myCar);
 					break;
 
 				case WEST:
-					driveWest(myCar);
+					if(!((grid.getCellDirection((myCar.getX()-1), myCar.getY())==Direction.JUNCTION) && trLight.getColour()==TrafficLightColour.GREEN)){
+					driveWest(myCar);}
 					break;
 
 				case NORTH:
-					driveNorth(myCar);
+					if(!((grid.getCellDirection(myCar.getX(), (myCar.getY()-1))==Direction.JUNCTION) && trLight.getColour()==TrafficLightColour.RED)){
+					driveNorth(myCar);}
 					break;
 
 				case SOUTH:
-					driveSouth(myCar);
+					if(!((grid.getCellDirection(myCar.getX(), (myCar.getY()+1))==Direction.JUNCTION) && trLight.getColour()==TrafficLightColour.RED)){
+					driveSouth(myCar);}
 					break;
 					
 				case JUNCTION:
+	
 							/** 
 							* comparing the entered Direction, to know where the car is coming from, to know where to keep direction
 							*
