@@ -9,7 +9,7 @@
 			import mx.events.FlexEvent;
 			private var currentInstrument:String = "";
 			
-			public var rb:SquareGrid = MapEditor.drawRb();
+			public var rb:ITrafficGrid = new Roundabout();
 			
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
@@ -24,11 +24,11 @@
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
-				squareGrid.initWithTooltip(25,25);
+				squareGrid.init(25,25);
 				gridWidth.text = "25";
 				gridHeight.text = "25";
 				
-				rbGroup.addElement(MapEditor.drawRb());
+				//rbGroup.addElement(new Roundabout);
 				//roundAbout.initWithTooltip(10,10, false);
 				//drawRb(roundAbout);
 				
@@ -43,6 +43,12 @@
 					case "roadInstr":
 						trace('sel road');
 						break;
+					case "selectInstr":
+						trace('sel sel');
+						break;
+					case "rbInstr":
+						trace('sel rb');
+						break;
 				}
 			}
 			
@@ -54,66 +60,7 @@
 				
 			}
 			
-			public static function drawRb():SquareGrid{
-				var grid:SquareGrid = new SquareGrid();
-				grid.initWithTooltip(10,10, false);
-				
-				grid.cells[0][3].type = Cell.ROAD;
-				grid.cells[0][4].type = Cell.ROAD;
-				grid.cells[0][5].type = Cell.ROAD;
-				grid.cells[0][6].type = Cell.ROAD;
-				
-				grid.cells[2][1].type = Cell.ROAD;
-				grid.cells[2][2].type = Cell.ROAD;
-				grid.cells[2][3].type = Cell.ROAD;
-				grid.cells[2][6].type = Cell.ROAD;
-				grid.cells[2][7].type = Cell.ROAD;
-				grid.cells[2][8].type = Cell.ROAD;
-				
-				grid.cells[3][0].type = Cell.ROAD;
-				grid.cells[3][1].type = Cell.ROAD;
-				grid.cells[3][2].type = Cell.ROAD;
-				grid.cells[3][7].type = Cell.ROAD;
-				grid.cells[3][8].type = Cell.ROAD;
-				grid.cells[3][9].type = Cell.ROAD;
-				
-				grid.cells[4][0].type = Cell.ROAD;
-				grid.cells[4][1].type = Cell.ROAD;
-				grid.cells[4][8].type = Cell.ROAD;
-				grid.cells[4][9].type = Cell.ROAD;
-				
-				grid.cells[5][0].type = Cell.ROAD;
-				grid.cells[5][1].type = Cell.ROAD;
-				grid.cells[5][8].type = Cell.ROAD;
-				grid.cells[5][9].type = Cell.ROAD;
-				
-				grid.cells[6][0].type = Cell.ROAD;
-				grid.cells[6][1].type = Cell.ROAD;
-				grid.cells[6][2].type = Cell.ROAD;
-				grid.cells[6][7].type = Cell.ROAD;
-				grid.cells[6][8].type = Cell.ROAD;
-				grid.cells[6][9].type = Cell.ROAD;
-				
-				grid.cells[7][1].type = Cell.ROAD;
-				grid.cells[7][2].type = Cell.ROAD;
-				grid.cells[7][3].type = Cell.ROAD;
-				grid.cells[7][6].type = Cell.ROAD;
-				grid.cells[7][7].type = Cell.ROAD;
-				grid.cells[7][8].type = Cell.ROAD;
-				
-				grid.cells[9][3].type = Cell.ROAD;
-				grid.cells[9][4].type = Cell.ROAD;
-				grid.cells[9][5].type = Cell.ROAD;
-				grid.cells[9][6].type = Cell.ROAD;
-				
-				for (var i:int = 2; i<8; i++){
-					grid.cells[1][i].type = Cell.ROAD;
-					grid.cells[8][i].type = Cell.ROAD;
-				}
-				
-				return grid;
-				
-			}
+			
 			
 		]]>
 	</fx:Script>
@@ -137,14 +84,23 @@
 			<s:Button label="Save as..."/>
 			
 			<s:Label text="Instruments" fontSize="18"/>
+			<s:HGroup id="selectInstr" useHandCursor="true" click="onInstrumentSelect(event)">
+				<s:Rect width="20" height="20" fill="{SquareCell.ROAD_FILL}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Label text="Select"/>
+			</s:HGroup>
 			<s:HGroup id="roadInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" fill="{SquareCell.roadFill}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Rect width="20" height="20" fill="{SquareCell.ROAD_FILL}" stroke="{SquareCell.defaultStroke}"/>
 				<s:Label text="Road"/>
 			</s:HGroup>
 			<s:HGroup id="eraserInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" fill="{SquareCell.defaultFill}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Rect width="20" height="20" fill="{SquareCell.EMPTY_FILL}" stroke="{SquareCell.defaultStroke}"/>
 				<s:Label text="Eraser"/>
 			</s:HGroup>
+			<s:HGroup id="rbInstr" useHandCursor="true" click="onInstrumentSelect(event)">
+				<s:Rect width="20" height="20" fill="{SquareCell.EMPTY_FILL}" stroke="{SquareCell.defaultStroke}"/>
+				<s:Label text="Roundabout"/>
+			</s:HGroup>
+			
 			
 			<s:VGroup id="rbGroup" visible="false">
 				<s:Label text="Roundabout" fontSize="18"/>

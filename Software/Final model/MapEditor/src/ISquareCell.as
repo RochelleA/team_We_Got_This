@@ -2,12 +2,10 @@ package
 {
 	import mx.core.IVisualElement;
 	
-	import spark.primitives.Rect;
-
 	public interface ISquareCell extends ICell, IVisualElement
 	{
 		function ISquareCell(x:int, y:int, side:int):void;
-		function get rect():Rect;
+		//function get rect():Rect;
 		//function get visualElement():SpriteVisualElement;
 	}
 }

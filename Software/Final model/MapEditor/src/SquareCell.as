@@ -7,14 +7,14 @@ package
 	
 	import spark.primitives.Rect;
 
-	public class SquareCell extends Cell implements ISquareCell
+	public class SquareCell extends VisualCell implements ISquareCell
 	{
 		
 		private var _rect:Rect;
 		
 		public static const defaultStroke:SolidColorStroke = new SolidColorStroke(0xaaaaaa);
-		public static const defaultFill:SolidColor = new SolidColor(0xffffff,1);
-		public static const roadFill:SolidColor = new SolidColor(0x3b5f91);
+		public static const EMPTY_FILL:SolidColor = new SolidColor(0xffffff);
+		public static const ROAD_FILL:SolidColor = new SolidColor(0x3b5f91);
 		
 		public var prevType:int;
 		public var partOfRoundabout:Boolean = false;
@@ -31,31 +31,31 @@ package
 			_rect.width = side;
 			_rect.height = side;
 			
-			rect.fill = SquareCell.defaultFill;
-			rect.stroke = SquareCell.defaultStroke;
+			_rect.fill = SquareCell.EMPTY_FILL;
+			_rect.stroke = SquareCell.defaultStroke;
 			
 			this.addElement(_rect);
-			this.toolTip = "x: "+x+", y: "+y;
+			//this.toolTip = "x: "+x+", y: "+y;
 			
-			super.type = Cell.EMPTY;
+			super.type = CellType.EMPTY;
 
 		}
 		
 		override public function set type(value:int):void{
-			if(value == Cell.ROAD){
-				this._rect.fill = SquareCell.roadFill;
+			if(value == CellType.ROAD){
+				this._rect.fill = SquareCell.ROAD_FILL;
 				//trace('set road');
-			}else if(value == Cell.EMPTY){
+			}else if(value == CellType.EMPTY){
 				//trace('set empty');
-				this._rect.fill = SquareCell.defaultFill;
+				this._rect.fill = SquareCell.EMPTY_FILL;
 			}
 			super.type = value;
 		}
-		
-		public function get rect():Rect
-		{
-			return _rect;
-		}
+//		
+//		public function get rect():Rect
+//		{
+//			return _rect;
+//		}
 
 
 	}

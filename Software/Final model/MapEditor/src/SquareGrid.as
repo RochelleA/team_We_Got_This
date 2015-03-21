@@ -1,8 +1,12 @@
 package
 {
 	import flash.events.MouseEvent;
-			
-	public class SquareGrid extends TrafficGrid
+		
+	/**
+	 * An extension to grid with ability to draw lines, roundabouts and listen for mouse
+	 * event. 
+	 */
+	public class SquareGrid extends SimpleSquareGrid
 	{
 		private var _side:int = 20;
 		private var downX:int;
@@ -22,32 +26,16 @@ package
 			super();
 		}
 		
-		public function initWithTooltip(width:int, height:int, showTooltip:Boolean = true):void
+		override public function init(width:int, height:int):void
 		{
-			trace('init');
-						
-			this._cells = new Array(height);
-			
-			for(var i:int=0; i<height; i++){
-				var row:Array = new Array(width);
-				for (var j:int=0; j<width; j++){
-					var cell:SquareCell = new SquareCell(j, i, side);
-					cell.addEventListener(MouseEvent.CLICK, onCellClick);
-					this.addElement(cell);
-					cell.x = j * side;
-					cell.y = i * side;
-					
-					if(!showTooltip){
-						cell.toolTip = "";
-					}
-					
-					row[j] = cell;
-				}
-				cells[i] = row;
+			trace('grid init');
+			super.init(width, height);
+			//super.init(width, height);
+			for each(var c:VisualCell in this.allCells){	
+				//trace(c);
+				c.addEventListener(MouseEvent.CLICK, onCellClick);
+
 			}
-			
-			this.gridWidth = width;
-			this.gridHeight = height;
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -106,10 +94,10 @@ package
 				}
 			}
 		}
+		
 		private function putRoundabout(x:int, y:int):void{
-			
 
-			var rb:SquareGrid = (this.parentApplication as MapEditor).rb;
+			var rb:ITrafficGrid = (this.parentApplication as MapEditor).rb;
 			
 			if(x+10>this.gridWidth){
 				x = this.gridWidth - 10;
@@ -126,22 +114,20 @@ package
 			}
 			
 			log(' Move roundabout to '+rbX+':'+rbY);
-			eraseCells(tempCells);
+			restoreCells(tempCells);
 			tempCells.length = 0;
 			
-			for each (var row:Array in rb.cells){
-				for each (var cell:SquareCell in row){
-					if(cell.type == Cell.ROAD){
-						var gridCell:SquareCell = this.cells[rbY+cell.yPos][rbX+cell.xPos] as SquareCell;
-						//gridCell.prevType = cell.type;
-						gridCell.type = Cell.ROAD;
-						tempCells.push(gridCell);
-					}
+			for each (var cell:ICell in rb.allCells){
+				if(cell.type == VisualCell.ROAD){
+					var gridCell:SquareCell = this.cells[rbY+cell.yPos][rbX+cell.xPos] as SquareCell;
+					//gridCell.prevType = cell.type;
+					gridCell.type = VisualCell.ROAD;
+					tempCells.push(gridCell);
 				}
 			}
 		}
 		
-		private function eraseCells(cells:Array):void{
+		private function restoreCells(cells:Array):void{
 			for (var i:int = 0; i<cells.length; i++){
 				if(!cells[i]){
 					continue;
@@ -155,16 +141,17 @@ package
 				if(!cells[i]){
 					continue;
 				}
-				(cells[i] as SquareCell).type = Cell.ROAD;
+				(cells[i] as SquareCell).type = VisualCell.ROAD;
 			}
 		}
+		
 		/**
 		 * @author
 		 * @source http://groups.csail.mit.edu/graphics/classes/6.837/F99/grading/asst2/turnin/rdror/Bresenham.java
 		 */
 		private function plotLine2(x1:int, y1:int, x2:int, y2:int):void {
 			trace('plot line');
-			eraseCells(tempCells);
+			restoreCells(tempCells);
 			tempCells.length = 0;
 			
 			// If slope is outside the range [-1,1], swap x and y
@@ -238,27 +225,15 @@ package
 		protected function onCellClick(e:MouseEvent):void{
 			var cell:ISquareCell = e.target as ISquareCell;
 			trace (cell.xPos, cell.yPos, cell.type);
-			if(cell.type == Cell.EMPTY){
-				cell.type = Cell.ROAD;
+			if(cell.type == VisualCell.EMPTY){
+				cell.type = VisualCell.ROAD;
 				log('Add road at '+downX+':'+downY);
 			}else{
-				cell.type = Cell.EMPTY;
+				cell.type = VisualCell.EMPTY;
 				log('Remove road at '+downX+':'+downY);
 			}
 			
 		}
-
-		public function get side():int
-		{
-			return _side;
-		}
-
-		public function set side(value:int):void
-		{
-			_side = value;
-			trace('set side');
-		}
-
 		
 		public function mouseUp():void
 		{
