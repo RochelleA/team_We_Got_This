@@ -1,7 +1,7 @@
 
 \documentclass{article}
 \usepackage[usenames,dvipsnames]{xcolor}
-\usepackage{graphicx, float,amsmath, caption, subcaption}
+\usepackage{graphicx, float,amsmath, caption, subcaption,float}
 \definecolor{DarkGray}{gray}{0.25}
 \pagestyle{plain}
 %opening
@@ -244,6 +244,7 @@
 	
 	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. All members of our team had agreed that we wanted one of the  a multi-lane roundabout in our simulation. However, we foresaw several problems that could occur when implementing it. 
 	
+<<<<<<< Updated upstream
 \begin{figure}
     \centering
     \begin{subfigure}[h]{0.5\textwidth}
@@ -272,8 +273,37 @@
     
     
 As we intended to create a multi-lane roundabout with four junctions, we considered the situation where a large amount of cars is entering the roundabout from one junction. If we first implement the roundabout without traffic lights, we could try to ``break'' it by creating a steady flow of cars from one direction thereby blocking cars from entering the roundabout at the next junction. In figure \ref{steadyFlow}, a steady flow of cars is entering the roundabout from the fourth junction and are exiting at the second junction. This means that cars waiting to enter the roundabout from the first junction must keep waiting until the steady flow of cars lets up, thus creating a traffic jam. One solution to this problem would be to then implement traffic lights on this roundabout to regulate the number of cars entering at each junction. A timer-based traffic light would allow cars to enter the roundabout for a certain amount of time. A dynamic traffic light would depend on the number of cars coming into the roundabout from each direction. The traffic light would stay green longer for the junction which has the steady flow of cars, but it would also stop this flow to allow the cars at the other junctions to enter the roundabout. Either type of traffic light is a viable solution to this problem.
+=======
+	\begin{figure}
+		\centering
+		\begin{subfigure}{5 cm}
+			\centering
+			\includegraphics[width=\textwidth]{CarCrash3}
+			\caption{Issue with exiting a multi-lane roundabout}
+			\label{CarCrash3}
+		\end{subfigure}
+		\begin{subfigure}{5 cm}
+			\centering
+			\includegraphics[width=\textwidth]{spiralRoundabout}
+			\caption{Possible two lane spiral roundabout}
+			\label{SpiralRoundabout}
+			\end{subfigure}
+	\end{figure}
+	
+	As our groups focus was on multi-lane roundabouts one of the the problem which exist in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In the figure \ref{CarCrash3}, we can see that  the grey car has approached the roundabout with its final destination being exit 4 and at about the same time a blue car has approached the roundabout with it final destination being exit 1. In this scenario a problem arise because the grey car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real-life the driver of the grey car would anticipate this problem and either adjust it's speed so the blue car could proceed before it or the blue car would give way to the grey car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decide to research problem in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which insures that the lane the person enters the roundabout in will lead them directly to the correct exit without them having to change lanes on the roundabout. We decided we would also like to model this solution as it is a new a unique solution to a problem which has existed for many years. 
+	
+	It was at this point the group decided it would be useful to have a case network we could test new policies on. This would allow us to insure the simulation we built could be used by clients to represent their own network and to gather relevant statistics. We decided that our test network would focus on a four junction multi-lane roundabout. In order to gather statistics and test new policies first we needed a scenario. In our scenario there would be a heavy flow of cars coming from junction one, this would stop other cars entering the roundabout and cause a traffic jam (see figure \ref{SteadyFlow}). The solution we are proposing is that we could add traffic lights to this roundabout to help regulate the glow of traffic. If we could build dynamic traffic lights we could instead have the duration of the traffic light be dependant on the number of cars passing by the light. What we hope is that after we have built our simulation we will be able to test this scenario and use the simulation to find the most efficient light duration which would maximise the network flow through the roundabout. considering the end goal of our simulation allowed us to be clearer on what is necessary to build a quality traffic simulation.  
+	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{SteadyFlow}
+		\caption{Diagram showing how a steady flow of cars from one junction could cause a traffic jam on a network. }
+		\label{SteadyFlow}
+	\end{figure} 
+>>>>>>> Stashed changes
 
-
+\textcolor{red}{FloatBarrier}
 	\subsection{Requirement Specification and Verification}
 	
 	Given the models analysed, we can define new requirements which are more precise than elicited ones. We will begin by categorising them into functional and non-functional requirements. In table \ref{requirements}, we specify the priority of each of the requirements and it is this priority list which will dictate the timetable of the project outlined in section \ref{Requirement Management}.\\
@@ -282,7 +312,7 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 	\textbf{Reporting:} The system should report on the results of a run simulation according to a number of factors: how conjectured the roads were (percentages of road cells occupied by cars to empty road cells) and how long it took cars to get from A to B (in respect to the minimum time it would have taken them without any other cars).\\
 	
 	\noindent
-	\textbf{Performance / response time:} The simulation should run without lag on a regular University computer (e.g. in MSc lab 534), i.e. 64-bit Inter Core2 Quad CPU @ 2.5GHz for a medium-size simulation. 
+	\textbf{Performance / response time:} The simulation should run without lag on a regular University computer (e.g. in MSc lab 534), Ie. 64-bit Inter Core2 Quad CPU @ 2.5GHz for a medium-size simulation. 
 	However, when the complexity increases to more than 500x500 cells and 250 cars, the system is allowed to show a reasonable decrease in performance. 
 	With 1000x1000 cells and 500 cars, system is not guaranteed to continue responding to user input or show feedback on its state.\\
 	
@@ -369,7 +399,7 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 	
 	\begin{figure}[H]
 		\centering
-		%%\includegraphics[width=0.7\textwidth]{Layers.png}
+		\includegraphics[width=0.7\textwidth]{Layers.png}
 		
 		\caption{Layered pattern of the simulation}
 		\label{Layers}
@@ -414,13 +444,13 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 		\centering
 		\begin{subfigure}{\textwidth}
 			\centering
-			%%\includegraphics[width=0.75\textwidth]{MVCExample.jpg}
+			\includegraphics[width=0.75\textwidth]{MVCExample.jpg}
 			\caption{An example MVC structure from \cite{bass2007software}}
 		\end{subfigure}	
 		\par \bigskip
 		\begin{subfigure}{\textwidth}
 			\centering
-			%%\includegraphics[width=0.75\textwidth]{mvc}
+			\includegraphics[width=0.75\textwidth]{mvc}
 			\caption{The MVC design for our simulation}
 			\label{OurMvc}
 		\end{subfigure}
@@ -431,7 +461,7 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 	\begin{figure}
 		\vspace{-35pt}
 		\centering
-		%%\includegraphics[width=1.15\textwidth]{SequenceDiagram}
+		\includegraphics[width=1.15\textwidth]{SequenceDiagram}
 		\caption{The sequence diagram of an example run of the simulation}
 		\label{SequenceDiagram}
 	\end{figure}
@@ -466,7 +496,7 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 	
 	\noindent
 	\textcolor{MidnightBlue}{\bf Necessary}
-	- a requirement is prioritised as necessary if it is a core component of the simulation which is deemed to be necessary to achieve our original goals.\\
+	- A requirement is prioritised as necessary if it is a core component of the simulation which is deemed to be necessary to achieve our original goals.\\
 	
 	\noindent
 	\textcolor{MidnightBlue}{\bf Optional} - A requirement is categorised as optional if its inclusion would be an important benefit to the overall system but without it we will still achieve our goals.\\
@@ -543,7 +573,7 @@ If both the necessary and optional requirements were implemented and there was s
 	
 	\begin{figure}
 		\centering
-		%%\includegraphics[width=\textwidth]{"G Chart"}
+		\includegraphics[width=\textwidth]{"G Chart"}
 	\end{figure}
 	
 	%todo	\textcolor{blue}{Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effect that had on the design. You may also wish to mention the impact of team-working on your requirements and design.	}
