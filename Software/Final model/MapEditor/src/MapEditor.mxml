@@ -99,6 +99,24 @@
 				return _currentInstrument;
 			}
 			
+			protected function onCellSelected(event:Event):void
+			{
+				//trace('cell selected'+);
+				setSelectedCell(squareGrid.selectedCell);
+			}
+			private function setSelectedCell(c:ICell):void{
+				if(!c){
+					click_cell_lbl.visible = click_cell_lbl.includeInLayout = true;
+					cell_info.visible = cell_info.includeInLayout = false;
+					cell_coord.text = "";
+				}else{
+					click_cell_lbl.visible = click_cell_lbl.includeInLayout = false;
+					cell_info.visible = cell_info.includeInLayout = true;
+					cell_coord.text = c.toString();
+
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -107,7 +125,7 @@
 	</fx:Declarations>
 	<s:HGroup paddingTop="10" paddingLeft="10">
 		<s:Scroller id="scroller" width="501" height="551">
-			<local:SquareGrid id="squareGrid"/>
+			<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>
 		</s:Scroller>
 
 		<s:VGroup>
@@ -152,9 +170,15 @@
 				<local:SquareGrid id="roundAbout"/>
 			</s:VGroup>-->
 			
-			<s:VGroup>
-				<s:Label text="Log" fontSize="18"/>
-				<s:TextArea id="log"/>
+			<s:VGroup paddingTop="50">
+				<s:Label text="Cell properties" fontSize="18"/>
+				<s:Label visible="true" id="click_cell_lbl" text="Click on a cell to view info" fontStyle="italic"/>
+				<s:VGroup id="cell_info">
+					<s:HGroup>
+						<s:Label text="Cell at"/>
+						<s:Label id="cell_coord"/>
+					</s:HGroup>
+				</s:VGroup>
 			</s:VGroup>
 			
 			

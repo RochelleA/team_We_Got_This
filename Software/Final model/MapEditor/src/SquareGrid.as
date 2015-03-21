@@ -1,11 +1,16 @@
 package
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import spark.components.Group;
 		
 	/**
 	 * An extension to grid with ability to draw lines, roundabouts and listen for mouse
 	 * event. 
 	 */
+	[Event(name="cellSelected", type="flash.events.Event")]
+	
 	public class SquareGrid extends SimpleSquareGrid
 	{
 		private var downX:int, downY:int; 
@@ -30,7 +35,7 @@ package
 			dummySelectCell.visible = false;
 			dummySelectCell.x = -100;
 			dummySelectCell.y = -100;
-			this.useHandCursor = true;
+			(dummySelectCell as Group).mouseEnabled = false;
 			
 		}
 		
@@ -75,10 +80,10 @@ package
 			mouseDown = true;
 		}
 		
-		private function log(s:String):void{
-			(this.parentApplication as MapEditor).log.text = (this.parentApplication as MapEditor).log.text+s+"\n";
-			(this.parentApplication as MapEditor).log.scrollToRange(int.MAX_VALUE, int.MAX_VALUE); 
-		}
+		//private function log(s:String):void{
+			//(this.parentApplication as MapEditor).log.text = (this.parentApplication as MapEditor).log.text+s+"\n";
+			//(this.parentApplication as MapEditor).log.scrollToRange(int.MAX_VALUE, int.MAX_VALUE); 
+		//}
 		
 		protected function onMouseMove(event:MouseEvent):void
 		{
@@ -110,20 +115,6 @@ package
 				case MapEditor.SELECT:					
 					cellToSelect = c;
 			}
-		}
-		private function set selectedCell(value:IVisualCell):void{
-			if(value == _selectedCell){
-				_selectedCell = null;
-				dummySelectCell.visible = false;
-				dummySelectCell.x = -100;
-				dummySelectCell.y = -100;
-			}else{
-				dummySelectCell.x = value.x;
-				dummySelectCell.y = value.y;
-				dummySelectCell.visible = true;
-				this._selectedCell = value;
-			}
-			
 		}
 		
 		private function putRoundabout(x:int, y:int):void{
@@ -262,7 +253,7 @@ package
 		public function mouseUp():void
 		{
 			if(instrument == MapEditor.SELECT){
-				this.selectedCell = cellToSelect;
+				this.setSelectedCell(cellToSelect);
 				return;
 			}
 			for each (var c:IVisualCell in tempCells){
@@ -271,5 +262,27 @@ package
 			
 			tempCells.length = 0;
 		}
+
+		public function get selectedCell():IVisualCell
+		{
+			return _selectedCell;
+		}
+		
+		private function setSelectedCell(value:IVisualCell):void{
+			if(value == _selectedCell){
+				_selectedCell = null;
+				dummySelectCell.visible = false;
+				dummySelectCell.x = -100;
+				dummySelectCell.y = -100;
+			}else{
+				dummySelectCell.x = value.x;
+				dummySelectCell.y = value.y;
+				dummySelectCell.visible = true;
+				this._selectedCell = value;
+			}
+			this.dispatchEvent(new Event("cellSelected"));
+			
+		}
+
 	}
 }
