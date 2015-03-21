@@ -4,6 +4,7 @@ package
 	
 	public class VisualCell extends Graphic implements IVisualCell
 	{
+		
 		private var _direction:int;
 		private var _isExit:Boolean;
 		private var _trafficLight:ITrafficLight;
@@ -15,6 +16,8 @@ package
 		protected var _tempType:int;
 		protected var _highlighted:Boolean;
 		protected var _selected:Boolean;
+		protected var _roadDir:String;
+		protected var _prevRoadDir:String;
 
 		/**
 		 * An abstract representation of one place on a map, which 
@@ -33,6 +36,20 @@ package
 		
 		override public function toString():String{
 			return "("+this._xPos + ":"+this._yPos+")";
+		}
+		public function typeToString():String{
+			var s:String;
+			switch (this._type){
+				case CellType.EMPTY:
+					s = "empty"
+					break;
+				case CellType.RB:
+					s = "roundabout";
+					break;
+				case CellType.ROAD:
+					s = "road,"+" "+ this.roadDir;
+			}
+			return s;
 		}
 		
 		public function get direction():int
@@ -123,6 +140,26 @@ package
 		public function set selected(value:Boolean):void
 		{
 			_selected = value;
+		}
+
+		public function get roadDir():String
+		{
+			return _roadDir;
+		}
+
+		public function set roadDir(value:String):void
+		{
+			_roadDir = value;
+		}
+
+		public function get prevRoadDir():String
+		{
+			return _prevRoadDir;
+		}
+
+		public function set prevRoadDir(value:String):void
+		{
+			_prevRoadDir = value;
 		}
 
 

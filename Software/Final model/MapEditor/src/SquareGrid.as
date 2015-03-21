@@ -21,9 +21,10 @@ package
 		
 		private var dummySelectCell:IVisualCell;
 		
-		public var instrument:int;
+		private var _instrument:int;
 		private var currentCell:ICell;
 		private var mouseDown:Boolean;
+		public var roadDir:String;
 		
 		public function SquareGrid()
 		{
@@ -32,11 +33,15 @@ package
 			
 			dummySelectCell = new SquareCell(1,1,_side);
 			dummySelectCell.selected = true;
+			(dummySelectCell as Group).mouseEnabled = false;
+			hideDummySelectCell();
+			
+		}
+		
+		private function hideDummySelectCell():void{
 			dummySelectCell.visible = false;
 			dummySelectCell.x = -100;
 			dummySelectCell.y = -100;
-			(dummySelectCell as Group).mouseEnabled = false;
-			
 		}
 		
 		override public function init(width:int, height:int):void
@@ -104,6 +109,8 @@ package
 					if(mouseDown){
 						plotLine2(downX, downY, c.xPos, c.yPos);
 					}else{
+						c.prevRoadDir = c.roadDir;
+						c.roadDir = this.roadDir;
 						c.prevType = c.type;
 						c.tempType = CellType.ROAD;
 						tempCells.push(c);
@@ -114,6 +121,12 @@ package
 					break;
 				case MapEditor.SELECT:					
 					cellToSelect = c;
+					break;
+				case MapEditor.RUBBER:
+					c.prevType = c.type;
+					c.tempType = CellType.EMPTY;
+					tempCells.push(c);
+					
 			}
 		}
 		
@@ -139,10 +152,11 @@ package
 			//log(' Move roundabout to '+rbX+':'+rbY);
 			restoreCells(tempCells);
 			
-			for each (var cell:ICell in rb.rbCells){
+			for each (var cell:IVisualCell in rb.rbCells){
 				try{
 					var gridCell:IVisualCell = this.cells[y+cell.yPos][x+cell.xPos] as IVisualCell;
-					
+					cell.prevRoadDir = this.roadDir;
+					cell.roadDir = this.roadDir;
 					gridCell.prevType = gridCell.type;
 					gridCell.tempType = CellType.RB;
 					tempCells.push(gridCell);
@@ -154,7 +168,8 @@ package
 		}
 		
 		private static function restoreCells(cells:Array):void{
-			for each (var cell:ICell in cells){
+			for each (var cell:IVisualCell in cells){
+				cell.roadDir = cell.prevRoadDir;
 				cell.type = cell.prevType;
 			}
 			cells.length = 0;
@@ -177,7 +192,7 @@ package
 			
 			var temp:int;
 			
-			var cell:ICell;
+			var cell:IVisualCell;
 			
 			if (Math.abs(y2 - y1) > Math.abs(x2 - x1)) {
 				xy_swap = true;
@@ -211,10 +226,14 @@ package
 				}else{
 					cell = this._cells[y][x];
 				}
+				cell.prevRoadDir = this.roadDir;
 				if(cell.type != CellType.ROAD){
-					cell.prevType = cell.type;
-					tempCells.push(cell);
+					cell.roadDir = this.roadDir;
+				}else{
+					cell.roadDir = SimpleSquareGrid.JUNCTION;
 				}
+				cell.prevType = cell.type;
+				tempCells.push(cell);
 				
 				e += m_num;
 				
@@ -239,10 +258,14 @@ package
 				cell = this._cells[y][x];
 			}
 			
+			cell.prevRoadDir = this.roadDir;
 			if(cell.type != CellType.ROAD){
-				cell.prevType = cell.type;
-				tempCells.push(cell);
+				cell.roadDir = this.roadDir;
+			}else{
+				cell.roadDir = SimpleSquareGrid.JUNCTION;
 			}
+			cell.prevType = cell.type;
+			tempCells.push(cell);
 			
 			//view.setPixel(y,x);
 			//else view.setPixel(x,y);
@@ -259,7 +282,6 @@ package
 			for each (var c:IVisualCell in tempCells){
 				c.type = c.tempType;
 			}
-			
 			tempCells.length = 0;
 		}
 
@@ -269,11 +291,9 @@ package
 		}
 		
 		private function setSelectedCell(value:IVisualCell):void{
-			if(value == _selectedCell){
+			if(!value || value == _selectedCell){
 				_selectedCell = null;
-				dummySelectCell.visible = false;
-				dummySelectCell.x = -100;
-				dummySelectCell.y = -100;
+				hideDummySelectCell();
 			}else{
 				dummySelectCell.x = value.x;
 				dummySelectCell.y = value.y;
@@ -283,6 +303,21 @@ package
 			this.dispatchEvent(new Event("cellSelected"));
 			
 		}
+
+		public function get instrument():int
+		{
+			return _instrument;
+		}
+
+		public function set instrument(value:int):void
+		{
+			_instrument = value;
+			if(value != MapEditor.SELECT){
+				hideDummySelectCell();
+				this.setSelectedCell(null);
+			}
+		}
+
 
 	}
 }

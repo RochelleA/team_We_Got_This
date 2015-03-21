@@ -8,6 +8,13 @@ package
 	{
 		protected var _side:int = 20;
 		
+		public static const NORTH:String = "north";
+		public static const EAST:String = "eash";
+		public static const SOUTH:String = "south";
+		public static const WEST:String = "west";
+		public static const JUNCTION:String = "junction";
+		public static const ROUNDABOUT:String = "roundabout";
+		
 		public function SimpleSquareGrid()
 		{
 			super();
@@ -27,7 +34,7 @@ package
 					
 					cell.x = j * _side;
 					cell.y = i * _side;
-					cell.type = CellType.EMPTY;
+					//cell.type = CellType.EMPTY;
 					
 					this.addElement(cell);
 					

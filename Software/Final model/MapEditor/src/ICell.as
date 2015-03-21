@@ -22,7 +22,11 @@ package
 		function get prevType():int;
 		function set prevType(value:int):void;
 		
+		function get roadDir():String;
+		function set roadDir(value:String):void;
+		
 		function toString():String;
+		function typeToString():String;
 		
 	}
 }

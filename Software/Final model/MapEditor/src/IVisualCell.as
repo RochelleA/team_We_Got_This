@@ -12,5 +12,9 @@ package
 		
 		function get selected():Boolean;
 		function set selected(value:Boolean):void;
+		
+		function get prevRoadDir():String;
+		function set prevRoadDir(value:String):void;
+		
 	}
 }
