@@ -57,10 +57,8 @@ package
 				downY = c.yPos;
 			}
 			
-			for each (var row:Array in cells){
-				for each (var cell:SquareCell in row){
-					cell.prevType = cell.type;
-				}
+			for each (var cell:ICell in allCells){
+				cell.prevType = cell.type;
 			}
 			
 			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -97,7 +95,7 @@ package
 		
 		private function putRoundabout(x:int, y:int):void{
 
-			var rb:ITrafficGrid = (this.parentApplication as MapEditor).rb;
+			var rb:Roundabout = (this.parentApplication as MapEditor).rb;
 			
 			if(x+10>this.gridWidth){
 				x = this.gridWidth - 10;
@@ -115,33 +113,24 @@ package
 			
 			log(' Move roundabout to '+rbX+':'+rbY);
 			restoreCells(tempCells);
-			tempCells.length = 0;
 			
-			for each (var cell:ICell in rb.allCells){
-				if(cell.type == VisualCell.ROAD){
-					var gridCell:SquareCell = this.cells[rbY+cell.yPos][rbX+cell.xPos] as SquareCell;
-					//gridCell.prevType = cell.type;
-					gridCell.type = VisualCell.ROAD;
-					tempCells.push(gridCell);
-				}
+			for each (var cell:ICell in rb.rbCells){
+				var gridCell:IVisualCell = this.cells[rbY+cell.yPos][rbX+cell.xPos] as IVisualCell;
+				//gridCell.prevType = cell.type;
+				gridCell.tempType = CellType.RB;
+				tempCells.push(gridCell);
 			}
 		}
 		
 		private function restoreCells(cells:Array):void{
-			for (var i:int = 0; i<cells.length; i++){
-				if(!cells[i]){
-					continue;
-				}
-				var cell:SquareCell = cells[i] as SquareCell;
+			for each (var cell:ICell in cells){
 				cell.type = cell.prevType;
 			}
+			cells.length = 0;
 		}
 		private function drawCells(cells:Array):void{
-			for (var i:int = 0; i<cells.length; i++){
-				if(!cells[i]){
-					continue;
-				}
-				(cells[i] as SquareCell).type = VisualCell.ROAD;
+			for each (var cell:ICell in cells){
+				cell.type = CellType.ROAD;
 			}
 		}
 		
@@ -152,7 +141,6 @@ package
 		private function plotLine2(x1:int, y1:int, x2:int, y2:int):void {
 			trace('plot line');
 			restoreCells(tempCells);
-			tempCells.length = 0;
 			
 			// If slope is outside the range [-1,1], swap x and y
 			var xy_swap:Boolean = false;
@@ -223,7 +211,7 @@ package
 		 * Event Listener for Cell Clicks
 		 */
 		protected function onCellClick(e:MouseEvent):void{
-			var cell:ISquareCell = e.target as ISquareCell;
+			var cell:ICell = e.target as ICell;
 			trace (cell.xPos, cell.yPos, cell.type);
 			if(cell.type == VisualCell.EMPTY){
 				cell.type = VisualCell.ROAD;

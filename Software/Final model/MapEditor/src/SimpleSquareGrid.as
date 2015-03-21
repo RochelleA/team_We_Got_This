@@ -23,7 +23,7 @@ package
 			for(var i:int=0; i<height; i++){
 				var row:Array = new Array(width);
 				for (var j:int=0; j<width; j++){
-					var cell:ISquareCell = new SquareCell(j, i, side);
+					var cell:IVisualCell = new SquareCell(j, i, side);
 					
 					cell.x = j * side;
 					cell.y = i * side;

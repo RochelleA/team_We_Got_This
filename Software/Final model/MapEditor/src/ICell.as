@@ -17,7 +17,10 @@ package
 		function get yPos():int;
 		
 		function get type():int;
-		function set type(value:int):void;		
+		function set type(value:int):void;	
+		
+		function get prevType():int;
+		function set prevType(value:int):void;
 		
 	}
 }

@@ -7,9 +7,39 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
-			private var currentInstrument:String = "";
 			
-			public var rb:ITrafficGrid = new Roundabout();
+			private var _currentInstrument:int = 0;
+			
+			public static var SELECT:int = 0;
+			public static var RUBBER:int = 1;
+			public static var RB:int = 3;
+			public static var ROAD:int = 2;
+			
+			public var rb:Roundabout = new Roundabout();
+			
+			private function changeInstrument(i:int):void{
+				this._currentInstrument = i;
+				
+				i_sel.setStyle("fontWeight","normal");
+				i_er.setStyle("fontWeight","normal");
+				i_rd.setStyle("fontWeight","normal");
+				i_rb.setStyle("fontWeight","normal");
+				
+				switch (i){
+					case SELECT:
+						i_sel.setStyle("fontWeight", "bold");
+						break;
+					case RUBBER:
+						i_er.setStyle("fontWeight", "bold");
+						break;
+					case RB:
+						i_rb.setStyle("fontWeight", "bold");
+						break;
+					case ROAD:
+						i_rd.setStyle("fontWeight", "bold");
+				}
+				
+			}
 			
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
@@ -28,6 +58,8 @@
 				gridWidth.text = "25";
 				gridHeight.text = "25";
 				
+				changeInstrument(SELECT);
+				
 				//rbGroup.addElement(new Roundabout);
 				//roundAbout.initWithTooltip(10,10, false);
 				//drawRb(roundAbout);
@@ -37,17 +69,18 @@
 			protected function onInstrumentSelect(event:MouseEvent):void
 			{
 				switch(event.currentTarget.id){
+					
 					case "eraserInstr":
-						trace('sel eraser');
+						this.changeInstrument(MapEditor.RUBBER);
 						break;
 					case "roadInstr":
-						trace('sel road');
+						this.changeInstrument(MapEditor.ROAD);
 						break;
 					case "selectInstr":
-						trace('sel sel');
+						this.changeInstrument(MapEditor.SELECT);
 						break;
 					case "rbInstr":
-						trace('sel rb');
+						this.changeInstrument(MapEditor.RB);
 						break;
 				}
 			}
@@ -58,6 +91,11 @@
 				//	squareGrid.mouseUp();
 				//}
 				
+			}
+
+			public function get currentInstrument():int
+			{
+				return _currentInstrument;
 			}
 			
 			
@@ -85,20 +123,28 @@
 			
 			<s:Label text="Instruments" fontSize="18"/>
 			<s:HGroup id="selectInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" fill="{SquareCell.ROAD_FILL}" stroke="{SquareCell.defaultStroke}"/>
-				<s:Label text="Select"/>
+				<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
+					<s:fill>
+						<s:BitmapFill source="@Embed(source='assets/cursor (1).png')" smooth="true" fillMode="scale" />
+					</s:fill>
+				</s:Rect>
+				<s:Label id="i_sel" text="Select" height="100%" verticalAlign="middle"/>
 			</s:HGroup>
 			<s:HGroup id="roadInstr" useHandCursor="true" click="onInstrumentSelect(event)">
 				<s:Rect width="20" height="20" fill="{SquareCell.ROAD_FILL}" stroke="{SquareCell.defaultStroke}"/>
-				<s:Label text="Road"/>
+				<s:Label id="i_rd" text="Road" height="100%" verticalAlign="middle"/>
 			</s:HGroup>
 			<s:HGroup id="eraserInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" fill="{SquareCell.EMPTY_FILL}" stroke="{SquareCell.defaultStroke}"/>
-				<s:Label text="Eraser"/>
+				<s:Rect width="20" height="20"  stroke="{SquareCell.defaultStroke}">
+					<s:fill>
+						<s:BitmapFill source="@Embed(source='assets/eraser.png')" smooth="true" fillMode="scale" />
+					</s:fill>
+				</s:Rect>
+				<s:Label id="i_er" text="Eraser" height="100%" verticalAlign="middle"/>
 			</s:HGroup>
 			<s:HGroup id="rbInstr" useHandCursor="true" click="onInstrumentSelect(event)">
 				<s:Rect width="20" height="20" fill="{SquareCell.EMPTY_FILL}" stroke="{SquareCell.defaultStroke}"/>
-				<s:Label text="Roundabout"/>
+				<s:Label id="i_rb" text="Roundabout" height="100%" verticalAlign="middle"/>
 			</s:HGroup>
 			
 			

@@ -2,7 +2,7 @@ package
 {
 	import spark.primitives.Graphic;
 	
-	public class VisualCell extends Graphic implements ICell
+	public class VisualCell extends Graphic implements IVisualCell
 	{
 		private var _direction:int;
 		private var _isExit:Boolean;
@@ -10,7 +10,9 @@ package
 		
 		private var _xPos:int;
 		private var _yPos:int;		
-		private var _type:int;
+		protected var _type:int;
+		protected var _prevType:int;
+		protected var _tempType:int;
 		
 		public static const ROAD:int = 1;
 		public static const EMPTY:int = 0;
@@ -83,5 +85,27 @@ package
 		{
 			_type = value;
 		}
+
+		public function get prevType():int
+		{
+			return _prevType;
+		}
+
+		public function set prevType(value:int):void
+		{
+			_prevType = value;
+		}
+
+		public function get tempType():int
+		{
+			return _tempType;
+		}
+
+		public function set tempType(value:int):void
+		{
+			_tempType = value;
+		}
+
+
 	}
 }
