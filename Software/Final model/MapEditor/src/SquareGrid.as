@@ -20,6 +20,10 @@ package
 		private var realDragging:Boolean = false;
 		private var rbX:int, rbY:int;
 		
+		public var instrument:int;
+		private var currentCell:ICell;
+		private var mouseDown:Boolean;
+		
 		public function SquareGrid()
 		{
 			trace('create');
@@ -39,30 +43,47 @@ package
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			
+			this.addEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+			
+		}
+		
+		protected function onMouseOut(event:MouseEvent):void
+		{
+			trace('mouse out');
+			if(!mouseDown){
+				restoreCells(tempCells);
+			}
 			
 		}
 		
 		protected function onMouseUp(event:MouseEvent):void
 		{
 			mouseUp();
+			mouseDown = false;
 		}
 		
 		protected function onMouseDown(event:MouseEvent):void
 		{
-			realDragging = false;
+//			realDragging = false;
+//			if(event.target is ICell){
+//				var c:ICell = event.target as ICell;
+//				trace('mouse down on grid', c.xPos,c.yPos);
+//				downX = c.xPos;
+//				downY = c.yPos;
+//			}
+//			
+//			for each (var cell:ICell in allCells){
+//				cell.prevType = cell.type;
+//			}
 			if(event.target is ICell){
 				var c:ICell = event.target as ICell;
 				trace('mouse down on grid', c.xPos,c.yPos);
 				downX = c.xPos;
 				downY = c.yPos;
 			}
-			
-			for each (var cell:ICell in allCells){
-				cell.prevType = cell.type;
-			}
-			
-			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			
+			mouseDown = true;
 		}
 		
 		private function log(s:String):void{
@@ -72,15 +93,37 @@ package
 		
 		protected function onMouseMove(event:MouseEvent):void
 		{
+			if( !(event.target is ICell) ){
+				return;
+			}
+			
+			var c:IVisualCell = event.target as IVisualCell;			
+			if(c == currentCell){
+				return;
+			}else{
+				currentCell = c;
+				
+			}
+			
+			restoreCells(tempCells);
+			
+			switch (instrument){
+				case MapEditor.ROAD:
+					if(mouseDown){
+						plotLine2(downX, downY, c.xPos, c.yPos);
+					}else{
+						c.prevType = c.type;
+						c.tempType = CellType.ROAD;
+						tempCells.push(c);
+					}
+					break;
+				case MapEditor.RB:
+					this.putRoundabout(c.xPos-5, c.yPos-5);
+			}
+			return;
+			
+			
 			if(event.target is ICell){
-				var c:ICell = event.target as ICell;			
-				if(currentX == c.xPos && currentY == c.yPos){
-					return;
-				}else{
-					currentX = c.xPos;
-					currentY = c.yPos;
-					
-				}
 				
 				if(dragginRoundabout){
 					realDragging = true;
@@ -97,28 +140,35 @@ package
 
 			var rb:Roundabout = (this.parentApplication as MapEditor).rb;
 			
-			if(x+10>this.gridWidth){
-				x = this.gridWidth - 10;
-			}
-			if(y+10>this.gridHeight){
-				y = this.gridHeight - 10;
-			}
-			if(rbX == x && rbY == y){
-				return;
-			}else{
-				rbX = x;
-				rbY = y;
-				
-			}
+//			if(x+10>this.gridWidth){
+//				x = this.gridWidth - 10;
+//			}
+//			if(y+10>this.gridHeight){
+//				y = this.gridHeight - 10;
+//			}
+//			if(rbX == x && rbY == y){
+//				return;
+//			}else{
+//				rbX = x;
+//				rbY = y;
+//				
+//			}
 			
-			log(' Move roundabout to '+rbX+':'+rbY);
+			//log(' Move roundabout to '+rbX+':'+rbY);
 			restoreCells(tempCells);
 			
 			for each (var cell:ICell in rb.rbCells){
-				var gridCell:IVisualCell = this.cells[rbY+cell.yPos][rbX+cell.xPos] as IVisualCell;
-				//gridCell.prevType = cell.type;
-				gridCell.tempType = CellType.RB;
-				tempCells.push(gridCell);
+				
+				try{
+					var gridCell:IVisualCell = this.cells[y+cell.yPos][x+cell.xPos] as IVisualCell;
+					//gridCell.prevType = cell.type;
+					gridCell.prevType = gridCell.type;
+					gridCell.tempType = CellType.RB;
+					tempCells.push(gridCell);
+				}catch(e:Error){
+					trace('error');
+				}
+				
 			}
 		}
 		
@@ -129,8 +179,8 @@ package
 			cells.length = 0;
 		}
 		private function drawCells(cells:Array):void{
-			for each (var cell:ICell in cells){
-				cell.type = CellType.ROAD;
+			for each (var cell:IVisualCell in cells){
+				cell.tempType = CellType.ROAD;
 			}
 		}
 		
@@ -146,6 +196,8 @@ package
 			var xy_swap:Boolean = false;
 			
 			var temp:int;
+			
+			var cell:ICell;
 			
 			if (Math.abs(y2 - y1) > Math.abs(x2 - x1)) {
 				xy_swap = true;
@@ -175,10 +227,14 @@ package
 				
 			for (x = x1; x < x2; x++) {
 				if (xy_swap){
-					tempCells.push(this._cells[x][y]); //view.setPixel(y,x);
+					cell = this._cells[x][y];
 				}else{
-					tempCells.push(this._cells[y][x]); //else view.setPixel(x,y);
-				}				
+					cell = this._cells[y][x];
+				}
+				if(cell.type != CellType.ROAD){
+					cell.prevType = cell.type;
+					tempCells.push(cell);
+				}
 				
 				e += m_num;
 				
@@ -195,13 +251,20 @@ package
 					y++;
 				}
 			}
-				
+			
+			//add start cell
 			if (xy_swap){
-				tempCells.push(this._cells[x][y]); //view.setPixel(y,x)
+				cell = this._cells[x][y];
 			}else{
-				tempCells.push(this._cells[y][x]); //else view.setPixel(x,y);
+				cell = this._cells[y][x];
 			}
-				//view.setPixel(y,x);
+			
+			if(cell.type != CellType.ROAD){
+				cell.prevType = cell.type;
+				tempCells.push(cell);
+			}
+			
+			//view.setPixel(y,x);
 			//else view.setPixel(x,y);
 			drawCells(tempCells);
 				
@@ -211,25 +274,38 @@ package
 		 * Event Listener for Cell Clicks
 		 */
 		protected function onCellClick(e:MouseEvent):void{
-			var cell:ICell = e.target as ICell;
-			trace (cell.xPos, cell.yPos, cell.type);
-			if(cell.type == VisualCell.EMPTY){
-				cell.type = VisualCell.ROAD;
-				log('Add road at '+downX+':'+downY);
-			}else{
-				cell.type = VisualCell.EMPTY;
-				log('Remove road at '+downX+':'+downY);
-			}
+//			var cell:ICell = e.target as ICell;
+//			trace (cell.xPos, cell.yPos, cell.type);
+//			if(cell.type == VisualCell.EMPTY){
+//				cell.type = VisualCell.ROAD;
+//				log('Add road at '+downX+':'+downY);
+//			}else{
+//				cell.type = VisualCell.EMPTY;
+//				log('Remove road at '+downX+':'+downY);
+//			}
 			
 		}
 		
 		public function mouseUp():void
 		{
-			if(realDragging){
-				log('Place roundabout at '+rbX+':'+rbY);
+			for each (var c:IVisualCell in tempCells){
+				c.type = c.tempType;
 			}
+//			switch (instrument){
+//				case MapEditor.ROAD:
+//					for each (var c:IVisualCell in tempCells){
+//						c.type = CellType.ROAD;
+//					}
+//					trace('add road');
+//					//tempCells.push(c);
+//					break;
+//			}
+			
+//			if(realDragging){
+//				log('Place roundabout at '+rbX+':'+rbY);
+//			}
 			tempCells.length = 0;
-			this.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			//this.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		}
 	}
 }

@@ -19,6 +19,7 @@
 			
 			private function changeInstrument(i:int):void{
 				this._currentInstrument = i;
+				squareGrid.instrument = i;
 				
 				i_sel.setStyle("fontWeight","normal");
 				i_er.setStyle("fontWeight","normal");
@@ -98,8 +99,6 @@
 				return _currentInstrument;
 			}
 			
-			
-			
 		]]>
 	</fx:Script>
 	
@@ -108,7 +107,7 @@
 	</fx:Declarations>
 	<s:HGroup paddingTop="10" paddingLeft="10">
 		<s:Scroller id="scroller" width="501" height="551">
-			<local:SquareGrid id="squareGrid" />
+			<local:SquareGrid id="squareGrid"/>
 		</s:Scroller>
 
 		<s:VGroup>
