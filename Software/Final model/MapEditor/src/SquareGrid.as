@@ -8,17 +8,13 @@ package
 	 */
 	public class SquareGrid extends SimpleSquareGrid
 	{
-		private var _side:int = 20;
-		private var downX:int;
-		private var downY:int;
-		
-		private var currentX:int, currentY:int;
+		private var downX:int, downY:int; 
 		
 		private var tempCells:Array = new Array();
+		private var _selectedCell:IVisualCell;
+		private var cellToSelect:IVisualCell;
 		
-		private var dragginRoundabout:Boolean = true;
-		private var realDragging:Boolean = false;
-		private var rbX:int, rbY:int;
+		private var dummySelectCell:IVisualCell;
 		
 		public var instrument:int;
 		private var currentCell:ICell;
@@ -26,20 +22,25 @@ package
 		
 		public function SquareGrid()
 		{
-			trace('create');
+			trace('create advanced square grid');
 			super();
+			
+			dummySelectCell = new SquareCell(1,1,_side);
+			dummySelectCell.selected = true;
+			dummySelectCell.visible = false;
+			dummySelectCell.x = -100;
+			dummySelectCell.y = -100;
+			this.useHandCursor = true;
+			
 		}
 		
 		override public function init(width:int, height:int):void
 		{
-			trace('grid init');
+			trace('advanced grid init');
+			
 			super.init(width, height);
-			//super.init(width, height);
-			for each(var c:VisualCell in this.allCells){	
-				//trace(c);
-				c.addEventListener(MouseEvent.CLICK, onCellClick);
-
-			}
+			//this.addElement(dummyHighlightCell);
+			this.addElement(dummySelectCell);
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -55,7 +56,6 @@ package
 			if(!mouseDown){
 				restoreCells(tempCells);
 			}
-			
 		}
 		
 		protected function onMouseUp(event:MouseEvent):void
@@ -66,17 +66,6 @@ package
 		
 		protected function onMouseDown(event:MouseEvent):void
 		{
-//			realDragging = false;
-//			if(event.target is ICell){
-//				var c:ICell = event.target as ICell;
-//				trace('mouse down on grid', c.xPos,c.yPos);
-//				downX = c.xPos;
-//				downY = c.yPos;
-//			}
-//			
-//			for each (var cell:ICell in allCells){
-//				cell.prevType = cell.type;
-//			}
 			if(event.target is ICell){
 				var c:ICell = event.target as ICell;
 				trace('mouse down on grid', c.xPos,c.yPos);
@@ -102,11 +91,9 @@ package
 				return;
 			}else{
 				currentCell = c;
-				
 			}
 			
 			restoreCells(tempCells);
-			
 			switch (instrument){
 				case MapEditor.ROAD:
 					if(mouseDown){
@@ -119,27 +106,31 @@ package
 					break;
 				case MapEditor.RB:
 					this.putRoundabout(c.xPos-5, c.yPos-5);
+					break;
+				case MapEditor.SELECT:					
+					cellToSelect = c;
 			}
-			return;
-			
-			
-			if(event.target is ICell){
-				
-				if(dragginRoundabout){
-					realDragging = true;
-					putRoundabout(c.xPos,c.yPos);
-				}else{ //plot a line
-					trace('mouse move', c.xPos,c.yPos);
-					
-					plotLine2(downX, downY, c.xPos, c.yPos);
-				}
+		}
+		private function set selectedCell(value:IVisualCell):void{
+			if(value == _selectedCell){
+				_selectedCell = null;
+				dummySelectCell.visible = false;
+				dummySelectCell.x = -100;
+				dummySelectCell.y = -100;
+			}else{
+				dummySelectCell.x = value.x;
+				dummySelectCell.y = value.y;
+				dummySelectCell.visible = true;
+				this._selectedCell = value;
 			}
+			
 		}
 		
 		private function putRoundabout(x:int, y:int):void{
 
 			var rb:Roundabout = (this.parentApplication as MapEditor).rb;
 			
+			//out of bounds check
 //			if(x+10>this.gridWidth){
 //				x = this.gridWidth - 10;
 //			}
@@ -158,27 +149,26 @@ package
 			restoreCells(tempCells);
 			
 			for each (var cell:ICell in rb.rbCells){
-				
 				try{
 					var gridCell:IVisualCell = this.cells[y+cell.yPos][x+cell.xPos] as IVisualCell;
-					//gridCell.prevType = cell.type;
+					
 					gridCell.prevType = gridCell.type;
 					gridCell.tempType = CellType.RB;
 					tempCells.push(gridCell);
 				}catch(e:Error){
-					trace('error');
+					trace('error'); //cell is outside the grid
 				}
 				
 			}
 		}
 		
-		private function restoreCells(cells:Array):void{
+		private static function restoreCells(cells:Array):void{
 			for each (var cell:ICell in cells){
 				cell.type = cell.prevType;
 			}
 			cells.length = 0;
 		}
-		private function drawCells(cells:Array):void{
+		private static function drawCells(cells:Array):void{
 			for each (var cell:IVisualCell in cells){
 				cell.tempType = CellType.ROAD;
 			}
@@ -190,7 +180,6 @@ package
 		 */
 		private function plotLine2(x1:int, y1:int, x2:int, y2:int):void {
 			trace('plot line');
-			restoreCells(tempCells);
 			
 			// If slope is outside the range [-1,1], swap x and y
 			var xy_swap:Boolean = false;
@@ -270,42 +259,17 @@ package
 				
 		}
 		
-		/**
-		 * Event Listener for Cell Clicks
-		 */
-		protected function onCellClick(e:MouseEvent):void{
-//			var cell:ICell = e.target as ICell;
-//			trace (cell.xPos, cell.yPos, cell.type);
-//			if(cell.type == VisualCell.EMPTY){
-//				cell.type = VisualCell.ROAD;
-//				log('Add road at '+downX+':'+downY);
-//			}else{
-//				cell.type = VisualCell.EMPTY;
-//				log('Remove road at '+downX+':'+downY);
-//			}
-			
-		}
-		
 		public function mouseUp():void
 		{
+			if(instrument == MapEditor.SELECT){
+				this.selectedCell = cellToSelect;
+				return;
+			}
 			for each (var c:IVisualCell in tempCells){
 				c.type = c.tempType;
 			}
-//			switch (instrument){
-//				case MapEditor.ROAD:
-//					for each (var c:IVisualCell in tempCells){
-//						c.type = CellType.ROAD;
-//					}
-//					trace('add road');
-//					//tempCells.push(c);
-//					break;
-//			}
 			
-//			if(realDragging){
-//				log('Place roundabout at '+rbX+':'+rbY);
-//			}
 			tempCells.length = 0;
-			//this.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		}
 	}
 }

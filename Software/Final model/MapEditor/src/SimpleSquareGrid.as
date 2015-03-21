@@ -6,7 +6,7 @@ package
 	 */
 	public class SimpleSquareGrid extends VisualGrid
 	{
-		protected var side:int = 20;
+		protected var _side:int = 20;
 		
 		public function SimpleSquareGrid()
 		{
@@ -23,10 +23,10 @@ package
 			for(var i:int=0; i<height; i++){
 				var row:Array = new Array(width);
 				for (var j:int=0; j<width; j++){
-					var cell:IVisualCell = new SquareCell(j, i, side);
+					var cell:IVisualCell = new SquareCell(j, i, _side);
 					
-					cell.x = j * side;
-					cell.y = i * side;
+					cell.x = j * _side;
+					cell.y = i * _side;
 					cell.type = CellType.EMPTY;
 					
 					this.addElement(cell);

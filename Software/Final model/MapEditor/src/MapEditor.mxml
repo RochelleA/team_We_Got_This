@@ -147,10 +147,10 @@
 			</s:HGroup>
 			
 			
-			<s:VGroup id="rbGroup" visible="false">
+			<!--<s:VGroup id="rbGroup" visible="false">
 				<s:Label text="Roundabout" fontSize="18"/>
 				<local:SquareGrid id="roundAbout"/>
-			</s:VGroup>
+			</s:VGroup>-->
 			
 			<s:VGroup>
 				<s:Label text="Log" fontSize="18"/>

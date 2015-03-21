@@ -13,9 +13,8 @@ package
 		protected var _type:int;
 		protected var _prevType:int;
 		protected var _tempType:int;
-		
-		public static const ROAD:int = 1;
-		public static const EMPTY:int = 0;
+		protected var _highlighted:Boolean;
+		protected var _selected:Boolean;
 
 		/**
 		 * An abstract representation of one place on a map, which 
@@ -104,6 +103,26 @@ package
 		public function set tempType(value:int):void
 		{
 			_tempType = value;
+		}
+
+		public function get highlighted():Boolean
+		{
+			return _highlighted;
+		}
+
+		public function set highlighted(value:Boolean):void
+		{
+			_highlighted = value;
+		}
+
+		public function get selected():Boolean
+		{
+			return _selected;
+		}
+
+		public function set selected(value:Boolean):void
+		{
+			_selected = value;
 		}
 
 
