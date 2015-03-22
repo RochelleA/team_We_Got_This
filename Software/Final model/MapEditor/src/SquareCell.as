@@ -35,7 +35,6 @@ package
 		private var ROAD_BTMP_FILL:BitmapFill = new BitmapFill();
 		
 		public var partOfRoundabout:Boolean = false;
-		private var _roadWest:RoadWestRect;
 		
 		/**
 		 * An extension to a simple cell which can be displayed as a Rectangle

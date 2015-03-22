@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:instr="instruments.*" creationComplete="onCreationComplete(event)">
+	<fx:Metadata>
+		[Event(name="changeInstrument", type="flash.events.Event")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[			
+			import mx.events.FlexEvent;
+			private var selectedInstrument:Instrument;
+			private var _currentInstrumentId:String;
+			
+			protected function onInstrumentClick(event:MouseEvent):void
+			{
+				if(event.currentTarget is Instrument && event.currentTarget !== selectedInstrument){
+					trace('change instrument');
+					this.selectInstrument(event.currentTarget as Instrument);
+				}
+			}
+			
+			private function selectInstrument(i:Instrument):void{
+				if(selectedInstrument){
+					selectedInstrument.selected = false;
+				}
+				i.selected = true;
+				this.selectedInstrument = i;
+				this.dispatchEvent(new Event("changeInstrument"));
+			}
+
+			public function get currentInstrumentId():String
+			{
+				return this.selectedInstrument.instrId;
+			}
+
+			
+			protected function onCreationComplete(event:FlexEvent):void
+			{
+				selectInstrument(sel);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	
+	<instr:Instrument id="sel" instrId="{Instruments.SELECT}" title="Select" icon="{Icons.CURSOR}" click="onInstrumentClick(event)"/>
+	<instr:Instrument instrId="{Instruments.RUBBER}" title="Eraser" icon="{Icons.RUBBER}" click="onInstrumentClick(event)"/>
+	
+	<s:HGroup>
+		<instr:Instrument instrId="{Instruments.ROAD_EAST}" title="Road East" icon="{Icons.ROAD_EAST}" click="onInstrumentClick(event)"/>
+		<instr:Instrument instrId="{Instruments.ROAD_SOUTH}" title="Road South" icon="{Icons.ROAD_SOUTH}" click="onInstrumentClick(event)"/>
+		<instr:Instrument instrId="{Instruments.ROAD_WEST}" title="Road West" icon="{Icons.ROAD_WEST}" click="onInstrumentClick(event)"/>
+		<instr:Instrument instrId="{Instruments.ROAD_NORTH}" title="Road North" icon="{Icons.ROAD_NORTH}" click="onInstrumentClick(event)"/>
+		<instr:Instrument instrId="{Instruments.ROAD_JUNCTION}" title="Junction" icon="{Icons.ROAD_JUNCTION}" click="onInstrumentClick(event)"/>
+	</s:HGroup>
+	
+	<instr:Instrument instrId="{Instruments.ROUNDABOUT}" title="Roundabout" icon="{Icons.ROUNDABOUT}" click="onInstrumentClick(event)"/>
+	
+</s:Group>

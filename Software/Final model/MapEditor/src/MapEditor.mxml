@@ -2,52 +2,21 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" width="955" height="600" xmlns:local="*"
-			    creationComplete="application1_creationCompleteHandler(event)" mouseUp="globalMouseUp(event)">
+			   creationComplete="application1_creationCompleteHandler(event)" mouseUp="globalMouseUp(event)" xmlns:instruments="instruments.*">
 	
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
-			import mx.graphics.SolidColorStroke;
 			
 			private var _currentInstrument:int = 0;
 			private var _roadInstr:String;
 			
-			public static var SELECT:int = 0;
-			public static var RUBBER:int = 1;
-			public static var RB:int = 3;
-			public static var ROAD:int = 2;
+			public var rb:Roundabout = new Roundabout();			
 			
-			public var rb:Roundabout = new Roundabout();
-			
-			private function changeInstrument(i:int):void{
-				this._currentInstrument = i;
-				squareGrid.instrument = i;
-				squareGrid.roadDir = _roadInstr;
-				
-				i_sel.setStyle("fontWeight","normal");
-				i_er.setStyle("fontWeight","normal");
-				i_rd.setStyle("fontWeight","normal");
-				i_rb.setStyle("fontWeight","normal");
-				
-				switch (i){
-					case SELECT:
-						i_sel.setStyle("fontWeight", "bold");
-						break;
-					case RUBBER:
-						i_er.setStyle("fontWeight", "bold");
-						break;
-					case RB:
-						i_rb.setStyle("fontWeight", "bold");
-						break;
-					case ROAD:
-						i_rd.setStyle("fontWeight", "bold");
-				}
-				
-			}
 			
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
-
+				
 				squareGrid = new SquareGrid();
 				squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
 				
@@ -61,67 +30,8 @@
 				gridWidth.text = "25";
 				gridHeight.text = "25";
 				
-				changeInstrument(SELECT);
+				//changeInstrument(SELECT);
 				
-			}
-			
-			protected function onInstrumentSelect(event:MouseEvent):void
-			{
-				resetRoadInstrSelect();
-				switch(event.currentTarget.id){
-					
-					case "eraserInstr":
-						this.changeInstrument(MapEditor.RUBBER);
-						break;
-					case "roadInstr":
-						this.selectRoadInstr(event.target.id);
-						break;
-					case "selectInstr":
-						this.changeInstrument(MapEditor.SELECT);
-						break;
-					case "rbInstr":
-						_roadInstr = SimpleSquareGrid.ROUNDABOUT;
-						this.changeInstrument(MapEditor.RB);
-						break;		
-				}
-			}
-			private function resetRoadInstrSelect():void{
-				(road_west.getElementAt(0) as Rect).stroke = SquareCell.DEFAULT_STROKE;
-				(road_north.getElementAt(0) as Rect).stroke = SquareCell.DEFAULT_STROKE;
-				(road_east.getElementAt(0) as Rect).stroke = SquareCell.DEFAULT_STROKE;
-				(road_south.getElementAt(0) as Rect).stroke = SquareCell.DEFAULT_STROKE;
-			}
-			private function selectRoadInstr(id:String):void{
-				var doSwitch:Boolean = true;
-				
-				switch (id){
-					case "road_west":
-						(road_west.getElementAt(0) as Rect).stroke = new SolidColorStroke(SquareCell.DEFAULT_STROKE.color, 2);
-						_roadInstr = SimpleSquareGrid.WEST;
-						break;
-					case "road_north":
-						(road_north.getElementAt(0) as Rect).stroke = new SolidColorStroke(SquareCell.DEFAULT_STROKE.color, 2);
-						_roadInstr = SimpleSquareGrid.NORTH;
-						break;
-					case "road_east":
-						(road_east.getElementAt(0) as Rect).stroke = new SolidColorStroke(SquareCell.DEFAULT_STROKE.color, 2);
-						_roadInstr = SimpleSquareGrid.EAST;
-						break;
-					case "road_south":
-						(road_south.getElementAt(0) as Rect).stroke = new SolidColorStroke(SquareCell.DEFAULT_STROKE.color, 2);
-						_roadInstr = SimpleSquareGrid.SOUTH;
-						break;
-					case "road_junction":
-						(road_junction.getElementAt(0) as Rect).stroke = new SolidColorStroke(SquareCell.DEFAULT_STROKE.color, 2);
-						_roadInstr = SimpleSquareGrid.JUNCTION;
-						break;
-					default:
-						doSwitch = false;
-				}
-				if (doSwitch) 
-					this.changeInstrument(MapEditor.ROAD);
-				else
-					this.changeInstrument(MapEditor.SELECT);
 			}
 			
 			protected function globalMouseUp(event:MouseEvent):void
@@ -131,7 +41,7 @@
 				//}
 				
 			}
-
+			
 			public function get currentInstrument():int
 			{
 				return _currentInstrument;
@@ -162,6 +72,12 @@
 				MyFile.save("abc", "data.map");
 			}
 			
+			protected function onChangeInstrument(event:Event):void
+			{
+				trace('instrument change in model');
+				squareGrid.instrument = instrPane.currentInstrumentId;
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -172,7 +88,7 @@
 		<s:Scroller id="scroller" width="501" height="551">
 			<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>
 		</s:Scroller>
-
+		
 		<s:VGroup>
 			<s:HGroup verticalAlign="middle">
 				<s:Label text="Width:"/>
@@ -183,89 +99,7 @@
 			</s:HGroup>
 			<s:Button label="Save as..." click="onSaveClick(event)"/>
 			
-			<s:Label text="Instruments" fontSize="18"/>
-			<s:HGroup id="selectInstr" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-					<s:fill>
-						<s:BitmapFill source="@Embed(source='assets/cursor (1).png')" smooth="true" fillMode="scale" />
-					</s:fill>
-				</s:Rect>
-				<s:Label id="i_sel" text="Select" height="100%" verticalAlign="middle"/>
-			</s:HGroup>
-			
-			<s:HGroup id="roadInstr" click="onInstrumentSelect(event)">
-				<s:Group id="road_west">
-					<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-						<s:fill>
-							<s:BitmapFill source="@Embed(source='assets/arrow-west.png')" />
-						</s:fill>
-					</s:Rect>
-				</s:Group>
-				<s:Group id="road_north">
-					<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-						<s:fill>
-							<s:BitmapFill source="@Embed(source='assets/arrow-north.png')" />
-						</s:fill>
-					</s:Rect>
-				</s:Group>
-				<s:Group id="road_east">
-					<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-						<s:fill>
-							<s:BitmapFill source="@Embed(source='assets/arrow-east.png')" />
-						</s:fill>
-					</s:Rect>
-				</s:Group>
-				<s:Group id="road_south">
-					<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-						<s:fill>
-							<s:BitmapFill source="@Embed(source='assets/arrow-south.png')" />
-						</s:fill>
-					</s:Rect>
-				</s:Group>
-				<s:Group id="road_junction">
-					<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}">
-						<s:fill>
-							<s:BitmapFill source="@Embed(source='assets/junction2.png')" />
-						</s:fill>
-					</s:Rect>
-				</s:Group>
-				
-				<!--<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}" click="onInstrumentSelect(event)">
-					<s:fill>
-						<s:BitmapFill source="@Embed(source='assets/arrow-east.png')" />
-					</s:fill>
-				</s:Rect>
-				<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}" click="onInstrumentSelect(event)">
-					<s:fill>
-						<s:BitmapFill source="@Embed(source='assets/arrow-north.png')" />
-					</s:fill>
-				</s:Rect>
-				<s:Rect width="20" height="20" stroke="{SquareCell.defaultStroke}" click="onInstrumentSelect(event)">
-					<s:fill>
-						<s:BitmapFill source="@Embed(source='assets/arrow-south.png')" />
-					</s:fill>
-				</s:Rect>-->
-				
-				<s:Label id="i_rd" text="Road" height="100%" verticalAlign="middle"/>
-			</s:HGroup>
-			<s:HGroup id="eraserInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20"  stroke="{SquareCell.defaultStroke}">
-					<s:fill>
-						<s:BitmapFill source="@Embed(source='assets/eraser.png')" smooth="true" fillMode="scale" />
-					</s:fill>
-				</s:Rect>
-				<s:Label id="i_er" text="Eraser" height="100%" verticalAlign="middle"/>
-			</s:HGroup>
-			<s:HGroup id="rbInstr" useHandCursor="true" click="onInstrumentSelect(event)">
-				<s:Rect width="20" height="20" fill="{SquareCell.EMPTY_FILL}" stroke="{SquareCell.defaultStroke}"/>
-				<s:Label id="i_rb" text="Roundabout" height="100%" verticalAlign="middle"/>
-			</s:HGroup>
-			
-			
-			<!--<s:VGroup id="rbGroup" visible="false">
-				<s:Label text="Roundabout" fontSize="18"/>
-				<local:SquareGrid id="roundAbout"/>
-			</s:VGroup>-->
+			<instruments:InstrumentsPane id="instrPane" changeInstrument="onChangeInstrument(event)" />
 			
 			<s:VGroup paddingTop="50">
 				<s:Label text="Cell properties" fontSize="18"/>

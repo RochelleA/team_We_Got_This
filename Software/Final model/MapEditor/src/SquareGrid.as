@@ -4,6 +4,8 @@ package
 	import flash.events.MouseEvent;
 	
 	import spark.components.Group;
+	
+	import instruments.Instruments;
 		
 	/**
 	 * An extension to grid with ability to draw lines, roundabouts and listen for mouse
@@ -21,7 +23,7 @@ package
 		
 		private var dummySelectCell:IVisualCell;
 		
-		private var _instrument:int;
+		private var _instrument:String;
 		private var currentCell:ICell;
 		private var mouseDown:Boolean;
 		public var roadDir:String;
@@ -105,7 +107,7 @@ package
 			
 			restoreCells(tempCells);
 			switch (instrument){
-				case MapEditor.ROAD:
+				case Instruments.ROAD:
 					if(mouseDown){
 						plotLine2(downX, downY, c.xPos, c.yPos);
 					}else{
@@ -116,13 +118,13 @@ package
 						tempCells.push(c);
 					}
 					break;
-				case MapEditor.RB:
+				case Instruments.ROUNDABOUT:
 					this.putRoundabout(c.xPos-5, c.yPos-5);
 					break;
-				case MapEditor.SELECT:					
+				case Instruments.SELECT:					
 					cellToSelect = c;
 					break;
-				case MapEditor.RUBBER:
+				case Instruments.RUBBER:
 					c.prevType = c.type;
 					c.tempType = CellType.EMPTY;
 					tempCells.push(c);
@@ -226,7 +228,7 @@ package
 				}else{
 					cell = this._cells[y][x];
 				}
-				cell.prevRoadDir = this.roadDir;
+				cell.prevRoadDir = cell.roadDir;
 				if(cell.type != CellType.ROAD){
 					cell.roadDir = this.roadDir;
 				}else{
@@ -258,7 +260,7 @@ package
 				cell = this._cells[y][x];
 			}
 			
-			cell.prevRoadDir = this.roadDir;
+			cell.prevRoadDir = cell.roadDir;
 			if(cell.type != CellType.ROAD){
 				cell.roadDir = this.roadDir;
 			}else{
@@ -275,7 +277,7 @@ package
 		
 		public function mouseUp():void
 		{
-			if(instrument == MapEditor.SELECT){
+			if(instrument == Instruments.SELECT){
 				this.setSelectedCell(cellToSelect);
 				return;
 			}
@@ -304,15 +306,37 @@ package
 			
 		}
 
-		public function get instrument():int
+		public function get instrument():String
 		{
 			return _instrument;
 		}
 
-		public function set instrument(value:int):void
+		public function set instrument(value:String):void
 		{
 			_instrument = value;
-			if(value != MapEditor.SELECT){
+			switch (value){
+				case Instruments.ROAD_EAST:
+					_instrument = Instruments.ROAD;
+					this.roadDir = SimpleSquareGrid.EAST;
+					break;
+				case Instruments.ROAD_SOUTH:
+					_instrument = Instruments.ROAD;
+					this.roadDir = SimpleSquareGrid.SOUTH;
+					break;
+				case Instruments.ROAD_NORTH:
+					_instrument = Instruments.ROAD;
+					this.roadDir = SimpleSquareGrid.NORTH;
+					break;
+				case Instruments.ROAD_WEST:
+					_instrument = Instruments.ROAD;
+					this.roadDir = SimpleSquareGrid.WEST;
+					break;
+				case Instruments.ROAD_JUNCTION:
+					_instrument = Instruments.ROAD;
+					this.roadDir = SimpleSquareGrid.JUNCTION;
+					break;
+			}
+			if(value != Instruments.SELECT){
 				hideDummySelectCell();
 				this.setSelectedCell(null);
 			}
