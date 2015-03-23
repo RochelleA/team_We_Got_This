@@ -12,6 +12,8 @@ public class Program {
 	public static void main(String[] args) {
 		Model model = new Model();
 		
+		System.out.println(model.getGrid().getWidth() + " "+model.getGrid().getHeight());
+		
 	    DataSimulator ds = new DataSimulator(model.getGrid());
 	    ds.setRunning(true);
 	    

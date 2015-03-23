@@ -19,4 +19,10 @@ public interface ITrafficLight {
 	 * @return the current colour
 	 */
 	public TrafficLightColour getColour();
+	
+	/**
+	 * Set delay of the traffic light
+	 * @param delay specifies how many ms the traffic light updates
+	 */
+	public void setDelay(int delay);
 }

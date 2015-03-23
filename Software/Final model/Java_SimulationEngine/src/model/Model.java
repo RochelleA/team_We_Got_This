@@ -32,11 +32,11 @@ public class Model extends EventDispatchable implements EventListener {
 	//	System.out.println("has car "+grid.hasCarAt(0, 10));
 
 		//GetMap();
-		this.grid = parseMap("files/roundabout.txt");
+		this.grid = parseMap("files/roundabout_new.txt");
 		
 		_gc = new GridController(grid, this);
 		
-		this.startSim();
+		//this.startSim();
 		
 		//grid.placeCarAt(7, 10, new Car());
 		//grid.placeCarAt(10, 10, new Car());
@@ -62,103 +62,134 @@ public class Model extends EventDispatchable implements EventListener {
 		String[] southRoad = new String[] {"4","4*", "4!", "48"};
 		
 		IGrid rgrid = null; //return grid 
-		try {	
-			int row=0;
+		try(FileReader file = new FileReader(filename)) {	
 
-			FileReader file = new FileReader(filename);
-			LineNumberReader lnr = new LineNumberReader(file);
-			lnr.skip(Long.MAX_VALUE);
-			
-			int height = lnr.getLineNumber() + 1;
-						
-			BufferedReader reader =new BufferedReader(new FileReader(filename));
+			BufferedReader reader =new BufferedReader(file);
 			String line = reader.readLine();
 			
-			int width = line.trim().split("\\s+").length;
+			//System.out.println(line);
+			String pattern = "(\\w+) (\\d+)x(\\d+)";
+			String titleStr = line.replaceAll(pattern, "$1");
+			String widthStr = line.replaceAll(pattern, "$2");
+			int gWidth = Integer.parseInt(widthStr);
+			String heightStr = line.replaceAll(pattern, "$3");
+			int gHeight = Integer.parseInt(heightStr);
 			
-			//System.out.println(width +":"+ height);
+			System.out.println(titleStr+";"+widthStr+";"+heightStr);
 			
-			rgrid = new Grid(width, height);
+			rgrid = new Grid(gWidth, gHeight);
 			
-			String []spaces;		
-			while(line != null){
-				spaces = line.trim().split("\\s+");
-				if(spaces.length != width){
-					throw new GridException("Inconsistent number of symbols on each line");
+			boolean parseGrid = false;
+			boolean parseTrafficLights = false;
+			int row = 0, col = 0;
+			
+			while((line = reader.readLine()) != null){
+				if(line.equals("===") && !parseGrid){
+					parseGrid = true;
+					
+					continue;
+				}else if(line.equals("===") && parseGrid){
+					parseGrid = false;
+					parseTrafficLights = true;
+					
+					continue;
 				}
-
-				for (int col = 0; col<width; col++) {
-					String value = (String)spaces[col];
-					
-					if(value.equals("0"))
-					{
-						rgrid.setCellType(col, row, CellType.EMPTY);
-					}else if(Arrays.asList(eastRoad).contains(value))
-					{
-						//to east
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.EAST);
-					}else if(Arrays.asList(westRoad).contains(value))
-					{
-						//to west
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.WEST);
-					}else if(Arrays.asList(northRoad).contains(value))
-					{
-						//to north
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.NORTH);
-					}else if(Arrays.asList(southRoad).contains(value))
-					{
-						//to south
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.SOUTH);
+				//System.out.println(line);
+				if(parseGrid){
+					String[] spaces = line.trim().split("\\s+");
+					if(spaces.length != gWidth){
+						throw new GridException("Inconsistent number of symbols on each line");
 					}
-
-					else if(value.equals("5"))
-					{
-						//junction
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.JUNCTION);
+					col = 0;
+					for (String value : spaces){
+						System.out.println(col+"_"+row);
+						//String value = (String)spaces[col];
+//						
+						if(value.equals("0"))
+						{
+							rgrid.setCellType(col, row, CellType.EMPTY);
+						}else if(Arrays.asList(eastRoad).contains(value))
+						{
+							//to east
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.EAST);
+						}else if(Arrays.asList(westRoad).contains(value))
+						{
+							//to west
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.WEST);
+						}else if(Arrays.asList(northRoad).contains(value))
+						{
+							//to north
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.NORTH);
+						}else if(Arrays.asList(southRoad).contains(value))
+						{
+							//to south
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.SOUTH);
+						}
+	
+						else if(value.equals("5"))
+						{
+							//junction
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.JUNCTION);
+						}
+						else if(value.equals("9") || value.equals("8"))
+						{
+							//junction
+							rgrid.setCellType(col, row, CellType.ROAD);
+							rgrid.setCellDirection(col, row, Direction.ROUNDABOUT);
+						}
+						
+						else if(value.equals("7"))
+						{
+							//junction
+							rgrid.setCellType(col, row, CellType.EMPTY);
+							rgrid.setCellDirection(col, row, Direction.CIRCLE);
+						}
+						
+						// stop here if no modifier
+						if(value.length() == 1){
+							col++;
+							continue;
+						}
+						
+						String modifier = value.substring(value.length() - 1);
+						
+						if(modifier.equals("!")){
+							System.err.println("! exit");
+							rgrid.setIsExit(col, row, true);
+						}else if(modifier.equals("*")){
+							rgrid.setIsEntry(col, row, true);
+							System.err.println("* entry");
+						}
+						
+						col++;
+							
 					}
-					else if(value.equals("9") || value.equals("8"))
-					{
-						//junction
-						rgrid.setCellType(col, row, CellType.ROAD);
-						rgrid.setCellDirection(col, row, Direction.ROUNDABOUT);
+				}else if(parseTrafficLights){
+					System.out.println("parse tl");
+					pattern = "\\[(\\d+);(\\d+)\\] (\\d+) (\\w+)";
+					String tlX = line.replaceAll(pattern, "$1");
+					String tlY = line.replaceAll(pattern, "$2");
+					//int gWidth = Integer.parseInt(widthStr);
+					String tlDelay = line.replaceAll(pattern, "$3");
+					String type = line.replaceAll(pattern, "$4");
+					TrafficLightColour tlc = TrafficLightColour.GREEN;
+					if(type.equals("RED")){
+						tlc = TrafficLightColour.RED;
 					}
+					//int gHeight = Integer.parseInt(heightStr);
+					System.out.println(tlX+"_"+tlY+"_"+tlDelay);
+					ITrafficLight tl = new TrafficLight();
+					tl.setDelay(Integer.parseInt(tlDelay));
+					tl.setColour(tlc);
+					rgrid.placeTrafficLightAt(Integer.parseInt(tlX), Integer.parseInt(tlY), tl);
 					
-					else if(value.equals("7"))
-					{
-						//junction
-						rgrid.setCellType(col, row, CellType.EMPTY);
-						rgrid.setCellDirection(col, row, Direction.CIRCLE);
-					}
-					
-					
-					
-					
-					// stop here if no modifier
-					if(value.length() == 1){
-						continue;
-					}
-					
-					String modifier = value.substring(value.length() - 1);
-					
-					if(modifier.equals("!")){
-						System.err.println("! exit");
-						rgrid.setIsExit(col, row, true);
-					}else if(modifier.equals("*")){
-						rgrid.setIsEntry(col, row, true);
-						System.err.println("* entry");
-					}
-					
-					///////////////////matrix[row][col] = Integer.parseInt(spaces[col]);
-
 				}
-				
-				row++; 
-				line = reader.readLine();				
+				row++;
 			}
 			
 		}catch (IOException e) {

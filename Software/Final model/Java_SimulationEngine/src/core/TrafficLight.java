@@ -14,10 +14,8 @@ import events.SimpleEvent;
  *
  */
 public class TrafficLight implements ITrafficLight, ActionListener {
-
-	ITrafficLight trLight;
 	
-	Timer trLightTimer = new Timer(1500, this);
+	private Timer trLightTimer = new Timer(1500, this);
 	private TrafficLightColour colour;
 		
 		
@@ -47,19 +45,25 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 		{	
 			if(getColour()==TrafficLightColour.AMBER)
 			{
-			setColour(TrafficLightColour.GREEN);
+				setColour(TrafficLightColour.GREEN);
 			}
 			else if(getColour()==TrafficLightColour.RED_AMBER)
 			{
-			setColour(TrafficLightColour.RED);
+				setColour(TrafficLightColour.RED);
 			}
 			else if(getColour()==TrafficLightColour.RED)
 			{
-			setColour(TrafficLightColour.AMBER);
+				setColour(TrafficLightColour.AMBER);
 			}
 			else if(getColour()==TrafficLightColour.GREEN)
 			{
-			setColour(TrafficLightColour.RED_AMBER);
+				setColour(TrafficLightColour.RED_AMBER);
 			}
 		}
+
+	@Override
+	public void setDelay(int delay) {
+		// TODO Auto-generated method stub
+		trLightTimer.setDelay(delay);
+	}
 }

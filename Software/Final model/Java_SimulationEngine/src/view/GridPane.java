@@ -139,45 +139,49 @@ public class GridPane extends JComponent {
 	        					g.drawImage(car, px, py, null);
 	    					}
     					}
-    					if(getGrid().hasTrafficLightAt(x, y)){
-    						Color c = new Color(255, 255, 255);
-    						Graphics2D g2 = (Graphics2D) g;
-    						
-    						boolean drawSemiCircle = false;
-    						switch(getGrid().getTrafficLightAt(x, y).getColour()){
-    							case RED:
-    								c = new Color(255, 0, 0);
-    								break;
-    							case AMBER:
-    								c = new Color(255, 255, 0);
-    								break;
-    							case GREEN:
-    								c = new Color(102, 204, 0);
-    								break;
-    							case RED_AMBER:
-    								drawSemiCircle = true;
-    								c = new Color(255, 0, 255); 
-    						};
-    						if(drawSemiCircle){
-    							Arc2D leftArc = new Arc2D.Double(px, py, 5, 5, 90, 180, Arc2D.OPEN);
-    							Arc2D rightArc = new Arc2D.Double(px, py, 5, 5, 90, -180, Arc2D.OPEN);
-    							g2.setPaint(new Color(255, 255, 0));
-    							g2.fill(leftArc);
-    							g2.draw(leftArc);
-    							
-    							g2.setPaint(new Color(255, 0, 0));
-    							g2.fill(rightArc);
-    							g2.draw(rightArc);
-    						}else{
-	    						
-	    						Ellipse2D ellipse = new Ellipse2D.Double(px, py, 5, 5);
-	    						
-	    						g2.setPaint(c);
-	    						g2.fill(ellipse);
-	    						g2.draw(ellipse );
-    						}
-    					}
+    					
         			}
+    				
+    				if(getGrid().hasTrafficLightAt(x, y)){
+						System.out.println("grid has traffic light "+x+" "+y);
+						Color c = new Color(255, 255, 255);
+						Graphics2D g2 = (Graphics2D) g;
+						
+						boolean drawSemiCircle = false;
+						switch(getGrid().getTrafficLightAt(x, y).getColour()){
+							case RED:
+								c = new Color(255, 0, 0);
+								break;
+							case AMBER:
+								c = new Color(255, 255, 0);
+								break;
+							case GREEN:
+								c = new Color(102, 204, 0);
+								break;
+							case RED_AMBER:
+								drawSemiCircle = true;
+								c = new Color(255, 0, 255); 
+						};
+						if(drawSemiCircle){
+							Arc2D leftArc = new Arc2D.Double(px, py, 5, 5, 90, 180, Arc2D.OPEN);
+							Arc2D rightArc = new Arc2D.Double(px, py, 5, 5, 90, -180, Arc2D.OPEN);
+							g2.setPaint(new Color(255, 255, 0));
+							g2.fill(leftArc);
+							g2.draw(leftArc);
+							
+							g2.setPaint(new Color(255, 0, 0));
+							g2.fill(rightArc);
+							g2.draw(rightArc);
+						}else{
+    						
+    						Ellipse2D ellipse = new Ellipse2D.Double(px, py, 5, 5);
+    						
+    						g2.setPaint(c);
+    						g2.fill(ellipse);
+    						g2.draw(ellipse );
+						}
+					}
+    				
     			}
     			
     		
