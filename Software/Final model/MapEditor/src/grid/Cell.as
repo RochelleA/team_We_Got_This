@@ -2,6 +2,7 @@ package grid
 {
 	
 	import flash.events.Event;
+	import mx.events.PropertyChangeEvent;
 	
 	import spark.components.supportClasses.SkinnableComponent;
 	import spark.primitives.Rect;
@@ -16,6 +17,10 @@ package grid
 		private var _side:int = 20;
 		
 		private var _xPos:int, _yPos:int;
+		
+		private var _isRoad:Boolean = false;
+		
+		private var _isExit:Boolean, _isEntry:Boolean;
 		
 //		[SkinState(grid.CellType.EMPTY)]
 //		[SkinState("road_north")]
@@ -55,7 +60,7 @@ package grid
 		
 		override protected function getCurrentSkinState():String
 		{
-			trace(_xPos,_yPos,'get current skin state', this._type);
+			//trace(_xPos,_yPos,'get current skin state', this._type);
 			return this._type;
 		} 
 		
@@ -78,8 +83,21 @@ package grid
 		{
 			this._prevType = _type;
 			_type = value;
-				
+			
+			_isRoad = (type != grid.CellType.ROUNDABOUT && type != grid.CellType.EMPTY);
+			
+			
+			if(!temp && !_isRoad){
+				trace('not temp, not road, set permanent values');
+				_isExit = false;
+				_isEntry = false;
+			}
+			trace(isExit, isEntry);
+			//manually dispatch property change event because isRoad is changed
+			this.dispatchEvent(PropertyChangeEvent.createUpdateEvent(this,"isEntry",_isEntry,isEntry));
+			this.dispatchEvent(PropertyChangeEvent.createUpdateEvent(this,"isExit",_isExit,isExit));
 			this.invalidateSkinState();
+			trace('set type');
 		}
 
 		public function get temp():Boolean
@@ -108,6 +126,45 @@ package grid
 			this.type = this._prevType;
 		}
 
+		[Bindable]
+		public function get isExit():Boolean
+		{
+			return _isRoad && _isExit;
+		}
+
+		public function set isExit(value:Boolean):void
+		{
+			_isExit = value;
+			if(value && _isEntry){
+				isEntry = false;
+			}
+		}
+
+		[Bindable]
+		public function get isEntry():Boolean
+		{
+			return _isRoad && _isEntry;
+		}
+
+		public function set isEntry(value:Boolean):void
+		{
+			_isEntry = value;
+			if(value && _isExit){
+				isExit = false;
+			}
+		}
+
+		public function get isRoad():Boolean
+		{
+			return _isRoad;
+		}
+
 		
+		public function confirmNewType():void
+		{
+			this.temp = false;
+			trace('confirm new type');
+			this.type = this.type;
+		}
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
-		xmlns:mx="library://ns.adobe.com/flex/mx" preinitialize="skin1_preinitializeHandler(event)">
+		xmlns:mx="library://ns.adobe.com/flex/mx" preinitialize="skin1_preinitializeHandler(event)" mouseChildren="false">
 	<!-- host component -->
 	<fx:Metadata>
 		[HostComponent("grid.Cell")]
@@ -10,6 +10,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
+			import mx.events.PropertyChangeEvent;
 			
 			import instruments.Icons;
 			[Bindable]
@@ -19,6 +20,8 @@
 			{
 				// TODO Auto-generated method stub
 				hostComponent.addEventListener("tempChanged", onTempChange);
+				hostComponent.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onPropChange);
+
 			}
 			
 			protected function onTempChange(event:Event):void
@@ -29,6 +32,13 @@
 					fillAlpha = 1;
 				}
 				this.invalidateDisplayList();
+			}
+			
+			protected function onPropChange(event:PropertyChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace('property change event',event.property, event.oldValue, event.newValue);
+				
 			}
 			
 		]]>
@@ -43,6 +53,8 @@
 		<s:State name="roundabout" />
 		<s:State name="dummySelect" />
 	</s:states>
+	
+	
 	
 	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="rect">
 		<s:fill.empty>
@@ -81,4 +93,7 @@
 			<s:SolidColorStroke color="0xaaaaaa" color.dummySelect="0xff0000" weight.dummySelect="2"/>
 		</s:stroke>
 	</s:Rect>
+	
+	<s:Label text="entry" color="0x90ee90" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isEntry}" />
+	<s:Label text="exit" color="red" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isExit}" />
 </s:Skin>

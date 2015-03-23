@@ -33,6 +33,7 @@ package grid
 			
 			dummySelectCell = new Cell(0,0);
 			dummySelectCell.mouseEnabled = false;
+			dummySelectCell.mouseChildren = false;
 			dummySelectCell.type = "dummySelect";
 			hideDummySelectCell(dummySelectCell);
 			
@@ -60,13 +61,16 @@ package grid
 		
 		protected function onMouseMove(event:MouseEvent):void
 		{
-			trace('mouse move');
+			//trace('mouse move');
 			if( !(event.target is CellSkin) ){
 				return;
 			}
 			
 			var c:Cell = (event.target as CellSkin).owner as Cell;
-			trace(c);
+//			if(c.type == "dummySelect"){
+//				return;
+//			}
+			//trace(c);
 			if(c == currentCell){
 				return;
 			}else{
@@ -128,7 +132,7 @@ package grid
 		}
 		
 		private static function restoreCells(cells:Array):void{
-			trace('restore', cells.length);
+			//trace('restore', cells.length);
 			for each (var cell:Cell in cells){
 				cell.restore();
 			}
@@ -155,7 +159,7 @@ package grid
 			}
 			
 			for each (var c:Cell in tempCells){
-				c.temp = false;
+				c.confirmNewType();
 			}
 			tempCells.length = 0;
 		}

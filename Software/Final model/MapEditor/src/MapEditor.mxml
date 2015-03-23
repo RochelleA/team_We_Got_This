@@ -9,6 +9,7 @@
 			import mx.events.FlexEvent;
 			
 			import grid.Cell;
+			import grid.CellType;
 			
 			public static const rb:Roundabout = new Roundabout();			
 
@@ -38,6 +39,10 @@
 				setSelectedCell(squareGrid.selectedCell);
 			}
 			private function setSelectedCell(c:grid.Cell):void{
+				entryCB.enabled = false;
+				entryCB.selected = false;
+				exitCB.enabled = false;
+				exitCB.selected = false;
 				if(!c){
 					click_cell_lbl.visible = click_cell_lbl.includeInLayout = true;
 					cell_info.visible = cell_info.includeInLayout = false;
@@ -47,6 +52,11 @@
 					cell_info.visible = cell_info.includeInLayout = true;
 					cell_coord.text = c.toString();
 					cell_type.text = c.type;
+					if(c.isRoad){
+						entryCB.enabled = true;
+						exitCB.enabled = true;
+						updateEntryExitCheckBoxes(squareGrid.selectedCell, entryCB, exitCB);
+					}
 				}
 			}
 //			
@@ -63,6 +73,21 @@
 				squareGrid.instrument = instrPane.currentInstrumentId;
 				//testCell.temp = !testCell.temp;
 				//squareGrid.setStyle("side", 25);
+			}
+			
+			protected function onCheckBoxChange(event:Event):void
+			{
+				if(event.target == entryCB){
+					squareGrid.selectedCell.isEntry = entryCB.selected;
+				}else if(event.target == exitCB){
+					squareGrid.selectedCell.isExit = exitCB.selected;
+				}
+				updateEntryExitCheckBoxes(squareGrid.selectedCell, entryCB, exitCB);
+			}
+			private static function updateEntryExitCheckBoxes(cell:Cell, entryCB:CheckBox, exitCB:CheckBox):void{
+				trace('update check boxes');
+				entryCB.selected = cell.isEntry;
+				exitCB.selected = cell.isExit;
 			}
 			
 		]]>
@@ -100,6 +125,10 @@
 					<s:HGroup>
 						<s:Label text="Type:" width="50"/>
 						<s:Label id="cell_type"/>
+					</s:HGroup>
+					<s:HGroup id="checkBoxes">
+						<s:CheckBox id="entryCB" label="Entry" change="onCheckBoxChange(event)" />
+						<s:CheckBox id="exitCB" label="Exit" change="onCheckBoxChange(event)" />
 					</s:HGroup>
 				</s:VGroup>
 			</s:VGroup>
