@@ -1,8 +1,12 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -10,6 +14,7 @@ import javax.swing.JComponent;
 import core.CellType;
 import core.Direction;
 import core.IGrid;
+import core.TrafficLightColour;
 
 /**
  * 
@@ -133,6 +138,44 @@ public class GridPane extends JComponent {
 //	        					py=y*10;
 	        					g.drawImage(car, px, py, null);
 	    					}
+    					}
+    					if(getGrid().hasTrafficLightAt(x, y)){
+    						Color c = new Color(255, 255, 255);
+    						Graphics2D g2 = (Graphics2D) g;
+    						
+    						boolean drawSemiCircle = false;
+    						switch(getGrid().getTrafficLightAt(x, y).getColour()){
+    							case RED:
+    								c = new Color(255, 0, 0);
+    								break;
+    							case AMBER:
+    								c = new Color(255, 255, 0);
+    								break;
+    							case GREEN:
+    								c = new Color(102, 204, 0);
+    								break;
+    							case RED_AMBER:
+    								drawSemiCircle = true;
+    								c = new Color(255, 0, 255); 
+    						};
+    						if(drawSemiCircle){
+    							Arc2D leftArc = new Arc2D.Double(px, py, 5, 5, 90, 180, Arc2D.OPEN);
+    							Arc2D rightArc = new Arc2D.Double(px, py, 5, 5, 90, -180, Arc2D.OPEN);
+    							g2.setPaint(new Color(255, 255, 0));
+    							g2.fill(leftArc);
+    							g2.draw(leftArc);
+    							
+    							g2.setPaint(new Color(255, 0, 0));
+    							g2.fill(rightArc);
+    							g2.draw(rightArc);
+    						}else{
+	    						
+	    						Ellipse2D ellipse = new Ellipse2D.Double(px, py, 5, 5);
+	    						
+	    						g2.setPaint(c);
+	    						g2.fill(ellipse);
+	    						g2.draw(ellipse );
+    						}
     					}
         			}
     			}
