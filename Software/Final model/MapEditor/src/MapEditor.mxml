@@ -2,57 +2,42 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" width="955" height="600" xmlns:local="*"
-			   creationComplete="application1_creationCompleteHandler(event)" mouseUp="globalMouseUp(event)" xmlns:instruments="instruments.*">
+			   creationComplete="application1_creationCompleteHandler(event)" xmlns:instruments="instruments.*" xmlns:grid="grid.*">
 	
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
-			private var _currentInstrument:int = 0;
-			private var _roadInstr:String;
+			import grid.Cell;
 			
-			public var rb:Roundabout = new Roundabout();			
-			
-			
+			public static const rb:Roundabout = new Roundabout();			
+
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
 				
-				squareGrid = new SquareGrid();
-				squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
+				//squareGrid = new SquareGrid();
+				//squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
 				
-				scroller.viewport = squareGrid;
+				//scroller.viewport = squareGrid;
 				
 			}
-			
+//			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				squareGrid.init(25,25);
+				squareGrid.init(10,10);
 				gridWidth.text = "25";
 				gridHeight.text = "25";
 				
 				//changeInstrument(SELECT);
 				
 			}
-			
-			protected function globalMouseUp(event:MouseEvent):void
-			{
-				//if(event.target != squareGrid){
-				//	squareGrid.mouseUp();
-				//}
-				
-			}
-			
-			public function get currentInstrument():int
-			{
-				return _currentInstrument;
-			}
-			
+	
 			protected function onCellSelected(event:Event):void
 			{
 				//trace('cell selected'+);
 				setSelectedCell(squareGrid.selectedCell);
 			}
-			private function setSelectedCell(c:ICell):void{
+			private function setSelectedCell(c:grid.Cell):void{
 				if(!c){
 					click_cell_lbl.visible = click_cell_lbl.includeInLayout = true;
 					cell_info.visible = cell_info.includeInLayout = false;
@@ -61,21 +46,23 @@
 					click_cell_lbl.visible = click_cell_lbl.includeInLayout = false;
 					cell_info.visible = cell_info.includeInLayout = true;
 					cell_coord.text = c.toString();
-					cell_type.text = c.typeToString();
+					cell_type.text = c.type;
 				}
 			}
-			
+//			
 			protected function onSaveClick(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				var MyFile:FileReference = new FileReference();
 				MyFile.save("abc", "data.map");
 			}
-			
+//			
 			protected function onChangeInstrument(event:Event):void
 			{
 				trace('instrument change in model');
 				squareGrid.instrument = instrPane.currentInstrumentId;
+				//testCell.temp = !testCell.temp;
+				//squareGrid.setStyle("side", 25);
 			}
 			
 		]]>
@@ -86,7 +73,8 @@
 	</fx:Declarations>
 	<s:HGroup paddingTop="10" paddingLeft="10">
 		<s:Scroller id="scroller" width="501" height="551">
-			<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>
+			<!--<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>-->
+			<grid:SquareGrid id="squareGrid" cellSide="25" cellSelected="onCellSelected(event)"/>
 		</s:Scroller>
 		
 		<s:VGroup>
@@ -116,7 +104,8 @@
 				</s:VGroup>
 			</s:VGroup>
 			
-			
+<!--			<grid:Cell id="testCell" type="{grid.CellType.ROUNDABOUT}" temp="true" />
+-->			
 		</s:VGroup>
 		
 		

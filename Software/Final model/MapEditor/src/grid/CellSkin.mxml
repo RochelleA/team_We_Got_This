@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" preinitialize="skin1_preinitializeHandler(event)">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("grid.Cell")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import instruments.Icons;
+			[Bindable]
+			private var fillAlpha:Number = 1;
+			
+			protected function skin1_preinitializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				hostComponent.addEventListener("tempChanged", onTempChange);
+			}
+			
+			protected function onTempChange(event:Event):void
+			{
+				if(hostComponent.temp){
+					fillAlpha = 0.5;
+				}else{
+					fillAlpha = 1;
+				}
+				this.invalidateDisplayList();
+			}
+			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="empty" />
+		<s:State name="road_north" />
+		<s:State name="road_west" />
+		<s:State name="road_south" />
+		<s:State name="road_east" />
+		<s:State name="road_junction" />
+		<s:State name="roundabout" />
+		<s:State name="dummySelect" />
+	</s:states>
+	
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="rect">
+		<s:fill.empty>
+			<s:SolidColor alpha="1" color="0xffffff"/>
+		</s:fill.empty>
+		<s:fill.dummySelect>
+			<s:SolidColor alpha="0"/>
+		</s:fill.dummySelect>
+		<s:fill.roundabout>
+			<s:SolidColor alpha="{fillAlpha}" color="0x3b5f91"/>
+		</s:fill.roundabout>
+		<s:fill.road_east>
+			<s:BitmapFill source="{instruments.Icons.ROAD_EAST}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
+		</s:fill.road_east>
+		<s:fill.road_south>
+			<s:BitmapFill source="{instruments.Icons.ROAD_SOUTH}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
+		</s:fill.road_south>
+		<s:fill.road_west>
+			<s:BitmapFill source="{instruments.Icons.ROAD_WEST}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
+		</s:fill.road_west>
+		<s:fill.road_north>
+			<s:BitmapFill source="{instruments.Icons.ROAD_NORTH}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
+		</s:fill.road_north>
+		<s:fill.road_junction>
+			<s:BitmapFill source="{instruments.Icons.ROAD_JUNCTION}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
+		</s:fill.road_junction>
+		<!--<s:fill>
+			<s:BitmapFill source.road_east="{instruments.Icons.ROAD_EAST}"
+						  source.road_south="{instruments.Icons.ROAD_SOUTH}"
+						  source.road_west="{instruments.Icons.ROAD_WEST}"
+						  source.road_north="{instruments.Icons.ROAD_NORTH}"
+						  source.road_junction="{instruments.Icons.ROAD_JUNCTION}"
+						  smooth="true" fillMode="scale" alpha="{fillAlpha}" />
+		</s:fill>-->
+		<s:stroke>
+			<s:SolidColorStroke color="0xaaaaaa" color.dummySelect="0xff0000" weight.dummySelect="2"/>
+		</s:stroke>
+	</s:Rect>
+</s:Skin>
