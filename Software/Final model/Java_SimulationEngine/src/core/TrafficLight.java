@@ -36,10 +36,10 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 	public TrafficLightColour getColour() {
 		// TODO Auto-generated method stub
 		if(colour!=null){
-			System.out.println("The colour is " + colour);
+			
 		return colour;}
 		else {
-			System.out.println("The colour is NULL");
+		
 			return null;}
 	}
 	

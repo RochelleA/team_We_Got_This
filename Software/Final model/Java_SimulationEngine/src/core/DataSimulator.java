@@ -13,7 +13,7 @@ import events.SimpleEvent;
  *
  */
 public class DataSimulator extends EventDispatchable implements Runnable {
-	private int prob_car_appear = 25;
+	private int prob_car_appear = 20;
 	
 	private IGrid grid;
 	private int round = 0;
@@ -26,13 +26,62 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 		Thread carsFactory = new Thread(this);
 		carsFactory.start();
 	}
-	private void dispatchCar(int x, int y){
+	private void dispatchCar(int x, int y, Direction D){
 		ICar car = new Car();
 		
 		car.setSpeed(1);
 		car.setPosition(x,y);
-		car.setEnterDir(Direction.NORTH);
-		car.setExitDir(Direction.WEST);
+		if(D==Direction.NORTH)
+		{car.setEnterDir(Direction.SOUTH);
+		}
+		else if(D==Direction.SOUTH)
+		{car.setEnterDir(Direction.NORTH);
+		}
+		else if(D==Direction.EAST)
+		{car.setEnterDir(Direction.WEST);
+		}
+		else if(D==Direction.WEST)
+		{car.setEnterDir(Direction.EAST);
+		}
+		
+		int rand = random.nextInt(4)+1;
+		switch(rand){
+		case 1:
+			if(car.getEnterDir()==Direction.NORTH)
+			{car.setExitDir(Direction.SOUTH);
+			break;}
+			
+			car.setExitDir(Direction.NORTH);
+			break;
+			
+		case 2:
+			if(car.getEnterDir()==Direction.EAST){
+				car.setExitDir(Direction.WEST);
+				break;
+			}
+			car.setExitDir(Direction.EAST);
+			break;
+			
+		case 3:
+			if(car.getEnterDir()==Direction.SOUTH){
+				car.setExitDir(Direction.NORTH);
+				break;
+			}
+			car.setExitDir(Direction.SOUTH);
+			break;
+			
+		case 4:
+			if(car.getEnterDir()==Direction.WEST){
+				car.setExitDir(Direction.EAST);
+				break;
+			}
+			
+			car.setExitDir(Direction.WEST);
+			break;
+		
+		}
+		
+		
 		
 		NewCarEvent ce = new NewCarEvent(this,car);
 		
@@ -52,8 +101,8 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 					int r = random.nextInt(100);
 					if(prob_car_appear > r){
 						//make car!
-						//check if there is already car
-						this.dispatchCar(c.getX(), c.getY());
+						this.dispatchCar(c.getX(), c.getY(), c.getDirection());
+						
 					}
 				}
 			}

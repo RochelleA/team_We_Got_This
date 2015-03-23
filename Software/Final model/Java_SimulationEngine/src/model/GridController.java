@@ -3,11 +3,13 @@ package model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Timer;
 
+import core.Car;
 import core.CellType;
 import core.Direction;
 import core.ICar;
@@ -45,6 +47,15 @@ public class GridController implements ActionListener, IGridController {
 		trLight = new TrafficLight();
 		trLight.getColour();
 		this.setStatus(Model.STATUS_PAUSED);
+		
+//		ICar car = new Car();
+//		ICar car2 = new Car();
+//		car.setPosition(5, 12);
+//		car2.setPosition(5, 13);
+//		
+//		addCar(car);
+//		addCar(car2);
+		
 
 	}
 	
@@ -215,7 +226,7 @@ public class GridController implements ActionListener, IGridController {
 			grid.placeCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY(), myCar);
 			myCar.setX(myCar.getX()-myCar.getSpeed());
 			//going to WEST
-		}	
+		}
 		
 	}
 	
@@ -232,12 +243,14 @@ public class GridController implements ActionListener, IGridController {
 	
 	private void moveCar(){
 		
-		iterating = true;
+
+	this.iterating = true;
 	Iterator<ICar> i = listCars.iterator();
 	while(i.hasNext())
 	{
-			ICar myCar = i.next();
 
+			ICar myCar = i.next();
+		
 			/**
 			 * Statement checks the current position of the car
 			 * 
@@ -485,7 +498,8 @@ public class GridController implements ActionListener, IGridController {
 			}					
 		}
 	
-	iterating = false;
+
+	this.iterating = false;
 	
 	}
 	
@@ -499,16 +513,26 @@ public class GridController implements ActionListener, IGridController {
 	public void actionPerformed (ActionEvent e){
 		//System.out.println("timer event");
 		if(!iterating){
-			moveCar();
+			try{
+				moveCar();
+			}catch(ConcurrentModificationException cme){
+				System.out.println("exception");
+				this.iterating = false;
+			}
+			
 			model.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STEP));
+		}else{
+			System.out.println("iteration, wait");
 		}
 		
 	}
 
 	@Override
 	public void addCar(ICar car) {
+		
 		grid.placeCarAt(car.getX(), car.getY(), car);
 		listCars.add(car);
+
 	}
 
 	@Override
