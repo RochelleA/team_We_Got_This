@@ -23,8 +23,8 @@ public class Model extends EventDispatchable implements EventListener {
 	private IGridController _gc;
 	
 	
-	public static String STATUS_RUNNING = "running";
-	public static String STATUS_PAUSED = "paused";
+	public static final String STATUS_RUNNING = "running";
+	public static final String STATUS_PAUSED = "paused";
 	
 	public Model() {
 		//grid = new Grid(40, 25); //Grid(Col, Row)

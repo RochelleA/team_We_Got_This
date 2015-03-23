@@ -17,7 +17,7 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 
 	ITrafficLight trLight;
 	
-	Timer trLightTimer = new Timer(2000, this);
+	Timer trLightTimer = new Timer(1500, this);
 	private TrafficLightColour colour;
 		
 		
