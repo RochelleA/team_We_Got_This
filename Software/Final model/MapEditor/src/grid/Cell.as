@@ -2,6 +2,7 @@ package grid
 {
 	
 	import flash.events.Event;
+	
 	import mx.events.PropertyChangeEvent;
 	
 	import spark.components.supportClasses.SkinnableComponent;
@@ -57,6 +58,7 @@ package grid
 		
 		[SkinPart(required="true")]
 		public var rect:Rect;
+		private var _trafficLight:String;
 		
 		override protected function getCurrentSkinState():String
 		{
@@ -166,5 +168,18 @@ package grid
 			trace('confirm new type');
 			this.type = this.type;
 		}
+
+		[Bindable]
+		public function get trafficLight():String
+		{
+			return _trafficLight;
+		}
+
+		public function set trafficLight(value:String):void
+		{
+			_trafficLight = value;
+			this.dispatchEvent(new Event("trafficLightChanged"));
+		}
+
 	}
 }

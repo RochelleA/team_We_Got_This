@@ -12,8 +12,9 @@
 			
 			protected function ddl_changingHandler(event:IndexChangeEvent):void
 			{
-				var c:Class = TrafficLightColour.getIconForColour(ddl.dataProvider.getItemAt(event.newIndex).value);
-				ddl.setStyle('icon', c);
+				var value:String = ddl.dataProvider.getItemAt(event.newIndex).value;
+				selectedCell.trafficLight = value;
+				updateTrafficLightDDL(selectedCell, ddl);
 			}
 			
 			protected function onCheckBoxChange(event:Event):void
@@ -54,7 +55,33 @@
 						exitCB.enabled = true;
 						updateEntryExitCheckBoxes(selectedCell, entryCB, exitCB);
 					}
+					updateTrafficLightDDL(selectedCell, ddl);
 				}
+			}
+			
+			private function updateTrafficLightDDL(cell:Cell, ddl:DropDownList):void
+			{
+				// TODO Auto Generated method stub
+				var i:int = 0;
+				switch(cell.trafficLight){
+					case TrafficLightColour.RED:
+						i = 1;
+						break;
+					case TrafficLightColour.RED_AMBER:
+						i = 2;
+						break;
+					case TrafficLightColour.GREEN:
+						i = 3;
+						break;
+					case TrafficLightColour.AMBER:
+						i = 4;
+						break;
+				}
+				ddl.selectedIndex = i;
+				
+				var c:Class = TrafficLightColour.getIconForColour(cell.trafficLight);
+				ddl.setStyle('icon', c);
+				
 			}
 			
 		]]>
@@ -82,7 +109,7 @@
 			<s:FormItem>
 				<s:DropDownList changing="ddl_changingHandler(event)" id="ddl" skinClass="TrafficLightListSkin" labelField="title" selectedIndex="0" itemRenderer="TrafficLightItemRenderer"  width="110" >
 					<s:ArrayList>
-						<fx:Object title="None" />
+						<fx:Object title="None" value="None"/>
 						<fx:Object title="Red" value="{TrafficLightColour.RED}" />
 						<fx:Object title="Red-Amber" value="{TrafficLightColour.RED_AMBER}" />
 						<fx:Object title="Green" value="{TrafficLightColour.GREEN}" />
