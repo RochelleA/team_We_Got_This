@@ -244,7 +244,7 @@
 	
 	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. All members of our team had agreed that we wanted one of the  a multi-lane roundabout in our simulation. However, we foresaw several problems that could occur when implementing it. 
 	
-<<<<<<< Updated upstream
+    
 \begin{figure}
     \centering
     \begin{subfigure}[h]{0.5\textwidth}
@@ -268,42 +268,14 @@
         \caption{Possible two lane spiral roundabout}
         \label{spiralRoundabout}
 \end{figure}
-	 
-	As our groups focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In the figure \ref{CarCrash3}, we can see that  the grey car has approached the roundabout with its final destination being exit 4 and not long after the blue car has approached the roundabout with its final destination being exit 1. In this scenario a problem arises because the grey car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real-life the driver of the grey car would anticipate this problem and either adjust it's speed so the blue car could proceed before it or the blue car would give way to the grey car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decide to research problems in existing roundabouts in London \textcolor{red}{(Need reference for research?)}. During the research we came across a solution to a dangerous roundabout which was trialled in north London. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which insures that the lane the person enters the roundabout in will lead them directly to the correct exit without them having to change lanes on the roundabout. We decided we would also like to model this solution as it is a new a unique solution to a problem which has existed for many years. 
-    
-    
-As we intended to create a multi-lane roundabout with four junctions, we considered the situation where a large amount of cars is entering the roundabout from one junction. If we first implement the roundabout without traffic lights, we could try to ``break'' it by creating a steady flow of cars from one direction thereby blocking cars from entering the roundabout at the next junction. In figure \ref{steadyFlow}, a steady flow of cars is entering the roundabout from the fourth junction and are exiting at the second junction. This means that cars waiting to enter the roundabout from the first junction must keep waiting until the steady flow of cars lets up, thus creating a traffic jam. One solution to this problem would be to then implement traffic lights on this roundabout to regulate the number of cars entering at each junction. A timer-based traffic light would allow cars to enter the roundabout for a certain amount of time. A dynamic traffic light would depend on the number of cars coming into the roundabout from each direction. The traffic light would stay green longer for the junction which has the steady flow of cars, but it would also stop this flow to allow the cars at the other junctions to enter the roundabout. Either type of traffic light is a viable solution to this problem.
-=======
-	\begin{figure}
-		\centering
-		\begin{subfigure}{5 cm}
-			\centering
-			\includegraphics[width=\textwidth]{CarCrash3}
-			\caption{Issue with exiting a multi-lane roundabout}
-			\label{CarCrash3}
-		\end{subfigure}
-		\begin{subfigure}{5 cm}
-			\centering
-			\includegraphics[width=\textwidth]{spiralRoundabout}
-			\caption{Possible two lane spiral roundabout}
-			\label{SpiralRoundabout}
-			\end{subfigure}
-	\end{figure}
+	   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	As our groups focus was on multi-lane roundabouts one of the the problem which exist in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In the figure \ref{CarCrash3}, we can see that  the grey car has approached the roundabout with its final destination being exit 4 and at about the same time a blue car has approached the roundabout with it final destination being exit 1. In this scenario a problem arise because the grey car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real-life the driver of the grey car would anticipate this problem and either adjust it's speed so the blue car could proceed before it or the blue car would give way to the grey car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decide to research problem in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which insures that the lane the person enters the roundabout in will lead them directly to the correct exit without them having to change lanes on the roundabout. We decided we would also like to model this solution as it is a new a unique solution to a problem which has existed for many years. 
+	As our groups focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In figure \ref{CarCrash3}, we can see that the silver car has approached the roundabout with its final destination being exit 4, the blue car then approaches the roundabout with it final destination being exit 1. In this scenario a problem arises because the silver car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real life the driver of the silver car would anticipate this problem and either adjust its speed so the blue car could proceed before it or the blue car would give way to the silver car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decided to research problems in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London \textcolor{red}{(spiral roundabout reference)}. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{SpiralRoundabout}) is a spiral roundabout which ensures that the lane in which the person enters the roundabout will lead them directly to the correct exit without having to change lanes. We decided we would also like to model this as it is a new and unique solution to a problem which has existed for many years.
 	
-	It was at this point the group decided it would be useful to have a case network we could test new policies on. This would allow us to insure the simulation we built could be used by clients to represent their own network and to gather relevant statistics. We decided that our test network would focus on a four junction multi-lane roundabout. In order to gather statistics and test new policies first we needed a scenario. In our scenario there would be a heavy flow of cars coming from junction one, this would stop other cars entering the roundabout and cause a traffic jam (see figure \ref{SteadyFlow}). The solution we are proposing is that we could add traffic lights to this roundabout to help regulate the glow of traffic. If we could build dynamic traffic lights we could instead have the duration of the traffic light be dependant on the number of cars passing by the light. What we hope is that after we have built our simulation we will be able to test this scenario and use the simulation to find the most efficient light duration which would maximise the network flow through the roundabout. considering the end goal of our simulation allowed us to be clearer on what is necessary to build a quality traffic simulation.  
-	
-	
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=0.5\textwidth]{SteadyFlow}
-		\caption{Diagram showing how a steady flow of cars from one junction could cause a traffic jam on a network. }
-		\label{SteadyFlow}
-	\end{figure} 
->>>>>>> Stashed changes
+	It was at this point the group decided it would be useful to have a case network on which we could test new policies. This would allow us to ensure that the simulation we built could be used by clients to represent their own network and to gather relevant statistics. We decided that our test network would focus on a four junction multi-lane roundabout. In order to gather statistics and test new policies, we needed a scenario. In our scenario there would be a heavy flow of cars coming from junction one, this would delay other cars from entering the roundabout at the next junction, causing a traffic jam (see figure \ref{SteadyFlow}). The solution we propose is that we could add traffic lights to this roundabout to help regulate the flow of traffic. If we could build dynamic traffic lights, the duration of the traffic light would instead be dependent on the number of cars passing through the light rather than a timer-based traffic light. What we hope is that after we have built our simulation we will be able to test this scenario and use the simulation to find the most efficient light duration which would maximise the network flow through the roundabout. Considering the end goal of our simulation allowed us to be clearer on what is necessary to build a quality traffic simulation.  
 
-\textcolor{red}{FloatBarrier}
+
 	\subsection{Requirement Specification and Verification}
 	
 	Given the models analysed, we can define new requirements which are more precise than elicited ones. We will begin by categorising them into functional and non-functional requirements. In table \ref{requirements}, we specify the priority of each of the requirements and it is this priority list which will dictate the timetable of the project outlined in section \ref{Requirement Management}.\\
@@ -531,8 +503,7 @@ As we intended to create a multi-lane roundabout with four junctions, we conside
 		\label{requirements}
 		
 	\end{table}
-	
-	\textcolor{red}{Add intro to section, explanation of table and Nur's Gantt diagram.}\\\\
+    
     
     
 Table \ref{requirements} displays the requirements we wanted in our simulation broken down into the categories of Necessary, Optional, and Extra. 
@@ -545,36 +516,43 @@ If all the necessary requirements were finished, we hoped to implement the spira
 If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as Extra. This included different types of vehicles such as buses, places for cars to park, and a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give each car a behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
 \newline\indent	We thought that creating categories like this would give us a step-ladder approach to first complete the basics, fine tune what is already there to make it more advanced, and finally add even more elements to make it as realistic as possible.
 
-    
+
+\subsection{Project Timetabling}
+
+	As a team we decided to set a schedule for completing each of the requirements previously mentioned. We created a Gantt Chart demonstrating the order of events and their dependencies (see figure \ref{Gchart}). We have simplified the Gantt Chart by detailing the Name, Priority, Start Date, End Date, and Dependency in table \ref{timetable}. The Dependency column notes the number of the item that must already be implemented before that item can begin to be programmed. The Start and End dates noted in the table are our initial estimations of when we would start and finish each element. In actuality some of the elements took longer than expected and thus postponed their end date and the start of another element.
     
 	\begin{table}[H]
 		\centering
 		\label{TimetableForTheProject}
-		\begin{tabular}{|c|c|c|c|c|}
+		\begin{tabular}{|l|c|c|c|c|}
 			\hline {\bf Name} & {\bf Priority} & {\bf Start} & {\bf End} & {\bf Dependency} \\ 
-			\hline 1. Road & Necessary &  &  &  \\ 
-			\hline 2. Cars& Necessary &  &  &  \\ 
-			\hline 3. Roundabout & Necessary &  &  & 1 \\ 
-			\hline 4. Multiple Lanes & Necessary &  &  & 1 \\ 
-			\hline 5. Traffic Lights & Necessary &  &  &  \\ 
-			\hline 6.  Car Timer & Necessary &  &  & 2 \\ 
+			\hline 1. Road & Necessary & 13/02/15 &  18/02/15 &  \\ 
+			\hline 2. Cars & Necessary & 13/02/15 &  16/02/15 &  \\ 
+			\hline 3. Roundabout & Necessary & 13/02/15 & 18/02/15 & 1 \\ 
+			\hline 4. Multiple Lanes & Necessary & 13/02/15 & 18/02/15 & 1 \\ 
+			\hline 5. Traffic Lights & Necessary & 13/02/15 & 18/02/15 &  \\ 
+			\hline 6.  Car Timer & Necessary & 23/02/15  & 24/02/15 & 2 \\ 
 			\hline 7. Spiral Roundabout & Optional &  &  & 3 \\ 
-			\hline 8. Emergency Vehicle & Optional &  &  & 2 \\ 
-			\hline 9. Dynamic Traffic Lights & Optional &  &  & 5 \\ 
+			\hline 8. Emergency Vehicles & Optional & 23/02/15 & 27/02/15 & 2 \\ 			\hline 9. Dynamic Traffic Lights & Optional &  &  & 5 \\ 
 			\hline 10. Buses& Extra &  &  & 2 \\ 
 			\hline  11. Parking & Extra &  &  & 1 \\ 
 			\hline  12. Zebra Crossings & Extra &  &  & 1 \\ 
-			\hline 13. Driver Behaviour & Extra &  &  & 2 \\ 
+			\hline 13. Driver Behaviour & Extra &  19/02/15 & 20/02/15 & 2 \\ 
 			\hline 14. Horns/Honking & Extra &  &  & 13 \\ 
 			\hline 
 		\end{tabular} 
 		\caption{Timetable for the project}
+        \label{timetable}
 	\end{table}
 	
 	\begin{figure}
 		\centering
 		\includegraphics[width=\textwidth]{"G Chart"}
+        \caption{}
+        \label{Gchart}
 	\end{figure}
+    
+    
 	
 	%todo	\textcolor{blue}{Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effect that had on the design. You may also wish to mention the impact of team-working on your requirements and design.	}
 	
@@ -713,7 +691,10 @@ If both the necessary and optional requirements were implemented and there was s
 	\end{description}
 	
 	
-	\subsection{Github}
+	\subsection{GitHub}
+    
+    GitHub was an ongoing challenge for our team in the beginning of the project. As it took us a while to acclimate ourselves to using GitHub, we first used the online file-sharing platform Dropbox to distribute and save our team files. We set ourselves a deadline by which each member needed to be familiarised with GitHub. Following this deadline we still had some difficulties with the platform, but overall it was good for us to use in the documentation of  our project and tracking the change made by each team member.
+    
 	\section{Evaluation}
 	%todo	\textcolor{blue}{Critically evaluate your project: what worked well, and what didn't? 	how did you do relative to your plan? what changes were the result of improved thinking and what changes were forced upon you? how did your team work together? etc. 	Note that you need to show that you understand the weaknesses in your work as well as its strengths. You may wish to identify relevant future work that could be done on your project}
 	
