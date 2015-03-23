@@ -46,6 +46,8 @@ package grid
 		
 		override public function init(width:int, height:int):void{
 			super.init(width, height);
+			this.width = width*this.getStyle("cellSide")+1;
+			this.height = height*this.getStyle("cellSide")+1;
 			this.addElement(dummySelectCell);
 			dummySelectCell.setStyle("side", this.getStyle("cellSide"));
 			
@@ -136,6 +138,7 @@ package grid
 		protected function onMouseOut(event:MouseEvent):void
 		{
 			trace('mouse out');
+			currentCell = null;
 			if(!mouseDown){
 				restoreCells(tempCells);
 			}
