@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+			
+			import grid.Cell;
+			
+			private var _selectedCell:Cell;
+			
+			protected function ddl_changingHandler(event:IndexChangeEvent):void
+			{
+				var c:Class = TrafficLightColour.getIconForColour(ddl.dataProvider.getItemAt(event.newIndex).value);
+				ddl.setStyle('icon', c);
+			}
+			
+			protected function onCheckBoxChange(event:Event):void
+			{
+				if(event.target == entryCB){
+					selectedCell.isEntry = entryCB.selected;
+				}else if(event.target == exitCB){
+					selectedCell.isExit = exitCB.selected;
+				}
+				updateEntryExitCheckBoxes(selectedCell, entryCB, exitCB);
+			}
+			private static function updateEntryExitCheckBoxes(cell:Cell, entryCB:CheckBox, exitCB:CheckBox):void{
+				trace('update check boxes');
+				entryCB.selected = cell.isEntry;
+				exitCB.selected = cell.isExit;
+			}
+			public function get selectedCell():Cell{
+				return _selectedCell;
+			}
+			public function set selectedCell(c:grid.Cell):void{
+				this._selectedCell = c;
+				
+				entryCB.enabled = false;
+				entryCB.selected = false;
+				exitCB.enabled = false;
+				exitCB.selected = false;
+				if(!c){
+					click_cell_lbl.visible = click_cell_lbl.includeInLayout = true;
+					cell_info.visible = cell_info.includeInLayout = false;
+					cell_coord.text = "";
+				}else{
+					click_cell_lbl.visible = click_cell_lbl.includeInLayout = false;
+					cell_info.visible = cell_info.includeInLayout = true;
+					cell_coord.text = c.toString();
+					cell_type.text = c.type;
+					if(c.isRoad){
+						entryCB.enabled = true;
+						exitCB.enabled = true;
+						updateEntryExitCheckBoxes(selectedCell, entryCB, exitCB);
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Label text="Cell properties" fontSize="18"/>
+	<s:Label visible="true" id="click_cell_lbl" text="Click on a cell to view info" fontStyle="italic"/>
+	<s:VGroup id="cell_info" visible="false" includeInLayout="false">
+		<s:HGroup>
+			<s:Label text="Cell at" width="50"/>
+			<s:Label id="cell_coord"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="Type:" width="50"/>
+			<s:Label id="cell_type"/>
+		</s:HGroup>
+		<s:HGroup id="checkBoxes">
+			<s:CheckBox id="entryCB" label="Entry" change="onCheckBoxChange(event)" />
+			<s:CheckBox id="exitCB" label="Exit" change="onCheckBoxChange(event)" />
+		</s:HGroup>
+		<s:HGroup verticalAlign="middle">
+			<s:Label text="Traffic Light" />
+			<s:FormItem>
+				<s:DropDownList changing="ddl_changingHandler(event)" id="ddl" skinClass="TrafficLightListSkin" labelField="title" selectedIndex="0" itemRenderer="TrafficLightItemRenderer"  width="110" >
+					<s:ArrayList>
+						<fx:Object title="None" />
+						<fx:Object title="Red" value="{TrafficLightColour.RED}" />
+						<fx:Object title="Red-Amber" value="{TrafficLightColour.RED_AMBER}" />
+						<fx:Object title="Green" value="{TrafficLightColour.GREEN}" />
+						<fx:Object title="Amber" value="{TrafficLightColour.AMBER}" />
+					</s:ArrayList>
+				</s:DropDownList>
+			</s:FormItem>
+		</s:HGroup>
+	</s:VGroup>
+</s:VGroup>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true">
+	
+	<s:HGroup paddingLeft="2" paddingTop="2">
+		<s:BitmapImage source="{TrafficLightColour.RED_ICON}" includeInLayout="{data.value==TrafficLightColour.RED}"  visible="{data.value==TrafficLightColour.RED}"/>
+		<s:BitmapImage source="{TrafficLightColour.RED_AMBER_ICON}" includeInLayout="{data.value==TrafficLightColour.RED_AMBER}"  visible="{data.value==TrafficLightColour.RED_AMBER}"/>
+		<s:BitmapImage source="{TrafficLightColour.AMBER_ICON}" includeInLayout="{data.value==TrafficLightColour.AMBER}"  visible="{data.value==TrafficLightColour.AMBER}"/>
+		<s:BitmapImage source="{TrafficLightColour.GREEN_ICON}" includeInLayout="{data.value==TrafficLightColour.GREEN}"  visible="{data.value==TrafficLightColour.GREEN}"/>
+		
+		<s:Label text="{data.title}" fontSize="12" height="100%" verticalAlign="middle" paddingTop="4" paddingBottom="2"/>
+	</s:HGroup>
+	
+</s:ItemRenderer>

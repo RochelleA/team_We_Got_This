@@ -134,7 +134,7 @@ package
 		
 		private function putRoundabout(x:int, y:int):void{
 
-			var rb:Roundabout = (this.parentApplication as MapEditor).rb;
+			//var rb:Roundabout = (this.parentApplication as MapEditor).rb;
 			
 			//out of bounds check
 //			if(x+10>this.gridWidth){
@@ -153,7 +153,7 @@ package
 			
 			//log(' Move roundabout to '+rbX+':'+rbY);
 			restoreCells(tempCells);
-			
+			return;
 			for each (var cell:IVisualCell in rb.rbCells){
 				try{
 					var gridCell:IVisualCell = this.cells[y+cell.yPos][x+cell.xPos] as IVisualCell;
