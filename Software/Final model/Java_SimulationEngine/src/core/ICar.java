@@ -23,6 +23,20 @@ public interface ICar {
 	 */
 	public void setY(int y);
 	
+
+	/**
+	 * Sets the cars dir.
+	 *
+	 * @param carsDir the new cars dir
+	 */
+	public void setcarsDir(Direction carsDir);
+
+	/**
+	 * Gets the cars dir.
+	 *
+	 * @return the cars dir
+	 */
+	public Direction getcarsDir();
 	
 	/**
 	 * Sets the numb over taking.

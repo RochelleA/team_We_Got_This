@@ -39,8 +39,11 @@ public class GridPane extends JComponent {
 	Image roadNorthSpaceLane = new ImageIcon("images/roadNorthSpaceLane.png").getImage();
 	Image roadSouthSpaceLane = new ImageIcon("images/roadSouthSpaceLane.png").getImage();
 	Image roadNorthLane = new ImageIcon("images/roadNorthLane.png").getImage();
+	
 	Image car = new ImageIcon("images/redCar.jpg").getImage();
 	Image carNorth = new ImageIcon("images/redCarNorth.jpg").getImage();
+	Image carNorthEast = new ImageIcon("images/northEast.png").getImage();
+	Image carEastSouth = new ImageIcon("images/eastSouth.png").getImage();
 	
 	Image roadNorthEast = new ImageIcon("images/roadNorthEast.png").getImage();
 	Image roadEastSouth = new ImageIcon("images/roadEastSouth.png").getImage();
@@ -147,6 +150,24 @@ public class GridPane extends JComponent {
 						
 					}
 					if(getGrid().hasCarAt(x, y)){
+						if(getGrid().getCarAt(x, y).getcarsDir()==Direction.EAST || getGrid().getCarAt(x, y).getcarsDir()==Direction.WEST)
+						{
+							g.drawImage(car, px, py, null);
+						}
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.NORTH || getGrid().getCarAt(x, y).getcarsDir()==Direction.SOUTH)
+						{
+							g.drawImage(carNorth, px, py, null);
+						}
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.eastSouth || getGrid().getCarAt(x, y).getcarsDir()==Direction.westNorth)
+						{
+							g.drawImage(carEastSouth, px, py, null);
+						}
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.northEast || getGrid().getCarAt(x, y).getcarsDir()==Direction.southWest)
+						{
+							g.drawImage(carNorthEast, px, py, null);
+						}
+						
+						/**
 						if(getGrid().getCellDirection(x, y)==Direction.NORTH || getGrid().getCellDirection(x, y)==Direction.SOUTH)
 						{
 //	    						px=x*10;
@@ -158,6 +179,7 @@ public class GridPane extends JComponent {
 //	        					py=y*10;
         					g.drawImage(car, px, py, null);
     					}
+    					*/
 					}
 					
     			}
