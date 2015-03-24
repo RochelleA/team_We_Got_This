@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
-		xmlns:mx="library://ns.adobe.com/flex/mx" preinitialize="skin1_preinitializeHandler(event)" mouseChildren="false">
+		xmlns:mx="library://ns.adobe.com/flex/mx" mouseChildren="false">
 	<!-- host component -->
 	<fx:Metadata>
 		[HostComponent("grid.Cell")]
@@ -9,87 +9,113 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
-			import mx.events.PropertyChangeEvent;
+			//import mx.events.PropertyChangeEvent;
 			
-			import instruments.Icons;
-			[Bindable]
-			private var fillAlpha:Number = 1;
+			//import instruments.Icons;
+			//[Bindable]
+			//private var fillAlpha:Number = 1;
 			
-			protected function skin1_preinitializeHandler(event:FlexEvent):void
-			{
-				// TODO Auto-generated method stub
-				hostComponent.addEventListener("tempChanged", onTempChange);
-				hostComponent.addEventListener("trafficLightChanged", onTrafficLightChange);
-				hostComponent.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onPropChange);
-
-			}
+//			protected function skin1_preinitializeHandler(event:FlexEvent):void
+//			{
+//				// TODO Auto-generated method stub
+//				hostComponent.addEventListener("tempChanged", onTempChange);
+//				//hostComponent.addEventListener("trafficLightChanged", onTrafficLightChange);
+//				hostComponent.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onPropChange);
+//
+//			}
 			
-			protected function onTempChange(event:Event):void
-			{
-				if(hostComponent.temp){
-					fillAlpha = 0.5;
-				}else{
-					fillAlpha = 1;
-				}
-				this.invalidateDisplayList();
-			}
+//			protected function onTempChange(event:Event):void
+//			{
+//				if(hostComponent.temp){
+//					fillAlpha = 0.5;
+//				}else{
+//					fillAlpha = 1;
+//				}
+//				this.invalidateDisplayList();
+//			}
+//			
+//			protected function onPropChange(event:PropertyChangeEvent):void
+//			{
+//				// TODO Auto-generated method stub
+//				trace('property change event',event.property, event.oldValue, event.newValue);
+//				
+//			}
 			
-			protected function onPropChange(event:PropertyChangeEvent):void
-			{
-				// TODO Auto-generated method stub
-				trace('property change event',event.property, event.oldValue, event.newValue);
-				
-			}
-			
-			protected function onTrafficLightChange(event:Event):void
-			{
-				// TODO Auto-generated method stub
-				trace('traffic light change');
-				ellipse2Fill.alpha = 0;
-				switch(hostComponent.trafficLight){
-					case "None":
-						ellipseFill.alpha = 0;
-						break;
-					case TrafficLightColour.RED:
-						ellipseFill.color = 0xff0000;
-						ellipseFill.alpha = 1;
-						break;
-					case TrafficLightColour.RED_AMBER:
-						ellipseFill.color = 0xffff00;
-						ellipse2Fill.color = 0xff0000;
-						ellipse2Fill.alpha = 1;
-						ellipseFill.alpha = 1;
-						break;
-					case TrafficLightColour.GREEN:
-						ellipseFill.color = 0x00ff00;
-						ellipseFill.alpha = 1;
-						break;
-					case TrafficLightColour.AMBER:
-						ellipseFill.color = 0xffff00;
-						ellipseFill.alpha = 1;
-						break;
-					
-				}
-			}
+//			protected function onTrafficLightChange(event:Event):void
+//			{
+//				// TODO Auto-generated method stub
+//				trace('traffic light change');
+//				ellipse2Fill.alpha = 0;
+//				switch(hostComponent.trafficLight){
+//					case "None":
+//						ellipseFill.alpha = 0;
+//						break;
+//					case TrafficLightColour.RED:
+//						ellipseFill.color = 0xff0000;
+//						ellipseFill.alpha = 1;
+//						break;
+//					case TrafficLightColour.RED_AMBER:
+//						ellipseFill.color = 0xffff00;
+//						ellipse2Fill.color = 0xff0000;
+//						ellipse2Fill.alpha = 1;
+//						ellipseFill.alpha = 1;
+//						break;
+//					case TrafficLightColour.GREEN:
+//						ellipseFill.color = 0x00ff00;
+//						ellipseFill.alpha = 1;
+//						break;
+//					case TrafficLightColour.AMBER:
+//						ellipseFill.color = 0xffff00;
+//						ellipseFill.alpha = 1;
+//						break;
+//					
+//				}
+//			}
 			
 		]]>
 	</fx:Script>
 	<s:states>
-		<s:State name="empty" />
-		<s:State name="road_north" />
+		<s:State name="normal" />
+		<s:State name="temp" />
+		
+		<!--<s:State name="road_north" />
 		<s:State name="road_west" />
 		<s:State name="road_south" />
 		<s:State name="road_east" />
 		<s:State name="road_junction" />
-		<s:State name="roundabout" />
-		<s:State name="dummySelect" />
+		<s:State name="roundabout" />-->
 	</s:states>
 	
+	<!-- Transparent rectangle to react for mouse events-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="transparentFillRect">
+		<s:fill>
+			<s:SolidColor color="0xffffff" alpha="0" />
+		</s:fill>
+	</s:Rect>
 	
+	<!--Cell Solid Colour Fill-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="solidFillRect" alpha.temp="0.5" 
+			includeInLayout="{getStyle('isSolidFill')}" visible="{getStyle('isSolidFill')}">
+		<s:fill>
+			<s:SolidColor color="{getStyle('solidFill')}" />
+		</s:fill>
+	</s:Rect>
 	
-	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="rect">
-		<s:fill.empty>
+	<!--Cell Bitmap Fill-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="bitmapFillRect" alpha.temp="0.5"
+			includeInLayout="{getStyle('isBitmapFill')}" visible="{getStyle('isBitmapFill')}">
+		<s:fill>
+			<s:BitmapFill source="{getStyle('bitmapFill')}" smooth="true" fillMode="scale"/>
+		</s:fill>
+	</s:Rect>
+	
+	<!--Cell Border-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}">	
+		<s:stroke>
+			<s:SolidColorStroke color="{getStyle('strokeColour')}" />
+		</s:stroke>
+	</s:Rect>
+		<!--<s:fill.empty>
 			<s:SolidColor alpha="1" color="0xffffff"/>
 		</s:fill.empty>
 		<s:fill.dummySelect>
@@ -112,14 +138,10 @@
 		</s:fill.road_north>
 		<s:fill.road_junction>
 			<s:BitmapFill source="{instruments.Icons.ROAD_JUNCTION}" alpha="{fillAlpha}" smooth="true" fillMode="scale" />
-		</s:fill.road_junction>
-		
-		<s:stroke>
-			<s:SolidColorStroke color="0xaaaaaa" color.dummySelect="0xff0000" weight.dummySelect="2"/>
-		</s:stroke>
-	</s:Rect>
+		</s:fill.road_junction>-->
 	
-	<s:Label text="entry" color="0x90ee90" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isEntry}" />
+	
+	<!--<s:Label text="entry" color="0x90ee90" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isEntry}" />
 	<s:Label text="exit" color="red" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isExit}" />
 	
 	<s:Ellipse right="2" top="2" id="ellipse" width="5" height="5">
@@ -132,4 +154,6 @@
 			<s:SolidColor color="red" id="ellipse2Fill" alpha="0"/>
 		</s:fill>
 	</s:Ellipse>
+	color.dummySelect="0xff0000" weight.dummySelect="2"
+	-->
 </s:Skin>

@@ -13,16 +13,16 @@
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
 				
-				squareGrid = new grid.SquareGrid();
-				squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
+				//squareGrid = new grid.SquareGrid();
+				//squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
 				
-				scroller.viewport = squareGrid;
+				//scroller.viewport = squareGrid;
 				
 			}
 //			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				squareGrid.init(10,10);
+				//squareGrid.init(10,10);
 				gridWidth.text = "25";
 				gridHeight.text = "25";
 				
@@ -35,7 +35,7 @@
 			protected function onCellSelected(event:Event):void
 			{
 				//trace('cell selected'+);
-				cellProp.selectedCell = squareGrid.selectedCell;
+				//cellProp.selectedCell = squareGrid.selectedCell;
 			}
 			
 //			
@@ -49,7 +49,7 @@
 			protected function onChangeInstrument(event:Event):void
 			{
 				trace('instrument change in model');
-				squareGrid.instrument = instrPane.currentInstrumentId;
+				//squareGrid.instrument = instrPane.currentInstrumentId;
 				//testCell.temp = !testCell.temp;
 				//squareGrid.setStyle("side", 25);
 			}
@@ -65,9 +65,10 @@
 	<s:HGroup paddingTop="10" paddingLeft="10">
 		<s:Scroller id="scroller" width="501" height="551">
 			<!--<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>-->
-			<grid:SquareGrid id="squareGrid" cellSide="25" cellSelected="onCellSelected(event)"/>
+			<grid:AdvancedGrid widthInCells="10" heightInCells="10" cellSide="25" />
 		</s:Scroller>
-		
+<!--		<grid:SquareGrid id="squareGrid" cellSide="25" cellSelected="onCellSelected(event)" includeInLayout="false" visible="false"/>
+-->
 		<s:VGroup>
 			<s:HGroup verticalAlign="middle">
 				<s:Label text="Width:"/>
@@ -80,8 +81,8 @@
 			
 			<instruments:InstrumentsPane id="instrPane" changeInstrument="onChangeInstrument(event)" />
 			
-			<local:CellPropertiesPanel id="cellProp" paddingTop="50" />
-			
+<!--			<local:CellPropertiesPanel id="cellProp" paddingTop="50" />
+-->			
 		</s:VGroup>
 		
 		
