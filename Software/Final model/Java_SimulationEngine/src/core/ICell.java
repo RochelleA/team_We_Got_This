@@ -114,7 +114,7 @@ public interface ICell {
 	boolean hasTrafficLight();
 	
 	/**
-	 * Positions a traffic light on the cell. Throws an exception if there's no traffic light.
+	 * Positions a traffic light on the cell. Throws an exception if there's already a traffic light on the cell.
 	 * @param tl the traffic light to place
 	 * @throws GridException
 	 * @see ICell#getTrafficLight()

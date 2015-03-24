@@ -215,7 +215,17 @@ public class GridTest {
 	
 	//====
 	//TRAFFIC LIGHTS
-
+	@Test 
+	public void testGetTrafficLights(){
+		IGrid grid = new Grid(1, 2);
+		assertEquals(0, grid.getTrafficLights().size());
+		grid.placeTrafficLightAt(0, 0, new TrafficLight());
+		assertEquals(1, grid.getTrafficLights().size());
+		grid.placeTrafficLightAt(0, 1, new TrafficLight());
+		assertEquals(2, grid.getTrafficLights().size());
+		grid.removeTrafficLightFrom(0, 1);
+		assertEquals(1, grid.getTrafficLights().size());
+	}
 	@Test
 	public void testHasTrafficLightAt() {
 		IGrid grid = new Grid(1, 1);

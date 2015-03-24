@@ -141,6 +141,12 @@ public interface IGrid {
 	
 	//traffic lights
 	/**
+	 * Get all traffic lights on the grid.
+	 * @return ArrayList<ITrafficLights>
+	 */
+	ArrayList<ITrafficLight> getTrafficLights();
+	
+	/**
 	 * Checks if a cell has a traffic light. 
 	 * @param x x coordinate of the cell
 	 * @param y y coordinate of the cell

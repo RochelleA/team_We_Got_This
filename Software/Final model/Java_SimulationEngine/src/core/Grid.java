@@ -13,6 +13,8 @@ public class Grid implements IGrid {
 	
 	private static int MAX_WIDTH = 100;
 	private static int MAX_HEIGHT = 100;
+	
+	private ArrayList<ITrafficLight> trafficLights = new ArrayList<ITrafficLight>();
 
 	private int width;
 	private int height;
@@ -189,11 +191,14 @@ public class Grid implements IGrid {
 	@Override
 	public void placeTrafficLightAt(int x, int y, ITrafficLight tl) {
 		this.getCellAt(x,y).setTrafficLight(tl);
+		trafficLights.add(tl);
 	}
 
 	@Override
 	public void removeTrafficLightFrom(int x, int y) {
+		ITrafficLight tl = this.getCellAt(x,y).getTrafficLight();
 		this.getCellAt(x,y).removeTrafficLight();
+		trafficLights.remove(tl);
 
 	}
 	//====
@@ -202,6 +207,11 @@ public class Grid implements IGrid {
 	@Override
 	public ArrayList<ICell> getEntryCells() {
 		return this.entryCells;
+	}
+
+	@Override
+	public ArrayList<ITrafficLight> getTrafficLights() {
+		return this.trafficLights;
 	}
 
 }
