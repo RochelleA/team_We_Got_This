@@ -29,13 +29,10 @@ public class GridController implements ActionListener, IGridController {
 		
 		
 		IGrid grid;
-		
 	
-		
 		//array of the cars
 		List<ICar> listCars = new ArrayList<ICar>();
 		List<ICar> allCars = new ArrayList<ICar>();
-		
 		
 		
 		/** The main timer. */
@@ -125,7 +122,7 @@ public class GridController implements ActionListener, IGridController {
 	
 	
 	//driving to SOUTH-WEST
-	private void driveWestNorth(ICar car){
+	public void driveWestNorth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()-1)){
 
@@ -138,7 +135,7 @@ public class GridController implements ActionListener, IGridController {
 
 	
 	//driving to NORTH-EAST
-	private void driveNorthEast(ICar car){
+	public void driveNorthEast(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()-1)){
 
@@ -151,7 +148,7 @@ public class GridController implements ActionListener, IGridController {
 	}
 	
 	//driving to SOUTH-WEST
-	private void driveSouthWest(ICar car){
+	public void driveSouthWest(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()+1)){
 
@@ -163,7 +160,7 @@ public class GridController implements ActionListener, IGridController {
 	}
 	
 	//driving to EAST-SOUTH
-		private void driveEastSouth(ICar car){
+	public void driveEastSouth(ICar car){
 			ICar myCar = car;
 			if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()+1)){
 
@@ -190,7 +187,7 @@ public class GridController implements ActionListener, IGridController {
 	}
 	
 	//driving to SOUTH
-	private void driveSouth(ICar car){
+	public void driveSouth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed())){
 
@@ -204,7 +201,7 @@ public class GridController implements ActionListener, IGridController {
 	}
 	
 	//driving to EAST
-	private void driveEast(ICar car){
+	public void driveEast(ICar car){
 		ICar myCar = car;
 		
 		if(!grid.hasCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY())){
@@ -220,7 +217,7 @@ public class GridController implements ActionListener, IGridController {
 	}
 	
 	//driving to WEST
-	private void driveWest(ICar car){
+	public void driveWest(ICar car){
 		ICar myCar = car;
 		
 		if(!grid.hasCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY())){
@@ -311,9 +308,7 @@ public class GridController implements ActionListener, IGridController {
 	{
 
 			ICar myCar = i.next();
-			
-			
-			
+
 			/**
 			 * Statement checks the current position of the car
 			 * 
@@ -323,6 +318,9 @@ public class GridController implements ActionListener, IGridController {
 			 */
 			
 			if(grid.isExit(myCar.getX(), myCar.getY())){
+				System.out.println(myCar);
+				System.out.println(myCar.getEnterDir());
+				System.out.println(myCar.getExitDir());
 				System.out.println(myCar.getNumbRounds());
 				System.out.println(myCar.getNumbCells());
 				myCar.getNumbCells();
@@ -331,7 +329,6 @@ public class GridController implements ActionListener, IGridController {
 				grid.removeCarFrom(myCar.getX(),myCar.getY());
 				continue;
 				
-		
 			}	
 			
 			myCar.setNumbRounds(myCar.getNumbRounds()+1);

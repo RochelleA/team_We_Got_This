@@ -14,6 +14,7 @@ public class Car implements ICar {
 	private int speed;
 	private int numbCells;
 	private int numbRounds;
+	private int numbOverTaking;
 	
 	private Direction dirEnt;
 	private Direction dirExt;
@@ -105,5 +106,14 @@ public class Car implements ICar {
 		this.speed = speed;
 	}
 	
+	@Override
+	public void setNumbOverTaking(int numbOverTaking){
+		this.numbOverTaking = numbOverTaking;
+	}
+	
+	@Override
+	public int getNumbOverTaking(){
+		return numbOverTaking;
+	}
 	
 }

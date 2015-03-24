@@ -25,6 +25,21 @@ public interface ICar {
 	
 	
 	/**
+	 * Sets the numb over taking.
+	 *
+	 * @param numbOverTaking the new numb over taking
+	 */
+	public void setNumbOverTaking(int numbOverTaking);
+	
+	/**
+	 * Gets the numb over taking.
+	 *
+	 * @return the numb over taking
+	 */
+	public int getNumbOverTaking();
+	
+	
+	/**
 	 * Sets x position of the car.
 	 * @param x the position to set
 	 */
