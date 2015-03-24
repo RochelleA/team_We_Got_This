@@ -25,4 +25,14 @@ public interface ITrafficLight {
 	 * @param delay specifies how many ms the traffic light updates
 	 */
 	public void setDelay(int delay);
+	
+	/**
+	 * Stop traffic light from changing
+	 */
+	public void stop();
+	
+	/**
+	 * Start traffic light so it changes colours
+	 */
+	public void start();
 }

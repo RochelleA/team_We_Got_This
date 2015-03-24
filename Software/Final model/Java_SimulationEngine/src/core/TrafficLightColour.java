@@ -6,5 +6,5 @@ package core;
  *
  */
 public enum TrafficLightColour {
-	RED, RED_AMBER, AMBER, GREEN
+	RED, RED_AMBER, AMBER, GREEN, DISABLED
 }

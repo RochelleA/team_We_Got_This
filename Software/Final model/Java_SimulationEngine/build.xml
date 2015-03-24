@@ -10,6 +10,7 @@
 
     <property name="lib.dir"     value="lib"/>
     <property name="files.dir"   value="files"/>
+    <property name="images.dir"   value="images"/>
     
 <!--     <path id="classpath"> 
          <fileset dir="${lib.dir}" includes="**/*.jar"/> 
@@ -32,6 +33,7 @@
         <jar destfile="${jar.dir}/Program.jar">
             <fileset dir="${classes.dir}"/>
             <fileset dir="${files.dir}"/>
+	    <fileset dir="${images.dir}"/>
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
             </manifest>

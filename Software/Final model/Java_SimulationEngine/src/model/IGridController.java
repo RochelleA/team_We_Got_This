@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
 import core.ICar;
+import core.ITrafficLight;
 
 /**
  * @author Anton
@@ -32,9 +35,15 @@ public interface IGridController {
 	
 	/**
 	 * Returns current round of simulation controller.
-	 * @return
+	 * @return the current round
 	 */
 	public int getRound();
+	
+	/**
+	 * Returns a list of traffic lights
+	 * @return ArrayList<ITrafficLight> 
+	 */
+	public ArrayList<ITrafficLight> getTrafficLights();
 	
 	
 }

@@ -291,5 +291,29 @@ public class Model extends EventDispatchable implements EventListener {
 	public DataSimulator getDataSimulator() {
 		return ds;
 	}
+
+	public void setTrafficLightsColour(TrafficLightColour c) {
+		for (ITrafficLight tl : this._gc.getTrafficLights()){
+			tl.setColour(c);
+		}
+	}
+
+	public void stopTrafficLights() {
+		for (ITrafficLight tl : this._gc.getTrafficLights()){
+			tl.stop();
+		}
+	}
+	public void startTrafficLights() {
+		for (ITrafficLight tl : this._gc.getTrafficLights()){
+			tl.start();
+		}
+	}
+
+	public void disableTrafficLights() {
+		for (ITrafficLight tl : this._gc.getTrafficLights()){
+			tl.setColour(TrafficLightColour.DISABLED);
+		}
+		
+	}
 	
 }

@@ -632,4 +632,9 @@ public class GridController implements ActionListener, IGridController {
 		// TODO Auto-generated method stub
 		return rounds;
 	}
+
+	@Override
+	public ArrayList<ITrafficLight> getTrafficLights() {
+		return grid.getTrafficLights();
+	}
 }

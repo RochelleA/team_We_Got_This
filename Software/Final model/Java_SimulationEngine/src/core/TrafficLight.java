@@ -22,7 +22,7 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 	public TrafficLight()
 	{	
 		setColour(TrafficLightColour.GREEN);
-		trLightTimer.start();
+		this.start();
 	}
 		
 	@Override
@@ -65,5 +65,17 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 	public void setDelay(int delay) {
 		// TODO Auto-generated method stub
 		trLightTimer.setDelay(delay);
+	}
+
+	@Override
+	public void stop() {
+		trLightTimer.stop();
+		
+	}
+
+	@Override
+	public void start() {
+		trLightTimer.start();
+		
 	}
 }

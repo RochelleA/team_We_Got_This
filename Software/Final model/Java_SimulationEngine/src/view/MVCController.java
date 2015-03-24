@@ -1,6 +1,7 @@
 package view;
 
 import core.DataSimulator;
+import core.TrafficLightColour;
 import model.Model;
 
 /**
@@ -57,5 +58,18 @@ public class MVCController {
 	
 	public void setMapFile(String file){
 		model.loadFile(file);
+	}
+	
+	public void setTrafficLightsColour(TrafficLightColour c){
+		model.setTrafficLightsColour(c);
+	}
+	public void stopAllTrafficLights(){
+		model.stopTrafficLights();
+	}
+	public void startAllTrafficLights(){
+		model.startTrafficLights();
+	}
+	public void disableTrafficLights(){
+		model.disableTrafficLights();
 	}
 }

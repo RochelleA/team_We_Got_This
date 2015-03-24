@@ -23,6 +23,7 @@ import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 
 import core.DataSimulator;
+import core.TrafficLightColour;
 import model.Model;
 import events.EventListener;
 import events.SimpleEvent;
@@ -60,6 +61,14 @@ public class TestGrid01 implements EventListener {
 	private JLabel titleLabel;
 	private JLabel dataRoundLabel;
 	private JLabel modelRoundLabel;
+	
+	private JMenuItem setTrafficLightsRed;
+	private JMenuItem setTrafficLightsRedAmber;
+	private JMenuItem setTrafficLightsGreen;
+	private JMenuItem setTrafficLightsAmber;
+	private JMenuItem stopTrafficLights;
+	private JMenuItem startTrafficLights;
+	private JMenuItem disableTrafficLights;
 	
     public TestGrid01(Model model) {
     	
@@ -148,7 +157,7 @@ public class TestGrid01 implements EventListener {
         JMenu viewMenu = new JMenu("View");
         JMenu controlMenu = new JMenu("Control");
         JMenu dataMenu = new JMenu("Data");
-        JMenu helpMenu = new JMenu("Help");
+        JMenu trafficLightsMenu = new JMenu("Traffic Lights");
         
         //Managing Buttons 
         //JButton startButton = new JButton();
@@ -157,7 +166,7 @@ public class TestGrid01 implements EventListener {
          menuBar.add(viewMenu);
          menuBar.add(controlMenu);
          menuBar.add(dataMenu);
-         menuBar.add(helpMenu);
+         menuBar.add(trafficLightsMenu);
          
          // Create and add simple menu item to one of the drop down menu
          JMenuItem newAction = new JMenuItem("New");
@@ -183,7 +192,22 @@ public class TestGrid01 implements EventListener {
          dataActionStart = new JMenuItem("Start");
          dataActionPause = new JMenuItem("Pause");
          
-         JMenuItem helpAction = new JMenuItem("F1 for Help");
+         setTrafficLightsRed = new JMenuItem("Set All Red");
+         setTrafficLightsRed.addActionListener(new MenuActionListener());
+         setTrafficLightsRedAmber = new JMenuItem("Set All Red-Amber");
+         setTrafficLightsRedAmber.addActionListener(new MenuActionListener());
+         setTrafficLightsGreen = new JMenuItem("Set All Green");
+         setTrafficLightsGreen.addActionListener(new MenuActionListener());
+         setTrafficLightsAmber = new JMenuItem("Set All Amber");
+         setTrafficLightsAmber.addActionListener(new MenuActionListener());
+         
+         stopTrafficLights = new JMenuItem("Stop");
+         stopTrafficLights.addActionListener(new MenuActionListener());
+         startTrafficLights = new JMenuItem("Stop");
+         startTrafficLights.addActionListener(new MenuActionListener());
+         disableTrafficLights = new JMenuItem("Disable");
+         disableTrafficLights.addActionListener(new MenuActionListener());
+         
          
          controlActionStart.addActionListener(new MenuActionListener());
          controlActionPause.addActionListener(new MenuActionListener());
@@ -213,7 +237,17 @@ public class TestGrid01 implements EventListener {
          controlMenu.add(controlActionPause);
          dataMenu.add(dataActionStart);
          dataMenu.add(dataActionPause);
-         helpMenu.add(helpAction);
+         
+         trafficLightsMenu.add(setTrafficLightsRed);
+         trafficLightsMenu.add(setTrafficLightsRedAmber);
+         trafficLightsMenu.add(setTrafficLightsGreen);
+         trafficLightsMenu.add(setTrafficLightsAmber);
+         trafficLightsMenu.addSeparator();
+         trafficLightsMenu.add(startTrafficLights);
+         trafficLightsMenu.add(stopTrafficLights);
+         trafficLightsMenu.addSeparator();
+         trafficLightsMenu.add(disableTrafficLights);
+         
     }
     
     private void setModelStatus(String status){
@@ -264,6 +298,7 @@ public class TestGrid01 implements EventListener {
 			if(de.getType().equals(SimpleEvent.MODEL_INIT_ERROR)){
 				JOptionPane.showMessageDialog(frame, de.getData(), "Map Parse Error", JOptionPane.ERROR_MESSAGE);
 				System.out.println(de.getData());
+				return;
 			}
 		}
 		String type = e.getType();
@@ -323,6 +358,26 @@ public class TestGrid01 implements EventListener {
 				}
 			}else if(source == loadDefaultMapAction){
 				c.setMapFile("files/roundabout_new.txt");
+			}else if(source == setTrafficLightsRed){
+				c.setTrafficLightsColour(TrafficLightColour.RED);
+				tp.repaint();
+			}else if(source == setTrafficLightsRedAmber){
+				c.setTrafficLightsColour(TrafficLightColour.RED_AMBER);
+				tp.repaint();
+			}else if(source == setTrafficLightsGreen){
+				c.setTrafficLightsColour(TrafficLightColour.GREEN);
+				tp.repaint();
+			}else if(source == setTrafficLightsAmber){
+				c.setTrafficLightsColour(TrafficLightColour.AMBER);
+				tp.repaint();
+			}else if(source == stopTrafficLights){
+				c.stopAllTrafficLights();
+				//tp.repaint();
+			}else if(source == startTrafficLights){
+				c.startAllTrafficLights();
+			}else if(source == disableTrafficLights){
+				c.disableTrafficLights();
+				tp.repaint();
 			}
 			else{
 				System.out.println("Unimplemented control");

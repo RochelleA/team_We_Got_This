@@ -180,6 +180,8 @@ public class GridPane extends JComponent {
 						case RED_AMBER:
 							drawSemiCircle = true;
 							c = new Color(255, 0, 255); 
+						case DISABLED:
+							c = new Color(10, 10, 10); 
 					};
 					if(drawSemiCircle){
 						Arc2D leftArc = new Arc2D.Double(px, py, 5, 5, 90, 180, Arc2D.OPEN);
