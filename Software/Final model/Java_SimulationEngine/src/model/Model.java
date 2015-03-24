@@ -109,7 +109,7 @@ public class Model extends EventDispatchable implements EventListener {
 				}
 				//System.out.println(line);
 				if(parseGrid){
-					System.out.println(row);
+					//System.out.println(row);
 					if(row >= gHeight){
 						throw new GridException("Number of rows is "+gHeight+", but "+row+" found");
 					}
@@ -153,7 +153,8 @@ public class Model extends EventDispatchable implements EventListener {
 							rgrid.setCellDirection(col, row, Direction.JUNCTION);
 						}
 						else if(value.equals("9") || value.equals("8"))
-						{
+						{					// **********************************************************************
+
 							//junction
 							rgrid.setCellType(col, row, CellType.ROAD);
 							rgrid.setCellDirection(col, row, Direction.ROUNDABOUT);
@@ -175,11 +176,11 @@ public class Model extends EventDispatchable implements EventListener {
 						String modifier = value.substring(value.length() - 1);
 						
 						if(modifier.equals("!")){
-							System.err.println("! exit");
+							//System.err.println("! exit");
 							rgrid.setIsExit(col, row, true);
 						}else if(modifier.equals("*")){
 							rgrid.setIsEntry(col, row, true);
-							System.err.println("* entry");
+							//System.err.println("* entry");
 						}
 						
 						col++;
@@ -188,7 +189,10 @@ public class Model extends EventDispatchable implements EventListener {
 					row++;
 					
 				}else if(parseTrafficLights){
-					System.out.println("parse tl");
+					if(row < gHeight){
+						throw new GridException("The number of lines is less than specified: expected "+gHeight+", but read "+row);
+					}
+					//System.out.println("parse tl");
 					pattern = "\\[(\\d+);(\\d+)\\] (\\d+) (\\w+)";
 					String tlX = line.replaceAll(pattern, "$1");
 					String tlY = line.replaceAll(pattern, "$2");
@@ -272,10 +276,11 @@ public class Model extends EventDispatchable implements EventListener {
 				_gc = new GridController(grid, this);
 				this.initialized = true;
 				
-				System.out.println("model initialised");
+				//System.out.println("model initialised");
 				this.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.MODEL_INIT));
 			}catch(GridException ge){
-				System.out.println("An error was encountered while reading from file. " + ge.getMessage()+".");
+				//System.out.println("An error was encountered while reading from file. " + ge.getMessage()+".");
+				this.fireSimpleEvent(new DataEvent(this, SimpleEvent.MODEL_INIT_ERROR,"An error was encountered while reading from file.\n" + ge.getMessage()+"."));
 			}catch(Exception e){
 				//System.out.println("");
 			}

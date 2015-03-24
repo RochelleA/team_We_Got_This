@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -258,6 +259,13 @@ public class TestGrid01 implements EventListener {
 
 	@Override
 	public void handleSimpleEvent(SimpleEvent e) {
+		if(e instanceof DataEvent){
+			DataEvent de = ((DataEvent)e);
+			if(de.getType().equals(SimpleEvent.MODEL_INIT_ERROR)){
+				JOptionPane.showMessageDialog(frame, de.getData(), "Map Parse Error", JOptionPane.ERROR_MESSAGE);
+				System.out.println(de.getData());
+			}
+		}
 		String type = e.getType();
 		switch (type){
 		case SimpleEvent.MODEL_STEP:
