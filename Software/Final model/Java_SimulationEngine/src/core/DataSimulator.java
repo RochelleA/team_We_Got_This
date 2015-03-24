@@ -2,7 +2,6 @@ package core;
 
 import java.util.Random;
 
-import events.DataEvent;
 import events.EventDispatchable;
 import events.NewCarEvent;
 import events.SimpleEvent;
@@ -17,14 +16,16 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 	
 	private IGrid grid;
 	private int round = 0;
-	private boolean isRunning = true;
+	private boolean isRunning = false;
 	private int delay = 1000;  // 1 s default delay
 	private Random random = new Random();
 	
-	public DataSimulator(IGrid grid){
-		this.grid = grid;
+	public DataSimulator(){
 		Thread carsFactory = new Thread(this);
 		carsFactory.start();
+	}
+	public void setGrid(IGrid grid){
+		this.grid = grid;
 	}
 	private void dispatchCar(int x, int y, Direction D){
 		ICar car = new Car();
@@ -87,27 +88,22 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 		
 		this.fireDataEvent(ce);
 	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while(true){
 			if(isRunning){
 				round++;
-				System.out.println("round: " + round);
-	
-				
-					
+				System.out.println("round: " + getRound());
+
 				for (ICell c : grid.getEntryCells()){
 					int r = random.nextInt(100);
 					if(prob_car_appear > r){
 						//make car!
 						this.dispatchCar(c.getX(), c.getY(), c.getDirection());
-						
 					}
 				}
 			}
-			
-			System.out.println(isRunning);
 			
 			try {
 				Thread.sleep(delay);
@@ -130,6 +126,10 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 
 	public void setProb_car_appear(int prob_car_appear) {
 		this.prob_car_appear = prob_car_appear;
+	}
+	
+	public int getRound() {
+		return round;
 	}
 	
 }

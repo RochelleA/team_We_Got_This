@@ -5,10 +5,12 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileFilter;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -52,11 +54,15 @@ public class TestGrid01 implements EventListener {
 	private JLabel dataStatusLabel;
 	private ImageIcon icon_green;
 	private ImageIcon icon_red;
+	private JMenuItem loadMapAction;
 	
-    public TestGrid01(Model model, DataSimulator ds) {
+    public TestGrid01(Model model) {
     	
     	this.model = model;
-    	this.ds = ds;
+    	this.ds = model.getDataSimulator();
+    	
+    	this.model.addEventListener(this); //listen for model updates
+    	this.ds.addEventListener(this); //listen for data status change event
     	
         frame = new JFrame("«We-Got-This» Traffic Simulation Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +74,7 @@ public class TestGrid01 implements EventListener {
         setUpMenu();
         
         tp = new GridPane(); //simulation grid 
-        tp.setGrid(model.getGrid());        
+        //tp.setGrid(model.getGrid());        
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.getViewport().add(tp);
@@ -136,7 +142,11 @@ public class TestGrid01 implements EventListener {
          
          // Create and add simple menu item to one of the drop down menu
          JMenuItem newAction = new JMenuItem("New");
-         JMenuItem openAction = new JMenuItem("Open");
+         
+         loadMapAction = new JMenuItem("Load Map");
+         loadMapAction.addActionListener(new MenuActionListener());
+         loadMapAction.setAccelerator(KeyStroke.getKeyStroke('l'));
+         
          JMenuItem exitAction = new JMenuItem("Exit");
          JMenuItem cutAction = new JMenuItem("Cut");
          JMenuItem copyAction = new JMenuItem("Copy");
@@ -166,8 +176,9 @@ public class TestGrid01 implements EventListener {
 
        
          // Adding the respective menu with their respective Menu Items
-         fileMenu.add(newAction);
-         fileMenu.add(openAction);
+         //fileMenu.add(newAction);
+         fileMenu.add(loadMapAction);
+         
          fileMenu.add(cutAction);
          fileMenu.add(copyAction);
          fileMenu.add(pasteAction);
@@ -234,6 +245,11 @@ public class TestGrid01 implements EventListener {
 			System.out.println("data status change");
 			setDataStatus(ds.getRunning());
 			break;
+		case SimpleEvent.MODEL_INIT:
+			System.out.println("model initialized 1");
+			tp.setGrid(model.getGrid());
+			tp.repaint();
+			break;
 		}
 	}
 	
@@ -254,7 +270,20 @@ public class TestGrid01 implements EventListener {
 			}else if(source == dataActionPause){
 				c.dataPause();
 				//System.out.println("Data Pause");
-			}else{
+			}else if(source == loadMapAction){
+				//In response to a button click:
+				System.out.println("open file choose menu");
+				final JFileChooser fc = new JFileChooser();
+				MapFileFilter mff = new MapFileFilter();
+				fc.addChoosableFileFilter(mff);
+				fc.setFileFilter(mff);
+				int returnVal = fc.showOpenDialog(frame);
+				if(returnVal == JFileChooser.APPROVE_OPTION){
+					System.out.println(fc.getSelectedFile().getAbsolutePath());
+					c.setMapFile(fc.getSelectedFile().getAbsolutePath());
+				}
+			}
+			else{
 				System.out.println("Unimplemented control");
 			}
 			

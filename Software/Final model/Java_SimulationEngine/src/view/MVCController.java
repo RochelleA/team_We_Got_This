@@ -13,18 +13,25 @@ public class MVCController {
 	private Model model;
 	private DataSimulator ds;
 	
-	public MVCController(Model m, DataSimulator ds){
+	public MVCController(Model m){
 		this.model = m;
-		this.ds = ds;
+		this.ds = model.getDataSimulator();
 	}
 	
 	public void start(){
+		if(!model.getInitialized()){
+			System.out.println("model not initialized");
+			return;
+		}
 		if(model.getStatus().equals(Model.STATUS_PAUSED)){
 			model.startSim();
 			ds.setRunning(true);
 		}
 	}
 	public void pause(){
+		if(!model.getInitialized()){
+			return;
+		}
 		if(model.getStatus().equals(Model.STATUS_RUNNING)){
 			model.pauseSim();
 			ds.setRunning(false);
@@ -32,6 +39,9 @@ public class MVCController {
 	}
 
 	public void dataStart() {
+		if(!model.getInitialized()){
+			return;
+		}
 		if(!model.getStatus().equals(Model.STATUS_PAUSED)){
 			ds.setRunning(true);
 		}
@@ -39,6 +49,13 @@ public class MVCController {
 	}
 
 	public void dataPause() {
+		if(!model.getInitialized()){
+			return;
+		}
 		ds.setRunning(false);
+	}
+	
+	public void setMapFile(String file){
+		model.loadFile(file);
 	}
 }

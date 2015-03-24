@@ -1,9 +1,9 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Arrays;
 
 import core.*;
@@ -22,52 +22,48 @@ public class Model extends EventDispatchable implements EventListener {
 	private IGrid grid; 
 	private IGridController _gc;
 	
+	private boolean initialized = false;
 	
 	public static final String STATUS_RUNNING = "running";
 	public static final String STATUS_PAUSED = "paused";
+	private static BufferedReader reader;
+	private DataSimulator ds;
 	
 	public Model() {
-		//grid = new Grid(40, 25); //Grid(Col, Row)
 		
-	//	System.out.println("has car "+grid.hasCarAt(0, 10));
-
-		//GetMap();
-		this.grid = parseMap("files/roundabout_new.txt");
-		
-		_gc = new GridController(grid, this);
-		
-		//this.startSim();
-		
-		//grid.placeCarAt(7, 10, new Car());
-		//grid.placeCarAt(10, 10, new Car());
-		//System.out.println("has car " + grid.hasCarAt(10, 10));
-		
-		//System.out.println(getGrid().toString());
-		//System.out.println("finished");
+	    ds = new DataSimulator();
+	    ds.setGrid(null);
+	    ds.setRunning(false);
+	    
+	    ds.addEventListener(this);
+	    
+		this.loadFile("files/roundabout_new.txt");
 	}
 	
 	
+	public boolean getInitialized(){
+		return initialized;
+	}
 	
 	/**
  	 * Reads a map from a txt file, and creates a corresponding grid.
  	 * @param filename the name of the map file to read
 	 * @return IGrid the parsed grid.
  	 */
-	public IGrid parseMap(String filename){
+	public static IGrid parseMap(String filename){
 		//* - entry
 		//! - exit
-		String[] eastRoad = new String[] {"1","1*", "1!", "16"};
-		String[] westRoad = new String[] {"2","2*", "2!", "26"};
-		String[] northRoad = new String[] {"3","3*", "3!", "38"};
-		String[] southRoad = new String[] {"4","4*", "4!", "48"};
+		String[] eastRoad = new String[] {"1","1*", "1!"};
+		String[] westRoad = new String[] {"2","2*", "2!"};
+		String[] northRoad = new String[] {"3","3*", "3!"};
+		String[] southRoad = new String[] {"4","4*", "4!"};
 		
 		IGrid rgrid = null; //return grid 
 		try(FileReader file = new FileReader(filename)) {	
 
-			BufferedReader reader =new BufferedReader(file);
+			reader = new BufferedReader(file);
 			String line = reader.readLine();
 			
-			//System.out.println(line);
 			String pattern = "(\\w+) (\\d+)x(\\d+)";
 			String titleStr = line.replaceAll(pattern, "$1");
 			String widthStr = line.replaceAll(pattern, "$2");
@@ -96,15 +92,18 @@ public class Model extends EventDispatchable implements EventListener {
 				}
 				//System.out.println(line);
 				if(parseGrid){
+					System.out.println(row);
+					if(row >= gHeight){
+						throw new GridException("Number of rows is "+gHeight+", but "+row+" found");
+					}
 					String[] spaces = line.trim().split("\\s+");
 					if(spaces.length != gWidth){
-						throw new GridException("Inconsistent number of symbols on each line");
+						throw new GridException("Number of columns is "+gWidth+", but extra symbols found on line "+(row+1));
 					}
 					col = 0;
 					for (String value : spaces){
-						System.out.println(col+"_"+row);
-						//String value = (String)spaces[col];
-//						
+						//System.out.println(col+"_"+row);
+						
 						if(value.equals("0"))
 						{
 							rgrid.setCellType(col, row, CellType.EMPTY);
@@ -145,7 +144,7 @@ public class Model extends EventDispatchable implements EventListener {
 						
 						else if(value.equals("7"))
 						{
-							//junction
+							//roundabout
 							rgrid.setCellType(col, row, CellType.EMPTY);
 							rgrid.setCellDirection(col, row, Direction.CIRCLE);
 						}
@@ -169,6 +168,8 @@ public class Model extends EventDispatchable implements EventListener {
 						col++;
 							
 					}
+					row++;
+					
 				}else if(parseTrafficLights){
 					System.out.println("parse tl");
 					pattern = "\\[(\\d+);(\\d+)\\] (\\d+) (\\w+)";
@@ -183,13 +184,17 @@ public class Model extends EventDispatchable implements EventListener {
 					}
 					//int gHeight = Integer.parseInt(heightStr);
 					System.out.println(tlX+"_"+tlY+"_"+tlDelay);
-					ITrafficLight tl = new TrafficLight();
-					tl.setDelay(Integer.parseInt(tlDelay));
-					tl.setColour(tlc);
-					rgrid.placeTrafficLightAt(Integer.parseInt(tlX), Integer.parseInt(tlY), tl);
+					try{
+						ITrafficLight tl = new TrafficLight();
+						tl.setDelay(Integer.parseInt(tlDelay));
+						tl.setColour(tlc);
+						rgrid.placeTrafficLightAt(Integer.parseInt(tlX), Integer.parseInt(tlY), tl);
+					}catch(Exception e){
+						throw new GridException("Could not parse traffic light: "+line);
+					}
+					
 					
 				}
-				row++;
 			}
 			
 		}catch (IOException e) {
@@ -211,6 +216,9 @@ public class Model extends EventDispatchable implements EventListener {
 		this._gc.stopTimer();
 	}
 	public String getStatus(){
+		if(_gc == null){
+			return Model.STATUS_PAUSED;
+		}
 		return this._gc.getStatus();
 	}
 	
@@ -234,6 +242,32 @@ public class Model extends EventDispatchable implements EventListener {
 			}
 		}
 		
+	}
+
+	public void loadFile(String file) {
+		// TODO Auto-generated method stub
+		File f = new File(file);
+		if(f.exists() && !f.isDirectory()) { 
+			try{
+				this.grid = parseMap(file);	
+				ds.setGrid(this.grid);
+
+				_gc = new GridController(grid, this);
+				this.initialized = true;
+				
+				System.out.println("model initialised");
+				this.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.MODEL_INIT));
+			}catch(GridException ge){
+				System.out.println("An error was encountered while reading from file. " + ge.getMessage()+".");
+			}catch(Exception e){
+				//System.out.println("");
+			}
+			
+		}
+	}
+
+	public DataSimulator getDataSimulator() {
+		return ds;
 	}
 	
 }

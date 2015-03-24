@@ -12,19 +12,15 @@ public class Program {
 	public static void main(String[] args) {
 		Model model = new Model();
 		
-		System.out.println(model.getGrid().getWidth() + " "+model.getGrid().getHeight());
-		
-	    DataSimulator ds = new DataSimulator(model.getGrid());
-	    ds.setRunning(true);
-	    
-	    TestGrid01 tg = new TestGrid01(model, ds);
-	    
-	    model.addEventListener(tg);
+		//System.out.println(model.getGrid().getWidth() + " "+model.getGrid().getHeight());
 
-	    ds.addEventListener(model);
-	    ds.addEventListener(tg); //fire status change events
 	    
-	    MVCController c = new MVCController(model, ds);
+	    TestGrid01 tg = new TestGrid01(model);
+	    
+	    //ds.addEventListener(model);
+	    //ds.addEventListener(tg); //fire status change events
+	    
+	    MVCController c = new MVCController(model);
 	    tg.setMVCController(c);
 	    
 	    
