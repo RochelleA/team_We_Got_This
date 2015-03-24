@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 import core.DataSimulator;
 import core.TrafficLightColour;
@@ -37,10 +38,12 @@ import events.DataEvent;
  *
  */
 
-public class TestGrid01 implements EventListener {
+public class TestGrid01 implements EventListener, ActionListener {
 
-	Image grassImg;
-	Image roadImg;
+	private Image grassImg;
+	private Image roadImg;
+	
+	private Timer trLightTimer = new Timer(200, this); // update rate
 	
 	private GridPane tp;
 	private MVCController c;
@@ -69,6 +72,7 @@ public class TestGrid01 implements EventListener {
 	private JMenuItem stopTrafficLights;
 	private JMenuItem startTrafficLights;
 	private JMenuItem disableTrafficLights;
+	private boolean markedForRepaint;
 	
     public TestGrid01(Model model) {
     	
@@ -122,6 +126,8 @@ public class TestGrid01 implements EventListener {
         frame.setVisible(true);
         
         getCurrentData();
+        
+        trLightTimer.start();
 
     }
     
@@ -201,7 +207,7 @@ public class TestGrid01 implements EventListener {
          setTrafficLightsAmber = new JMenuItem("Set All Amber");
          setTrafficLightsAmber.addActionListener(new MenuActionListener());
          
-         stopTrafficLights = new JMenuItem("Stop");
+         stopTrafficLights = new JMenuItem("Start");
          stopTrafficLights.addActionListener(new MenuActionListener());
          startTrafficLights = new JMenuItem("Stop");
          startTrafficLights.addActionListener(new MenuActionListener());
@@ -304,26 +310,20 @@ public class TestGrid01 implements EventListener {
 		String type = e.getType();
 		switch (type){
 		case SimpleEvent.MODEL_STEP:
-			tp.repaint();
+			markedForRepaint = true;
 			setDataRound();
 			setModelRound();
+			break;
+		case SimpleEvent.TRAFFIC_LIGHT_CHANGE:
+			//System.out.println("view traffic light change");
+			markedForRepaint = true;
 			break;
 		case SimpleEvent.MODEL_INIT:
 			System.out.println("model initialized");
 			tp.setGrid(model.getGrid());
-			tp.repaint();
+			markedForRepaint = true;
 		case SimpleEvent.MODEL_STATUS_CHANGE:
-			//System.out.println("model status change");
-			//setModelStatus(model.getStatus());
-			//break;
 		case SimpleEvent.DATA_STATUS_CHANGE:
-			//System.out.println("data status change");
-			//setDataStatus(ds.getRunning());
-			//break;
-		case SimpleEvent.TRAFFIC_LIGHT_CHANGE:
-			System.out.println("view traffic light change");
-			//setDataStatus(ds.getRunning());
-			//break;
 		default:
 			getCurrentData();
 			
@@ -364,24 +364,18 @@ public class TestGrid01 implements EventListener {
 				c.setMapFile("files/roundabout_new.txt");
 			}else if(source == setTrafficLightsRed){
 				c.setTrafficLightsColour(TrafficLightColour.RED);
-				tp.repaint();
 			}else if(source == setTrafficLightsRedAmber){
 				c.setTrafficLightsColour(TrafficLightColour.RED_AMBER);
-				tp.repaint();
 			}else if(source == setTrafficLightsGreen){
 				c.setTrafficLightsColour(TrafficLightColour.GREEN);
-				tp.repaint();
 			}else if(source == setTrafficLightsAmber){
 				c.setTrafficLightsColour(TrafficLightColour.AMBER);
-				tp.repaint();
 			}else if(source == stopTrafficLights){
 				c.stopAllTrafficLights();
-				//tp.repaint();
 			}else if(source == startTrafficLights){
 				c.startAllTrafficLights();
 			}else if(source == disableTrafficLights){
 				c.disableTrafficLights();
-				tp.repaint();
 			}
 			else{
 				System.out.println("Unimplemented control");
@@ -392,6 +386,16 @@ public class TestGrid01 implements EventListener {
 	
 	public void setMVCController(MVCController mvcc){
 		this.c = mvcc;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("view timer event");
+		if(markedForRepaint){
+			tp.repaint();
+			markedForRepaint = false;
+		}
+		
 	}
 
 
