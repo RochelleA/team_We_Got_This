@@ -15,6 +15,7 @@ public class Car implements ICar {
 	private int numbCells;
 	private int numbRounds;
 	private int numbOverTaking;
+	private Direction carsDir;
 	
 	private Direction dirEnt;
 	private Direction dirExt;
@@ -52,6 +53,17 @@ public class Car implements ICar {
 	@Override
 	public Direction getExitDir(){
 		return dirExt;
+	}
+	
+	
+	@Override
+	public void setcarsDir(Direction carsDir){
+		this.carsDir = carsDir;
+	}
+	
+	@Override
+	public Direction getcarsDir(){
+		return carsDir;
 	}
 	
 	

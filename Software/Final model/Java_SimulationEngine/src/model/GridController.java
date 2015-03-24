@@ -134,6 +134,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.placeCarAt(myCar.getX()-1, myCar.getY()-1, myCar);
 			myCar.setY(myCar.getY()-1);
 			myCar.setX(myCar.getX()-1);
+			myCar.setcarsDir(Direction.westNorth);
 		}	
 	}
 
@@ -147,6 +148,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.placeCarAt(myCar.getX()+1, myCar.getY()-1, myCar);
 			myCar.setY(myCar.getY()-1);
 			myCar.setX(myCar.getX()+1);
+			myCar.setcarsDir(Direction.northEast);
 			// drive EAST-NORTH
 		}	
 	}
@@ -160,6 +162,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.placeCarAt(myCar.getX()-1, myCar.getY()+1, myCar);
 			myCar.setY(myCar.getY()+1);
 			myCar.setX(myCar.getX()-1);
+			myCar.setcarsDir(Direction.southWest);
 		}	
 	}
 	
@@ -172,6 +175,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 				grid.placeCarAt(myCar.getX()+1, myCar.getY()+1, myCar);
 				myCar.setY(myCar.getY()+1);
 				myCar.setX(myCar.getX()+1);
+				myCar.setcarsDir(Direction.eastSouth);
 			}	
 		}
 		
@@ -184,6 +188,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.removeCarFrom(myCar.getX(), myCar.getY());
 			grid.placeCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()-myCar.getSpeed());
+			myCar.setcarsDir(Direction.NORTH);
 			//going to NORTH
 		}
 		else 
@@ -198,6 +203,7 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.removeCarFrom(myCar.getX(), myCar.getY());
 			grid.placeCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed(), myCar);
 			myCar.setY(myCar.getY()+myCar.getSpeed());
+			myCar.setcarsDir(Direction.SOUTH);
 			//going to SOUTH
 		}	
 		else 
@@ -212,12 +218,12 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			grid.removeCarFrom(myCar.getX(), myCar.getY());
 			grid.placeCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY(), myCar);
 			myCar.setX(myCar.getX()+myCar.getSpeed());
+			myCar.setcarsDir(Direction.EAST);
 			//going to EAST			
 		}	
-		else {
-			System.out.println("Overtaking enter;");
+		else
 			overTake(car);
-		}
+		
 	}
 	
 	//driving to WEST
@@ -225,10 +231,12 @@ public class GridController implements EventListener, ActionListener, IGridContr
 		ICar myCar = car;
 		
 		if(!grid.hasCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY())){
-
+			
 			grid.removeCarFrom(myCar.getX(), myCar.getY());
 			grid.placeCarAt(myCar.getX()-myCar.getSpeed(), myCar.getY(), myCar);
+			
 			myCar.setX(myCar.getX()-myCar.getSpeed());
+			myCar.setcarsDir(Direction.WEST);
 			//going to WEST
 		}
 		else 

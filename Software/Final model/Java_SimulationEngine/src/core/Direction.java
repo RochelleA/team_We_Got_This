@@ -6,5 +6,5 @@ package core;
  *
  */
 public enum Direction {
-	NORTH, EAST, SOUTH, WEST , JUNCTION, ROUNDABOUT, CIRCLE
+	NORTH, EAST, SOUTH, WEST , JUNCTION, ROUNDABOUT, CIRCLE, northEast, eastSouth, westNorth, southWest
 }
