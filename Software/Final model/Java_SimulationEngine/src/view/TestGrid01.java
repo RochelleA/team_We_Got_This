@@ -2,14 +2,14 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileFilter;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,6 +73,8 @@ public class TestGrid01 implements EventListener, ActionListener {
 	private JMenuItem startTrafficLights;
 	private JMenuItem disableTrafficLights;
 	private boolean markedForRepaint;
+	private JLabel tlStatusLabel;
+	private JMenuItem enableTrafficLights;
 	
     public TestGrid01(Model model) {
     	
@@ -108,16 +110,21 @@ public class TestGrid01 implements EventListener, ActionListener {
         
         modelStatusLabel = new JLabel("Model Status: x",icon_green,JLabel.LEFT);
         dataStatusLabel = new JLabel("Data Status: x",icon_green,JLabel.LEFT);
+        tlStatusLabel = new JLabel("Traffic Lights: x",icon_green,JLabel.LEFT);
         
         titleLabel = new JLabel("Map");
-        dataRoundLabel = new JLabel("Data Round");
-        modelRoundLabel = new JLabel("Model Round");
+        titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.ITALIC, 14));
+        dataRoundLabel = new JLabel("Data Round",new ImageIcon("images/ferrari.png"),JLabel.LEFT);
+        modelRoundLabel = new JLabel("Model Round",new ImageIcon("images/clock.png"),JLabel.LEFT);
         
         listPane.add(titleLabel);
+        listPane.add(Box.createVerticalStrut(5));
         listPane.add(modelRoundLabel);
         listPane.add(dataRoundLabel);
+        listPane.add(Box.createVerticalStrut(15));
         listPane.add(modelStatusLabel);
         listPane.add(dataStatusLabel);
+        listPane.add(tlStatusLabel);
         
         listPane.setPreferredSize(new Dimension(225,100));
         
@@ -139,6 +146,7 @@ public class TestGrid01 implements EventListener, ActionListener {
         
         setModelRound();
         setDataRound();
+        setTlStatus(!this.model.getTrafficLightsDisabled());
         
     }
     private void setTitle(){
@@ -150,6 +158,15 @@ public class TestGrid01 implements EventListener, ActionListener {
     }
     private void setModelRound(){
     	modelRoundLabel.setText("Model round: "+model.getRound());
+    }
+    private void setTlStatus(boolean tlStatus){
+    	if(tlStatus){
+    		tlStatusLabel.setText("Traffic Lights: working");
+    		tlStatusLabel.setIcon(icon_green);
+    	}else{
+    		tlStatusLabel.setText("Traffic Lights: disabled");
+    		tlStatusLabel.setIcon(icon_red);
+    	}
     }
     
     private void setUpMenu(){
@@ -207,12 +224,14 @@ public class TestGrid01 implements EventListener, ActionListener {
          setTrafficLightsAmber = new JMenuItem("Set All Amber");
          setTrafficLightsAmber.addActionListener(new MenuActionListener());
          
-         stopTrafficLights = new JMenuItem("Start");
+         stopTrafficLights = new JMenuItem("Stop");
          stopTrafficLights.addActionListener(new MenuActionListener());
-         startTrafficLights = new JMenuItem("Stop");
+         startTrafficLights = new JMenuItem("Start");
          startTrafficLights.addActionListener(new MenuActionListener());
          disableTrafficLights = new JMenuItem("Disable");
          disableTrafficLights.addActionListener(new MenuActionListener());
+         enableTrafficLights = new JMenuItem("Enable");
+         enableTrafficLights.addActionListener(new MenuActionListener());
          
          
          controlActionStart.addActionListener(new MenuActionListener());
@@ -253,6 +272,7 @@ public class TestGrid01 implements EventListener, ActionListener {
          trafficLightsMenu.add(stopTrafficLights);
          trafficLightsMenu.addSeparator();
          trafficLightsMenu.add(disableTrafficLights);
+         trafficLightsMenu.add(enableTrafficLights);
          
     }
     
@@ -376,6 +396,8 @@ public class TestGrid01 implements EventListener, ActionListener {
 				c.startAllTrafficLights();
 			}else if(source == disableTrafficLights){
 				c.disableTrafficLights();
+			}else if(source == enableTrafficLights){
+				c.setTrafficLightsColour(TrafficLightColour.GREEN);
 			}
 			else{
 				System.out.println("Unimplemented control");
@@ -392,6 +414,7 @@ public class TestGrid01 implements EventListener, ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("view timer event");
 		if(markedForRepaint){
+			System.out.println("repaint");
 			tp.repaint();
 			markedForRepaint = false;
 		}

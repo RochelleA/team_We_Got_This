@@ -30,6 +30,7 @@ public class Model extends EventDispatchable implements EventListener {
 	private DataSimulator ds;
 	
 	private String mapTitle;
+	private boolean trafficLightsDisabled;
 	
 	public Model() {
 		
@@ -293,27 +294,51 @@ public class Model extends EventDispatchable implements EventListener {
 	}
 
 	public void setTrafficLightsColour(TrafficLightColour c) {
+		if(!initialized){
+			return;
+		}
 		for (ITrafficLight tl : this._gc.getTrafficLights()){
 			tl.setColour(c);
 		}
+		if(!c.equals(TrafficLightColour.DISABLED) && getTrafficLightsDisabled())
+			this.trafficLightsDisabled = false;
+			this.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STATUS_CHANGE));
 	}
 
 	public void stopTrafficLights() {
+		if(!initialized){
+			return;
+		}
 		for (ITrafficLight tl : this._gc.getTrafficLights()){
 			tl.stop();
 		}
 	}
 	public void startTrafficLights() {
+		if(!initialized){
+			return;
+		}
 		for (ITrafficLight tl : this._gc.getTrafficLights()){
 			tl.start();
 		}
 	}
 
 	public void disableTrafficLights() {
+		if(!initialized){
+			return;
+		}
+		this.trafficLightsDisabled = true;
+		
 		for (ITrafficLight tl : this._gc.getTrafficLights()){
 			tl.setColour(TrafficLightColour.DISABLED);
 		}
+		this.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STATUS_CHANGE));
 		
+	}
+	public boolean getTrafficLightsDisabled(){
+		if(!initialized){
+			return true;
+		}
+		return this.trafficLightsDisabled;
 	}
 	
 }
