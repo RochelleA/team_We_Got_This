@@ -56,6 +56,9 @@ public class TestGrid01 implements EventListener {
 	private ImageIcon icon_red;
 	private JMenuItem loadMapAction;
 	private JMenuItem loadDefaultMapAction;
+	private JLabel titleLabel;
+	private JLabel dataRoundLabel;
+	private JLabel modelRoundLabel;
 	
     public TestGrid01(Model model) {
     	
@@ -75,19 +78,12 @@ public class TestGrid01 implements EventListener {
         setUpMenu();
         
         tp = new GridPane(); //simulation grid 
-        //tp.setGrid(model.getGrid());        
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.getViewport().add(tp);
         JViewport vp = scrollPane.getViewport();
-        System.out.println(vp.getSize());
         vp.setSize(tp.getWidth(), tp.getHeight());
-        System.out.println(vp.getSize());
-        
-        System.out.println("rect:"+tp.getWidth() + ":"+tp.getHeight());
-        
-        //System.out.println("width: "+tp.getSize().width);
-                
+                                
         frame.add(scrollPane);
         
         JPanel listPane = new JPanel();
@@ -99,14 +95,19 @@ public class TestGrid01 implements EventListener {
         modelStatusLabel = new JLabel("Model Status: x",icon_green,JLabel.LEFT);
         dataStatusLabel = new JLabel("Data Status: x",icon_green,JLabel.LEFT);
         
+        titleLabel = new JLabel("Map");
+        dataRoundLabel = new JLabel("Data Round");
+        modelRoundLabel = new JLabel("Model Round");
+        
+        listPane.add(titleLabel);
+        listPane.add(modelRoundLabel);
+        listPane.add(dataRoundLabel);
         listPane.add(modelStatusLabel);
         listPane.add(dataStatusLabel);
         
         listPane.setPreferredSize(new Dimension(225,100));
         
         frame.add(listPane, BorderLayout.LINE_END);
-        //frame.add(tp);
-        //frame.add(listPane);
         
         frame.setVisible(true);
         
@@ -115,8 +116,24 @@ public class TestGrid01 implements EventListener {
     }
     
     private void getCurrentData(){
+    	System.out.println("get current data " + this.model.getInitialized());
     	setModelStatus(this.model.getStatus());
         setDataStatus(this.ds.getRunning());
+        setTitle();
+        
+        setModelRound();
+        setDataRound();
+        
+    }
+    private void setTitle(){
+    	titleLabel.setText("Map: "+model.getMapTitle());
+    	
+    }
+    private void setDataRound(){
+    	dataRoundLabel.setText("Data round: "+ds.getRound());
+    }
+    private void setModelRound(){
+    	modelRoundLabel.setText("Model round: "+model.getRound());
     }
     
     private void setUpMenu(){
@@ -200,13 +217,16 @@ public class TestGrid01 implements EventListener {
     
     private void setModelStatus(String status){
     	String s = "Controller status: ";
+    	controlActionStart.setEnabled(false);
+    	controlActionPause.setEnabled(false);
+    	
     	if(status.equals(Model.STATUS_PAUSED)){
-    		controlActionStart.setEnabled(true);
-    		controlActionPause.setEnabled(false);
+    		if(model.getInitialized()){
+    			controlActionStart.setEnabled(true);
+    		}
     		this.modelStatusLabel.setIcon(icon_red);
     		s += "Paused";
     	}else if(status.equals(Model.STATUS_RUNNING)){
-    		controlActionStart.setEnabled(false);
     		controlActionPause.setEnabled(true);
     		this.modelStatusLabel.setIcon(icon_green);
     		s += "Running";
@@ -242,21 +262,26 @@ public class TestGrid01 implements EventListener {
 		switch (type){
 		case SimpleEvent.MODEL_STEP:
 			tp.repaint();
-			break;
-		case SimpleEvent.MODEL_STATUS_CHANGE:
-			System.out.println("model status change");
-			setModelStatus(model.getStatus());
-			break;
-		case SimpleEvent.DATA_STATUS_CHANGE:
-			System.out.println("data status change");
-			setDataStatus(ds.getRunning());
+			setDataRound();
+			setModelRound();
 			break;
 		case SimpleEvent.MODEL_INIT:
-			System.out.println("model initialized 1");
+			System.out.println("model initialized");
 			tp.setGrid(model.getGrid());
 			tp.repaint();
-			break;
+		case SimpleEvent.MODEL_STATUS_CHANGE:
+			//System.out.println("model status change");
+			//setModelStatus(model.getStatus());
+			//break;
+		case SimpleEvent.DATA_STATUS_CHANGE:
+			//System.out.println("data status change");
+			//setDataStatus(ds.getRunning());
+			//break;
+		default:
+			getCurrentData();
+			
 		}
+		
 	}
 	
 	

@@ -30,4 +30,11 @@ public interface IGridController {
 	 */
 	public String getStatus();
 	
+	/**
+	 * Returns current round of simulation controller.
+	 * @return
+	 
+	public int getRound();
+	*/
+	
 }

@@ -129,7 +129,6 @@ public class GridPane extends JComponent {
     			}
 				
 				if(getGrid().hasTrafficLightAt(x, y)){
-					System.out.println("grid has traffic light "+x+" "+y);
 					Color c = new Color(255, 255, 255);
 					Graphics2D g2 = (Graphics2D) g;
 					

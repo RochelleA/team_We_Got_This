@@ -29,6 +29,8 @@ public class Model extends EventDispatchable implements EventListener {
 	private static BufferedReader reader;
 	private DataSimulator ds;
 	
+	private String mapTitle;
+	
 	public Model() {
 		
 	    ds = new DataSimulator();
@@ -37,12 +39,26 @@ public class Model extends EventDispatchable implements EventListener {
 	    
 	    ds.addEventListener(this);
 	    
-		this.loadFile("files/roundabout_new.txt");
 	}
 	
+	public int getRound(){
+		//_gc.getRound();
+		return 0;
+		
+	}
 	
 	public boolean getInitialized(){
 		return initialized;
+	}
+	
+	public String getMapTitle(){
+		String s = "";
+		if(!initialized){
+			s = "not loaded";
+		}else{
+			s = mapTitle;
+		}
+		return s;
 	}
 	
 	/**
@@ -50,7 +66,7 @@ public class Model extends EventDispatchable implements EventListener {
  	 * @param filename the name of the map file to read
 	 * @return IGrid the parsed grid.
  	 */
-	public static IGrid parseMap(String filename){
+	public IGrid parseMap(String filename){
 		//* - entry
 		//! - exit
 		String[] eastRoad = new String[] {"1","1*", "1!"};
@@ -72,6 +88,7 @@ public class Model extends EventDispatchable implements EventListener {
 			int gHeight = Integer.parseInt(heightStr);
 			
 			System.out.println(titleStr+";"+widthStr+";"+heightStr);
+			mapTitle = titleStr;
 			
 			rgrid = new Grid(gWidth, gHeight);
 			
@@ -216,7 +233,7 @@ public class Model extends EventDispatchable implements EventListener {
 		this._gc.stopTimer();
 	}
 	public String getStatus(){
-		if(_gc == null){
+		if(!initialized){
 			return Model.STATUS_PAUSED;
 		}
 		return this._gc.getStatus();
