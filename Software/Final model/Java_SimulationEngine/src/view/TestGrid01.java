@@ -320,6 +320,10 @@ public class TestGrid01 implements EventListener {
 			//System.out.println("data status change");
 			//setDataStatus(ds.getRunning());
 			//break;
+		case SimpleEvent.TRAFFIC_LIGHT_CHANGE:
+			System.out.println("view traffic light change");
+			//setDataStatus(ds.getRunning());
+			//break;
 		default:
 			getCurrentData();
 			

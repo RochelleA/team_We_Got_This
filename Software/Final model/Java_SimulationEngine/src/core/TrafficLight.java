@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import events.EventDispatchable;
 import events.SimpleEvent;
 
 
@@ -13,7 +14,7 @@ import events.SimpleEvent;
  * @author Anton
  *
  */
-public class TrafficLight implements ITrafficLight, ActionListener {
+public class TrafficLight extends EventDispatchable implements ITrafficLight, ActionListener {
 	
 	private Timer trLightTimer = new Timer(1500, this);
 	private TrafficLightColour colour;
@@ -28,6 +29,7 @@ public class TrafficLight implements ITrafficLight, ActionListener {
 	@Override
 	public void setColour(TrafficLightColour colour) {
 		this.colour = colour;
+		this.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.TRAFFIC_LIGHT_CHANGE));
 	}
 
 	@Override

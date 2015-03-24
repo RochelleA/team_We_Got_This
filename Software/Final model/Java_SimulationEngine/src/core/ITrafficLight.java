@@ -1,4 +1,8 @@
 package core;
+
+import events.EventListener;
+import events.SimpleEvent;
+
 /**
  * An interface for working with traffic lights. Traffic lights
  * can be placed in cells, such that a cell can have only one traffic light
@@ -35,4 +39,7 @@ public interface ITrafficLight {
 	 * Start traffic light so it changes colours
 	 */
 	public void start();
+	
+	public void addEventListener(EventListener listener);
+	
 }

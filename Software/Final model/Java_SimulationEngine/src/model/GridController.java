@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.swing.Timer;
 
-import core.Car;
 import core.CellType;
 import core.Direction;
 import core.ICar;
@@ -17,9 +16,10 @@ import core.IGrid;
 import core.ITrafficLight;
 import core.TrafficLight;
 import core.TrafficLightColour;
+import events.EventListener;
 import events.SimpleEvent;
 
-public class GridController implements ActionListener, IGridController {
+public class GridController implements EventListener, ActionListener, IGridController {
 		
 		private Model model;
 		private String status;
@@ -49,6 +49,10 @@ public class GridController implements ActionListener, IGridController {
 		trLight = new TrafficLight();
 		trLight.getColour();
 		this.setStatus(Model.STATUS_PAUSED);
+		
+		for (ITrafficLight tl : grid.getTrafficLights()){
+			tl.addEventListener(this);
+		}
 	}
 	
 	public void startTimer(){
@@ -636,5 +640,13 @@ public class GridController implements ActionListener, IGridController {
 	@Override
 	public ArrayList<ITrafficLight> getTrafficLights() {
 		return grid.getTrafficLights();
+	}
+
+	@Override
+	public void handleSimpleEvent(SimpleEvent e) {
+		if(e.getType().equals(SimpleEvent.TRAFFIC_LIGHT_CHANGE)){
+			model.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.TRAFFIC_LIGHT_CHANGE));
+		}
+		
 	}
 }
