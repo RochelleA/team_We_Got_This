@@ -55,6 +55,7 @@ public class TestGrid01 implements EventListener {
 	private ImageIcon icon_green;
 	private ImageIcon icon_red;
 	private JMenuItem loadMapAction;
+	private JMenuItem loadDefaultMapAction;
 	
     public TestGrid01(Model model) {
     	
@@ -147,6 +148,10 @@ public class TestGrid01 implements EventListener {
          loadMapAction.addActionListener(new MenuActionListener());
          loadMapAction.setAccelerator(KeyStroke.getKeyStroke('l'));
          
+         loadDefaultMapAction = new JMenuItem("Load Default");
+         loadDefaultMapAction.addActionListener(new MenuActionListener());
+         loadDefaultMapAction.setAccelerator(KeyStroke.getKeyStroke('L'));
+         
          JMenuItem exitAction = new JMenuItem("Exit");
          JMenuItem cutAction = new JMenuItem("Cut");
          JMenuItem copyAction = new JMenuItem("Copy");
@@ -178,6 +183,7 @@ public class TestGrid01 implements EventListener {
          // Adding the respective menu with their respective Menu Items
          //fileMenu.add(newAction);
          fileMenu.add(loadMapAction);
+         fileMenu.add(loadDefaultMapAction);
          
          fileMenu.add(cutAction);
          fileMenu.add(copyAction);
@@ -282,6 +288,8 @@ public class TestGrid01 implements EventListener {
 					System.out.println(fc.getSelectedFile().getAbsolutePath());
 					c.setMapFile(fc.getSelectedFile().getAbsolutePath());
 				}
+			}else if(source == loadDefaultMapAction){
+				c.setMapFile("files/roundabout_new.txt");
 			}
 			else{
 				System.out.println("Unimplemented control");
