@@ -42,9 +42,9 @@ public class Model extends EventDispatchable implements EventListener {
 	}
 	
 	public int getRound(){
-		//_gc.getRound();
+		if(_gc != null)
+			return _gc.getRound();
 		return 0;
-		
 	}
 	
 	public boolean getInitialized(){

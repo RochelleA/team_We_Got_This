@@ -12,6 +12,9 @@ public class Car implements ICar {
 	private int x;
 	private int y;
 	private int speed;
+	private int numbCells;
+	private int numbRounds;
+	
 	private Direction dirEnt;
 	private Direction dirExt;
 	
@@ -70,6 +73,26 @@ public class Car implements ICar {
 	@Override
 	public void setY(int y){
 		this.y = y;
+	}
+	
+	@Override
+	public int getNumbCells(){
+		return numbCells;
+	}
+	
+	@Override
+	public int getNumbRounds(){
+		return numbRounds;
+	}
+	
+	@Override
+	public void setNumbCells(int numbCells){
+		this.numbCells = numbCells;
+	}
+	
+	@Override
+	public void setNumbRounds(int numbRounds){
+		this.numbRounds = numbRounds;
 	}
 	
 	@Override

@@ -33,8 +33,8 @@ public interface IGridController {
 	/**
 	 * Returns current round of simulation controller.
 	 * @return
-	 
+	 */
 	public int getRound();
-	*/
+	
 	
 }
