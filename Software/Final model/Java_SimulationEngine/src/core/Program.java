@@ -16,7 +16,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.stage.Stage;
 import view.MVCController;
-import view.StatGraph;
 import view.TestGrid01;
 import model.*;
 
