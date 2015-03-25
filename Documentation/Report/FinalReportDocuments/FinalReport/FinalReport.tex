@@ -23,9 +23,9 @@
 	\textcolor{red}{What are our goals? We need to be able to say in two sentence what the goal of building our simulation is? }
 	
 	\pagebreak
-	\section*{Introduction}
+	\section{Introduction}
 	%todo	\textcolor{blue}{Describe the context for the work and the problem you are addressing. Briefly summarise what you achieved in the project.}
-	
+	The task for this project was to build a traffic simulation which implemented our own road policies and produced some statistical data based on these policies. In this report we will discuss how our team implemented a cell-automated microscopic traffic simulation with intelligent cars. The aim of our group was to ensure cars made the decision of where and when to move based on the information they had on the neighbouring cells.  We wanted the cars in our simulation to make decision which were as close to real life decisions made by drivers. In this report we will see that in order to achieve such sophisticated decision making, we needed to implement special policies at different points in our network such as on the approach to an intersection. Our group successfully implemented a map editor which allows users to create the own networks made of roads, junctions and roundabouts. The simulation engine is then able to read this map or a default map and start a simulation based on the map loaded. The simulation can be can be paused or the user also has the option to pause the statistics which are include in the right hand panel of the GUI. 
 	\section{Literature Review}
 	%	\textcolor{gray}{
 	%		\begin{itemize}
@@ -340,9 +340,9 @@
 		\item The simulation controller must move cars according to their speed and direction, making sure that collisions do not occur, e.g. if a car needs to be moved to the next cell which is already occupied by another car, it will not be moved. In the future, a collision can be allowed to occur and cause a traffic jam, but this is subject to changes in requirements.
 		\item The cars must be allowed to go ahead in their current direction or change direction when they reach a junction. 
 		\item The appropriate methods should exist to make cars enter, follow and exit roundabouts.
-		\item Traffic light's colour must change according to a certain delay associated with it by the global controller. \textcolor{red}{reconsider this:} The possible states are: RED, RED-AMBER, AMBER, GREEN. The exact behaviour of cars in these situations must be specified by a policy.
+		\item Traffic light's colour must change according to a certain delay associated with it by the global controller. \textcolor{red}{explain this in the implementation section} The possible states are: RED, RED-AMBER, AMBER, GREEN. The exact behaviour of cars in these situations must be specified by a policy.
 		\item Each car should have a timer which starts when it enters the map and stops when it exits. At this point, statistics are collected on the time taken for it to travel through the road network.
-		\item  The simulation might be paused by the user and its state can be saved by him/her to load later. \textcolor{red}{do we need/have time for this?}
+		\item  The simulation might be paused by the user and its state can be saved by him/her to load later. 
 		\item The vehicles may be able to overtake each other. 
 		\item  A behaviour may be added to each vehicle which determines the  speed at which they are driving and the decisions they make at traffic lights (e.g. always stop on AMBER for cautious drivers).
 		\item Special vehicles may be included in the simulation such as ambulances, fire brigades and police services. These special vehicles will get priority at traffic lights and other vehicles will be required to change lanes to give way. 
@@ -376,10 +376,10 @@
 		\label{Layers}
 	\end{figure}
 	
-	Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine \textcolor{red}{[glossary]}. 
+	Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine. 
 	Secondly, the data layer is responsible for the handling of data from the real world, e.g. how many cars are coming from different entry points at each point in time. 
 	This data could be gathered from cameras installed along the roads or from the mobile apps of drivers who wish to participate in helping to gather statistics about traffic conjectures \cite{NCTA}. 
-	Although it would be very challenging to have our system be able to read information in a similar way, it would be \textcolor{red}{useful} to allow users to be able to specify the probability a car will enter a given junction. 
+	Although it would be very challenging to have our system be able to read information in a similar way, it would be useful to allow users to be able to specify the probability a car will enter a given junction. 
 	This will allow the user to correctly model their own networks and design policies to improve problems. Thirdly, the Simulation Model layer uses the provided information about cars currently using the road network and attempts to predict future states of the network. 
 	A number of policies will be used in a simulation and one of the aims of this project is to find the most appropriate policy by comparing their performance, thus statistics and policies are two essential sub-layers. 
 	The Simulation Engine will also move the cars and switch colours on the traffic lights, so control is the third sub-layer. 
@@ -411,15 +411,14 @@
 	Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexities for simple programs \cite{bass2007software}. 
 	In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine. Therefore, we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
 	
-	\begin{figure}[p]
+	\begin{figure}[H]
 		\centering
-		\begin{subfigure}{\textwidth}
-			\centering
-			\includegraphics[width=0.9\textwidth]{MVCExample.jpg}
-			\caption{An example MVC structure from \cite{bass2007software}}
-		\end{subfigure}	
-		\par \bigskip
-		\begin{subfigure}{\textwidth}
+%		\begin{subfigure}{0.45\textwidth}
+%			\centering
+%			\includegraphics[width=0.9\textwidth]{MVCExample.jpg}
+%			\caption{An example MVC structure from \cite{bass2007software}}
+%		\end{subfigure}	
+		\begin{subfigure}{0.8\textwidth}
 			\centering
 			\includegraphics[width=0.9\textwidth]{mvc}
 			\caption{The MVC design for our simulation}
@@ -429,14 +428,14 @@
 		
 	\end{figure}
 	
-	\begin{figure}
-		\vspace{-35pt}
-		\centering
-		\includegraphics[width=1.15\textwidth]{SequenceDiagram}
-		\caption{The sequence diagram of an example run of the simulation}
-		\label{SequenceDiagram}
-	\end{figure}
-	
+%	\begin{figure}
+%		\vspace{-35pt}
+%		\centering
+%		\includegraphics[width=1.15\textwidth]{SequenceDiagram}
+%		\caption{The sequence diagram of an example run of the simulation}
+%		\label{SequenceDiagram}
+%	\end{figure}
+%	
 	
 	%
 	%\begin{figure}[h]
@@ -455,16 +454,16 @@
 	
 	\textcolor{red}{Problems with UML can three of them be combined on the same page to save space. Explain them here.}
     
-    %	
-%\begin{figure}
-%	\centering
-%\includegraphics[scale=0.65{ClassDiagram}
-%\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale= 0.45]{ClassDiagram}
+\end{figure}
+
+%\includepdf{ClassDiagram}
+
 	
 	\subsection{Requirement Management}\label{Requirement Management}
-	\textcolor{red}{How can we explain the attributes above if some have already been described in the above functional requirements\\
-	}
-	
+
 	Once we defined our functional and non-functional requirements, it was clear that there were a large number of requirements. 
 	Although we would like to include every attribute in our system, in order to clearly manage the requirements, we needed to know in what order we should complete them. 
 	This would help in creating a schedule for each requirement to be completed so that we could identify which elements were dependent on the completion of another. 
@@ -552,7 +551,7 @@ If all the necessary requirements were finished, we hoped to implement the spira
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=\textwidth]{"G_Chart"}
+		\includegraphics[width=\textwidth]{GChart}
         \caption{}
         \label{Gchart}
 	\end{figure}
@@ -563,14 +562,15 @@ If all the necessary requirements were finished, we hoped to implement the spira
 	
 	\section{Implementation}
 	%todo \textcolor{blue}{Describe the most significant implementation details, focusing on those where unusual or detailed solutions were required. Quote code fragments where necessary, but remember that the full source code will be included as an appendix. Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackle}
-	In this section, we describe how we approached the implementation stage of our project. 
-	We will start with the waterfall approach to implement the initial ``must'' requirements from the requirements document. This will be implemented with the help of designs such as Architectural Patterns and UML diagrams from the previous sections. We will make use of the Agile approach if we have time to include optional, non-crucial requirements such as emergency vehicles and behaviour of drivers. 
+	In this section, we describe how we approached the implementation stage of
+	our project. We started this project using the waterfall approach but after the intermediate report we realised that this approach was not the best model for our team. Instead we switched to the agile (scrum) methodology. This methodology was more appropriate for our group because the sprints allowed us to focus on a few attributes in one week before moving on to the next. The project will be implemented with the help of designs such as Architectural Patterns and UML diagrams from the previous sections.
+	
 	
 	
 	\subsection{Project Structure}
-	As defined in the design stage, our project was built around a number of components: (a) data module which simulates appearance of cars, (b) model module which is responsible for controlling the state of a grid, e.g. moving cars and changing colours of traffic lights, (c) UI to display to the user the current state of the road network, and (d) statistics to assess traffic policies. 
-	For each of the following, we created a package in our project to separate responsibilities. 
-	The outline and short description of each package is presented below. Finally, because we worked as a team of programmers, each person picked a package to work on, which allowed us to focus on one thing at a time and to develop ideas fully. This made sure we had a common vision of the final system which would meet the requirements and deliver the working, tested program on time. 
+ 	As defined in the design stage, our project was built around a number of components: (a) data module which simulates appearance of cars, (b) model module which is responsible for controlling the state of a grid, e.g. moving cars and changing colours of traffic lights, (c) UI to display to the user the current state of the road network, and (d) statistics to assess traffic policies. 
+ 	For each of the following, we created a package in our project to separate responsibilities. 
+ 	The outline and short description of each package is presented below. Finally, because we worked as a team of programmers, each person picked a package to work on, which allowed us to focus on one thing at a time and to develop ideas fully. We used the UMl diagrams to create class diagrams for each package's interface. This made sure we had a common vision of the final system which would meet the requirements and deliver the working, tested program on time. 
 	
 	\subsubsection{Core Package}
 	The core package comprises the essential classes required for the simulation system to work. They include IGrid interface and Grid implementation, ICell and Cell, ICar and Car, ITrafficLight and TrafficLight, and others (a more detailed description can be found in the documentation section). 
@@ -582,16 +582,30 @@ If all the necessary requirements were finished, we hoped to implement the spira
 	Person responsible: Anton. 
 	
 	\subsubsection{Model Package}
-	The Model package consists of the Model class, which has a number of methods to control the state of the simulation such as change maps as a response to user input and pause, start, and save simulations. 
-	Once a grid is loaded, the logic of changing the positions of cars and the colour of traffic lights is defined in the IGridController interface and implemented in the GridController class.\\
+	The Model package consists of the Model class, which has a number of methods to control the state of the simulation such as change maps as a response to user input and pause, start and save simulations. This functionality has been implemented using a MenuActionListener and allows the user to capture screen-shots of the simulation for a report they may be writing.
+	Once a grid is loaded, the logic of changing the positions of cars and the colour of traffic lights is defined in the IGridController interface and implemented in the GridController class.
+	The following are the core functions of the model package:
+		
+		\begin{itemize}
+			\item Vehicle Movement on the Lane
+			\item Vehicle Movement when on the Round-About.
+			\item Decision Making when on the Junction.
+			\item Decision Making when on the Round-About.
+			\item Avoiding Accidents /collisions and Overtaking.
+		\end{itemize}
+		\vspace{0.5cm}	
+	
 	
 	\noindent
 	Person responsible: Nur. 
 	
 	\subsubsection{View Package}
-	The View package is maintained separately from the Model package to ensure separation of responsibilities and to abstract the business logic from representation as specified in the designs. 
-	It uses JFrame to create a window and JPanel to place various components on the stage, for example graphical representation of the map (GridPane), JMenu, logo and statistics graphs. 
-	The view depends on resources such as images of cars, empty cells and roads and updates when there is a change in the model.\\
+		The View package is maintained separately from the Model package to ensure separation of responsibilities and to abstract the business logic from representation as specified in the designs. 
+		It uses JFrame of the Java Swing API to create a window and JPanel to place various components on the stage, for example graphical representation of the map (GridPane), JMenu, logo and statistical data. 
+		The view depends on resources such as images of cars, empty cells and roads and updates when there is a change in the model.  An important feature of simulation allows  to laod a default map if they do not have their own. This map will display all the attributes that can represented in our simulation as it contains both a junction and a roundabout.
+		
+		\textcolor{red}{All the user actions are taken from the view and passed on to the controller for respective actions that have to be taken. Effort has been made in making sure any change in the status of the model is recorded by the application and is befit to be used wherever necessary in future developments.}\\
+		
 	
 	\noindent
 	Person responsible: Zaki.
@@ -612,38 +626,103 @@ If all the necessary requirements were finished, we hoped to implement the spira
 	
 	\noindent
 	Person responsible: Nur, Zaki, Anton
+
+
+\subsection{Using Preloaded Maps}
 	
-	\subsection{Setting Up a Common IDE}
+An important aspect of our simulation is how the controller reads the user's map. When a user creates and saves their own map, this map is stored as a text file containing a grid of numbers. \\
+
+%\vspace{0.5cm}
+
+	\begin{figure}[H]
+		\centering
+		
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=4.5cm]{numberRepresentationMatrix}
+			\caption{A representation of basic network based on numbers}
+			\label{NumberRepresentation}
+		\end{subfigure}
+		%
+		\qquad
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=4.5cm]{basicDirectionmatrixC1}
+			\caption{A representation of a basic network based on directions}
+			\label{DirectionRepresentation}
+		\end{subfigure}
+		\caption{Two representations of a road network}
+		\label{StringNetworks}
+	\end{figure}
 	
-	Since we are using the version control system, Git, we can maintain the main remote repository in which all the code will go. 
-	When people make changes to the code, they commit it to the remote branch on GitHub, and others fetch it to keep an up-to-date version of the system in the local repository. 
-	We are also using Eclipse IDE so we can make it update the files in the project folder when a commit with changes is pulled from GitHub to the local computer.\\
-	
-	\noindent
-	To accomplish this task, one of us creates a new project in Eclipse in the Git folder (Software/Final Model/Java\_SimulationEngine). 
-	Then each programmer on the team creates a folder on his local computer which will serve as his/her local Git:\\
-	
-	mkdir sim\\
-	
-	cd sim\\
-	
-	\noindent
-	Then a team member initialises the Git in this folder and adds a remote origin from the SimulationEngine branch:\\
-	
-	\noindent
-	git remote add -t SimulationEngine -f origin https://github.com/RochelleA/team\_we\_got\_this.git\\
-	
-	\noindent
-	Finally, we download all the files which we have in the repo:\\
-	
-	\noindent
-	git checkout SimulationEngine\\
-	
-	\noindent
-	After these steps, the sim folder looks like this: \\
-	\textcolor{red}{Should we add the pics}
-	
-	Final Sprint - traffic signals, statistics and UI. 
+
+%vspace{0.5cm}	
+In figure \ref{StringNetworks}, we show two representations of the same road network which our simulation uses. As explained above a user can design their own network and this file is saved a string of numbers. Once the text file is parsed using a File Reader object in Model.java class, cells are created based on the numbers in the string with attribute described by the numbers i.e north.The view also uses these numbers to decide which image is used represent by each cell. After this point numbers are no longer used within the simulation and the logic is based on seven possible directions. These are north, south, east, west, junction, roundabout, and circle. This implementation allowed us to seamlessly include a dynamic map builder which allows our users to represent their own network. In the next section we describe how these directions are used to move cars across the network. 
+
+Initially we designed the system to require only 5 numbers -- 0,1,2,3 and 4. These would represent an empty cell or the directions east, west, north, and south respectively. However, whilst we were trying to organise the retrieval  of a pre-designed map by the simulation, we noticed that there was not currently a method to identify which cells were entrance and exit cells. We resolved this issue by creating two extra parameters that would go after a number. These parameters where an exclamation point (!) which determines an exit and asterisk (*) which determines an entrance. In the map editor, a user can click on a cell and set it to be either an entrance or exit cell. There is a restriction which prevents them from trying to make a cell both an exit and entrance. Once this map is saved as a text file, the string that represents this entrance or exit will have the direction as well as the parameter assigning to it the extra function of adding or removing a car. In the table below we briefly explain what each number represents and what image corresponds to each. We will save the explanation of the numbers 5, 7 and 9 to the section \ref{vehicleMovement} where we will use an example to describe these directions. 
+
+\vspace{0.5cm}
+\begin{center}
+	\begin{tabular}{|c|l|c|}
+		
+		\hline {\bf Number} & {\bf Description} & {\bf Image} \\ 
+		\hline 0 & empty - these cells do not represent any special feature (0) & grass \\ 
+		\hline 1 & road with east direction (E) & road \\ 
+		\hline 2 & road with west direction (W) & road \\ 
+		\hline 3 & road with north direction (N) & road \\ 
+		\hline 4 & road with south direction (S) & road \\ 
+		\hline 5 & junction (J) & road \\ 
+		\hline 7 & circle (C) - island in the middle of the roundabout & grass \\ 
+		\hline 9 & roundabout (R) - any part cell which is part of the roundabout & road \\ 
+		\hline 1! & the exclamation point declares that this cell is also an exit point & road \\
+		\hline 1* & the asterisk declares that this cell is also an entrance point & road \\ 
+		\hline
+	\end{tabular} 
+\end{center} 	
+
+\vspace{0.5cm}
+ 
+
+
+
+\subsection{Vehicle Movement}\label{vehicleMovement}
+
+The most interesting element of our simulation is how we move a car from one position to the next. This movement is dependant on where the car is currently on the network. Moreover it was necessary to write different logic for each case. The possible cases are: on a straight road, in a junction, or on a roundabout. In the following section we will discuss through examples how the logic for the movement of cars works and the problems we faced when implementing each case. 
+
+\subsubsection{Movement on a Straight Road}
+It was important for our team that our network model intelligent cars which could make decisions based on their current state and their initial entrance point. Moreover, they must be able to call the direction of the cell they are currently in as this dictates where they will be able to move to in the next tick of the simulation. For example, suppose a car `A' enters the map from West and is intending to go to East. The car has predefined information that its entry point was west and that its final destination is east. In order to accurately model real life, the assignment of an initial and final destination is random. 
+Moreover there is an extra condition added to this assignment that a car will not have the same initial and final destination, i.e. a car should not start from east intending to go east as this is not realistic. At each tick of the simulation a car checks what the  direction is of the cell that it sits on. If this cell is east, the car calls the function moveEast() which ensures the car keeps moving east for as long as the cell it sits on is a road to the east. We have designed this system so that cars are prevented from moving in any other direction than that of the cell which it sits on. However this led to a problem when a car crosses an intersection. The problem and solution are discussed in the next section. 
+
+\subsubsection{Moving in a Junction} \label{movementOnAJunction}
+
+We have seen that cars in our network move on straight roads based on the direction of the cell on which  they sit. This approach can not be used on a junction since here we would like cars to be able to move in a different direction from which they came in, i.e. a car coming from east may move north when it exits the junction. Now we can see from figure \ref{DirectionRepresentation} that when car A moving from the west entrance reaches the start of the intersection, the last cell in the west road calls the moveEast() function which moves the car into the junction. At this point, when the car asks the cell for its direction, it does not make sense for a junction to have a direction because we wanted cars to be able to move in several possible directions. Instead we introduced a direction called junction and a car on a cell with junction as its direction now needs extra information before it can move again. At this point it needs to find out where its original destination was and what the final destination is. Given the example of car A (represent in red in figure \ref{DirectionRepresentation}) who is trying to move from the west entrance to the east exit, the car uses the fact that it is trying to move east to check the cell to the east of it current position (green in figure \ref{DirectionRepresentation}). If this cell is empty the car moves to this position in the next tick. 
+
+However a more complex problem on a junction is when a car say B is entering from the west but trying to move south. Once the car is on the first cell of the intersection (represented in red in figure \ref{NumberRepresentation}) it asks where it is going and where it has come from. As it is going south it checks whether the road directly south of it has direction south (shown in green in figure \ref{FirstMove}). In figure \ref{FirstMove}, we can see that the direction of the road directly south of it is north so it can not turn down this road. Instead our car uses its knowledge of its initial entrance to understand it needs move once more to the east. Again it checks where its final destination is (south) and it again checks whether the road south of it corresponds to a road with a southern direction. At this point the car (in red in figure \ref{SecondMove}) is informed that the position directly south of it has the correct direction and it would move one cell south. It will continue to move one cell south until it is the road with a southern direction. 
+
+
+	\begin{figure}[H]
+		\centering
+		
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=4.5cm]{basicDirectionmatrixC2}
+			\caption{Car B at its first position on the junction}
+			\label{FirstMove}
+		\end{subfigure}
+		%
+		\qquad
+		\begin{subfigure}{0.45\textwidth}
+			\centering
+			\includegraphics[width=4.5cm]{basicDirectionmatrixC3}
+			\caption{Car B at its second position on the junction}
+			\label{SecondMove}
+		\end{subfigure}
+		\caption{Two representations of a road network}
+		\label{Car B in a junction}
+	\end{figure}
+
+
+\subsection{Movement on a Roundabout}\label{movementOnARoundabout}
 	
 	\subsection{Documentation}
 	\textcolor{gray}{export of JavaDoc, plus help for the user how to use the simulation (i.e. to start, click the start button, to finish, click stop button, etc).}
@@ -654,151 +733,6 @@ If all the necessary requirements were finished, we hoped to implement the spira
   
 
 
-\section*{Implementation}
-In this section, we describe how we approached the implementation stage of
-our project. We started this project using the waterfall approach but after the intermediate report we realised that this approach was not the best model for our team. Instead we switched to the Agile (scrum) methodology. This methodology was more appropriate for our group because the sprint allowed us to focus on a few attributes in one week before moving on to the next. The project will be implemented with the help of designs such as Architectural Patterns and UML diagrams from the previous sections.
-
-
-\subsection{Model Package}	
-The Model is the working engine that is responsible for controlling the flow and the movement of the traffic on the map. The Model is equipped with all the necessary functions required for the smooth implementation of the simulation engine. The core package or the Model contains some of the core functionality classes like the GridController.java, TrafficLight.java, Model.java and important interfaces like IGridController.java and IGrid.java.
-The following are the core functions
-
-\begin{itemize}
-\item Vehicle Movement on the Lane
-\item Vehicle Movement when on the Roundabout
-\item Decision Making when on the Junction
-\item Decision Making when on the Roundabout
-\item Avoiding Accidents / Collisions and Overtaking
-\end{itemize}
-
-\subsection{View Package}
-
-From the MVC model, the View is responsible for rendering the Model information to the user. The View also provides the interface required by the user such that their actions can be recorded and sent to the controller. The Model maintains the state information of the engine. The View then queries the Model to fetch the current State Information. The Model is also responsible for maintaining and updating the functionality of the application based on the user requests, \textcolor{red}{i.e pausing the simulation}. The Controller receives the user actions from the View and requests the Model to act as per the request.
-
-In our simulation, the View is responsible for displaying the collection of cells which form a grid. All vehicles are then moved on these cells.  We have used the JFrame class of the Java Swing API to show the grid. The frame is set on a border layout with a certain size as appropriate. There is a Menu Bar that has been added with some basic functionalities that allow the user to control the simulation. One of the actions the user can perform in the View is to start the simulation based on a map they have already created. However if the user does not have a map they wish to use, they can load the default map. This default map displays all attributes that can be represented in our simulation as it contains both a crossroad and a roundabout. Currently, a user can start and pause the simulation. Pausing the simulation allows the user to collect data on the simulation up to that point and to take screen-shots. They can then un-pause the simulation to let it keep running and then pause it again later to collect more data. These two sets of data can be analysed to find out what is happening in the simulation. \textcolor{red}{This functionality has been implemented using a MenuActionListener object which has the functions required to have a control on the user's actions. All the user actions are taken from the View and passed on to the controller for respective actions that have to be taken. Effort has been made in making sure any change in the status of the model is recorded by the application and is befit to be used wherever necessary in future developments.}
-
-An important aspect of our simulation is how the controller reads the user's map. When a user creates and saves their own map, this map is stored as a text file containing a grid of numbers. \\
-
-%\vspace{0.5cm}
-
-\begin{figure}
-\centering
-\begin{subfigure}{0.45\textwidth}
-%\begin{table}
-\centering
-
-\begin{tabular}{ccccccccc}
-0 & 0 & 0 & 3! & 4* & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
-1* & 1 & 1 & 5 & 5 & 1 & 1 & 1 & 1!\\
-2! & 2 & 2 & 5 & 5 & 2 & 2 & 2 & 2*\\
-0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & 3* & 4! & 0 & 0 & 0 & 0\\
-\end{tabular} 
-\caption{A representation of basic network based on numbers}
-\label{NumberRepresentation}
-\end{subfigure}
-%
-\qquad
-\begin{subfigure}{0.45\textwidth}
-\centering
-\begin{tabular}{ccccccccc}
-0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-E* & E & E & J & J & E & E & E & E!\\
-W! & W & W & J & J & W & W & W & W*\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
-\end{tabular} 
-\caption{A representation of a basic network based on directions}
-\label{DirectionRepresentation}
-\end{subfigure}
-\caption{A grid representation of a map.}
-\label{ExampleNet}
-\end{figure}
-
-%vspace{0.5cm}	
-Figure \ref{ExampleNet} shows two representations of the map as created in a matrix string \textcolor{red}{referencing the image of the map}. When this file is uploaded into the simulation, the controller takes the string and replaces the number with the corresponding image. Initially we designed the system to require only 5 numbers -- 0,1,2,3 and 4. These would represent an empty cell or the directions east, west, north, and south respectively. However, whilst we were trying to organise the retrieval  of a pre-designed map by the simulation, we noticed that there was not currently a method to identify which cells were entrance and exit cells. We resolved this issue by creating two extra parameters that would go after a number. These parameters where an exclamation point (!) which determines an exit and asterisk (*) which determines an entrance. In the map editor, a user can click on a cell and set it to be either an entrance or exit cell. There is a restriction which prevents them from trying to make a cell both an exit and entrance. Once this map is saved as a text file, the string that represents this entrance or exit will have the direction as well as the parameter assigning to it the extra function of adding or removing a car. In the table below we briefly explain what each number represents and what image corresponds to each. We will save the explanation of the numbers 5, 7 and 9 to the section \textcolor{red}{reference this section once it is written} where we will use an example to describe these directions. 
-
-\vspace{0.5cm}
-\begin{center}
-\begin{tabular}{|c|l|c|}
-
-\hline {\bf Number} & {\bf Description} & {\bf Image} \\ 
-\hline 0 & empty - these cells do not represent any special feature & grass \\ 
-\hline 1 & road with east direction & road \\ 
-\hline 2 & road with west direction & road \\ 
-\hline 3 & road with north direction & road \\ 
-\hline 4 & road with south direction & road \\ 
-\hline 5 & junction & road \\ 
-\hline 7 & circle - island in the middle of the roundabout & grass \\ 
-\hline 9 & roundabout - any part cell which is part of the roundabout & road \\ 
-\hline 1! & the exclamation point declares that this cell is also an exit point & road \\
-\hline 1* & the asterisk declares that this cell is also an entrance point & road \\ 
-\hline
-\end{tabular} 
-\end{center} 	
-
-\vspace{0.5cm}
-Once the text file is parsed using a File Reader object in Model.java class, cells are created based on the numbers in the string. Each cell is given properties such as direction and whether it is an entrance or an exit. After this point numbers are no longer used within the simulation and the logic is based on seven possible directions. These are north, south, east, west, junction, roundabout, and circle. This implementation allowed us to seamlessly include a dynamic map builder which allows our users to represent their own network. In the next section we describe how these directions are used to move cars across the network. 
-
-
-
-\subsection{Vehicle Movement}
-
-The most interesting element of our simulation is how we move a car from one position to the next. This movement is dependant on where the car is currently on the network. Moreover it was necessary to write different logic for each case. The possible cases are: on a straight road, in a junction, or on a roundabout. In the following section we will discuss through examples how the logic for the movement of cars works and the problems we faced when implementing each case. 
-
-\subsubsection{Movement on a Straight Road}
-It was important for our team that our network model intelligent cars which could make decisions based on their current or previous state. \textcolor{red}{Hence, in order to move across the network, cars used their origin and current position.} Moreover, they must be able to call the direction of the cell they are currently in as this dictates where they will be able to move to in the next tick of the simulation. For example, suppose a car `A' enters the map from West and is intending to go to East. The car has predefined information that its entry point was west and that its final destination is east. In order to accurately model real life, the assignment of an initial and final destination is random. 
-Moreover there is an extra condition added to this assignment that a car will not have the same initial and final destination, i.e. a car should not start from east intending to go east as this is not realistic. At each tick of the simulation a car checks what the  direction is of the cell that it sits on. If this cell is east, the car calls the function moveEast() which ensures the car keeps moving east for as long as the cell it sits on is a road to the east. We have designed this system so that cars are prevented from moving in any other direction than that of the cell which it sits on. However this led to a problem when a car crosses an intersection. The problem and solution are discussed in the next section. 
-
-\subsubsection{Moving in a Junction} 
-
-We have seen that cars in our network move on straight roads based on the direction of the cell on which  they sit. This approach can not be used on a junction since here we would like cars to be able to move in a different direction from which they came in, i.e. a car coming from east may move north when it exits the junction. Now we can see from figure \ref{DirectionRepresentation} that when car A moving from the west entrance reaches the start of the intersection, the last cell in the west road calls the moveEast() function which moves the car into the junction. At this point, when the car asks the cell for its direction, it does not make sense for a junction to have a direction because we wanted cars to be able to move in several possible directions. Instead we introduced a direction called junction and a car on a cell with junction as its direction now needs extra information before it can move again. At this point it needs to find out where its original destination was and what the final destination is. Given the example of car A who is trying to move from the west entrance to the east exit, the car uses the fact that it is trying to move east to check the cell to the \textcolor{red}{east} of it current position. If this cell is empty the car moves to this position in the next tick. However a more complex problem on a junction is when a car say B is entering from the west but trying to move north. Once the car is on the first cell of the intersection (represented in green in figure \ref{NumberRepresentation}) it asks where it is going and where it has come from. As it is going north it checks whether the road north of it has direction north. In our example map \textcolor{red}{delete: (see figure \ref{StringRepresentation})} we would see that the the road has direction south which means we do not want to move north yet. Instead our car uses its initial entrance to move once more the the east. Again it checks where its final destination is (north) and it again checks whether the road north of it corresponds to a road with a northern direction. At this point the car would now change its direction to north and continue north on the junction until it reaches the road going north to its final destination.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\begin{tabular}{ccccccccc}
-0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-E* & E & E & J & J & E & E & E & E!\\
-W! & W & W & J & \textcolor{green}{J} & W & W & W & W*\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
-\end{tabular} 
-\caption{A representation of basic network based on numbers}
-\label{NumberRepresentation}
-\end{subfigure}
-%
-\qquad
-\begin{subfigure}{0.50\textwidth}
-\centering
-\begin{tabular}{ccccccccc}
-0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-E* & E & E & J & J & E & E & E & E!\\
-W! & W & W & J & J & W & W & W & W*\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
-\end{tabular} 
-\caption{A representation of a basic network based on directions}
-\label{DirectionRepresentation}
-\end{subfigure}
-%\end{table}
-\label{ExampleNetwork}
-\end{figure}
 
 
 	
@@ -853,6 +787,12 @@ W! & W & W & J & J & W & W & W & W*\\
     Following this deadline all team members began using GitHub frequently, however it was apparent that the present structure of our repository was holding us back. When we began using GitHub, we simply replicated the structure of our Dropbox folder. Consequently our repository had a separate folder for each team member to store their files. As the group progressed in the project we began working on similar areas and hence needed to use the same files. We decided that it was important to restructure the repository so that it had a more cohesive structure. Instead of separating files by who created them we sorted all the group files into three categories: Documentation, Software and Graphics. At this point we created a file to explain how to store your files and use the repository so that everyone could easily find their files. Moreover we decided that everyone should try to leave clear comments when committing to GitHub so that everyone would understand the changes made to a file in the repository. We mostly followed this structure and GitHub became a a vital tool for our group. 
     \textcolor{red}{add stuff on problem with git not updating files}
    
+   	\subsection{Setting Up a Common IDE}
+   	
+   	Since we are using the version control system, Git, we can maintain the main remote repository in which all the code will go. 
+   	When people make changes to the code, they commit it to the remote branch on GitHub, and others fetch it to keep an up-to-date version of the system in the local repository. 
+   	We are also using Eclipse IDE so we can make it update the files in the project folder when a commit with changes is pulled from GitHub to the local computer.
+   	\textcolor{red}{Include anto targets and strikes section}
     
 	\section{Evaluation}
 	%todo	\textcolor{blue}{Critically evaluate your project: what worked well, and what didn't? 	how did you do relative to your plan? what changes were the result of improved thinking and what changes were forced upon you? how did your team work together? etc. 	Note that you need to show that you understand the weaknesses in your work as well as its strengths. You may wish to identify relevant future work that could be done on your project}
