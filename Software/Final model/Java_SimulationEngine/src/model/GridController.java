@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package model;
 
 import java.awt.event.ActionEvent;
@@ -21,29 +24,50 @@ import events.DataPoint;
 import events.EventListener;
 import events.SimpleEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GridController.
+ */
 public class GridController implements EventListener, ActionListener, IGridController {
 		
+		/** The model. */
 		private Model model;
+		
+		/** The status. */
 		private String status;
+		
+		/** The tr light. */
 		private ITrafficLight trLight;
 		
+		/** The cars y. */
 		int carsX, carsY;
 		
 		
+		/** The grid. */
 		IGrid grid;
 	
 		//array of the cars
+		/** The list cars. */
 		List<ICar> listCars = new ArrayList<ICar>();
+		
+		/** The all cars. */
 		List<ICar> allCars = new ArrayList<ICar>();
 		
 		
 		/** The main timer. */
 		Timer mainTimer = new Timer(150, this);
+		
+		/** The iterating. */
 		private boolean iterating;
+		
+		/** The rounds. */
 		private int rounds = 0;
 	
 	/**
 	 * A class which controls the state of the grid and sends events on changes.
+	 *
+	 * @param grid the grid
+	 * @param m the m
 	 */
 	public GridController(IGrid grid, Model m){
 		this.grid = grid;
@@ -57,11 +81,17 @@ public class GridController implements EventListener, ActionListener, IGridContr
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.IGridController#startTimer()
+	 */
 	public void startTimer(){
 		mainTimer.start();
 		this.setStatus(Model.STATUS_RUNNING);
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.IGridController#stopTimer()
+	 */
 	public void stopTimer(){
 		mainTimer.stop();
 		this.setStatus(Model.STATUS_PAUSED);
@@ -69,6 +99,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	
 		
 	//driving to RoundAbout
+	/**
+	 * Drive round about.
+	 *
+	 * @param car the car
+	 */
 	private void driveRoundAbout(ICar car){
 		ICar myCar = car;
 				
@@ -128,6 +163,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	
 	
 	//driving to SOUTH-WEST
+	/**
+	 * Drive west north.
+	 *
+	 * @param car the car
+	 */
 	public void driveWestNorth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()-1)){
@@ -142,6 +182,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 
 	
 	//driving to NORTH-EAST
+	/**
+	 * Drive north east.
+	 *
+	 * @param car the car
+	 */
 	public void driveNorthEast(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()-1)){
@@ -156,6 +201,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to SOUTH-WEST
+	/**
+	 * Drive south west.
+	 *
+	 * @param car the car
+	 */
 	public void driveSouthWest(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()+1)){
@@ -169,6 +219,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to EAST-SOUTH
+	/**
+	 * Drive east south.
+	 *
+	 * @param car the car
+	 */
 	public void driveEastSouth(ICar car){
 			ICar myCar = car;
 			if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()+1)){
@@ -183,6 +238,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 		
 	
 	//driving to NORTH
+	/**
+	 * Drive north.
+	 *
+	 * @param car the car
+	 */
 	public void driveNorth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed())){
@@ -198,6 +258,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to SOUTH
+	/**
+	 * Drive south.
+	 *
+	 * @param car the car
+	 */
 	public void driveSouth(ICar car){
 		ICar myCar = car;
 		if(grid.hasCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed()) && (grid.getCellDirection(myCar.getX(), myCar.getY())==Direction.JUNCTION))
@@ -217,6 +282,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to EAST
+	/**
+	 * Drive east.
+	 *
+	 * @param car the car
+	 */
 	public void driveEast(ICar car){
 		ICar myCar = car;
 		if(grid.hasCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY()) && (grid.getCellDirection(myCar.getX(), myCar.getY())==Direction.JUNCTION))
@@ -236,6 +306,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to WEST
+	/**
+	 * Drive west.
+	 *
+	 * @param car the car
+	 */
 	public void driveWest(ICar car){
 		ICar myCar = car;
 		
@@ -254,6 +329,11 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//OVER TAKING
+	/**
+	 * Over take.
+	 *
+	 * @param car the car
+	 */
 	public void overTake(ICar car){
 		ICar myCar = car;
 	
@@ -441,7 +521,6 @@ public class GridController implements EventListener, ActionListener, IGridContr
 									else
 									{
 										if((myCar.getStopC()>1) && (grid.getCellDirection(myCar.getX()+3,  myCar.getY())==Direction.EAST)){
-											System.out.println("Uraaaaaaaaaaaaaaaaaaaaaaaa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 											myCar.setExitDir(Direction.EAST);
 											break;
 										}
@@ -675,6 +754,9 @@ public class GridController implements EventListener, ActionListener, IGridContr
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see model.IGridController#addCar(core.ICar)
+	 */
 	@Override
 	public void addCar(ICar car) {
 		
@@ -684,27 +766,44 @@ public class GridController implements EventListener, ActionListener, IGridContr
 
 	}
 
+	/* (non-Javadoc)
+	 * @see model.IGridController#getStatus()
+	 */
 	@Override
 	public String getStatus() {
 		return this.status;
 	}
 
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
 	private void setStatus(String status) {
 		this.status = status;
 		model.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.MODEL_STATUS_CHANGE));
 	}
 
+	/* (non-Javadoc)
+	 * @see model.IGridController#getRound()
+	 */
 	@Override
 	public int getRound() {
 		// TODO Auto-generated method stub
 		return rounds;
 	}
 
+	/* (non-Javadoc)
+	 * @see model.IGridController#getTrafficLights()
+	 */
 	@Override
 	public ArrayList<ITrafficLight> getTrafficLights() {
 		return grid.getTrafficLights();
 	}
 
+	/* (non-Javadoc)
+	 * @see events.EventListener#handleSimpleEvent(events.SimpleEvent)
+	 */
 	@Override
 	public void handleSimpleEvent(SimpleEvent e) {
 		if(e.getType().equals(SimpleEvent.TRAFFIC_LIGHT_CHANGE)){
