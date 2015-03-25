@@ -8,7 +8,7 @@ package core;
  */
 public class Car implements ICar {
 	
-
+	private int stopCounter;
 	private int x;
 	private int y;
 	private int speed;
@@ -71,6 +71,14 @@ public class Car implements ICar {
 	@Override
 	public int getX(){
 		return x;
+	}
+	@Override
+	public int getStopC(){
+		return stopCounter;
+	}
+	@Override
+	public void setStopCounter(int stopCounter){
+		this.stopCounter = stopCounter;
 	}
 	
 	@Override

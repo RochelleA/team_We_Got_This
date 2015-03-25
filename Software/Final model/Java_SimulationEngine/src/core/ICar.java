@@ -25,6 +25,19 @@ public interface ICar {
 	
 
 	/**
+	 * Gets the stop c.
+	 *
+	 * @return the stop c
+	 */
+	public int getStopC();
+	
+	/**
+	 * Sets the stop counter.
+	 *
+	 * @param stopCounter the new stop counter
+	 */
+	public void setStopCounter(int stopCounter);
+	/**
 	 * Sets the cars dir.
 	 *
 	 * @param carsDir the new cars dir

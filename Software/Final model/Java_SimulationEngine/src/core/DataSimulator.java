@@ -12,7 +12,7 @@ import events.SimpleEvent;
  *
  */
 public class DataSimulator extends EventDispatchable implements Runnable {
-	private int prob_car_appear = 30;
+	private int prob_car_appear = 50;
 	
 	private IGrid grid;
 	private int round = 0;
