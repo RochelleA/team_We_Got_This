@@ -15,6 +15,7 @@ public class SimpleEvent extends EventObject {
 	public static final String MODEL_INIT = "model initialized";
 	public static final String MODEL_INIT_ERROR = "model init error";
 	public static final String TRAFFIC_LIGHT_CHANGE = "traffic light change";
+	public static final String MODEL_NEW_DATA = "new data point";
 	
 	private String type;
 	

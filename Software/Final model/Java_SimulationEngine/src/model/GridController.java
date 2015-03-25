@@ -16,6 +16,8 @@ import core.IGrid;
 import core.ITrafficLight;
 import core.TrafficLight;
 import core.TrafficLightColour;
+import events.DataEvent;
+import events.DataPoint;
 import events.EventListener;
 import events.SimpleEvent;
 
@@ -660,6 +662,13 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			}
 			
 			model.fireSimpleEvent(new SimpleEvent(this,SimpleEvent.MODEL_STEP));
+			
+			
+			DataPoint dp = new DataPoint(getRound(), listCars.size());
+			
+			DataEvent de = new DataEvent(this, SimpleEvent.MODEL_NEW_DATA, dp);
+			model.fireDataEvent(de);
+			
 		}else{
 			System.out.println("iteration, wait");
 		}

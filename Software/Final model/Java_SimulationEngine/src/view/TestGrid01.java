@@ -75,9 +75,10 @@ public class TestGrid01 implements EventListener, ActionListener {
 	private boolean markedForRepaint;
 	private JLabel tlStatusLabel;
 	private JMenuItem enableTrafficLights;
+	private JMenuItem openGraphAction;
 	
     public TestGrid01(Model model) {
-    	
+    	    	
     	this.model = model;
     	this.ds = model.getDataSimulator();
     	
@@ -137,8 +138,8 @@ public class TestGrid01 implements EventListener, ActionListener {
         trLightTimer.start();
 
     }
-    
-    private void getCurrentData(){
+
+	private void getCurrentData(){
     	System.out.println("get current data " + this.model.getInitialized());
     	setModelStatus(this.model.getStatus());
         setDataStatus(this.ds.getRunning());
@@ -203,7 +204,11 @@ public class TestGrid01 implements EventListener, ActionListener {
          loadDefaultMapAction.setAccelerator(KeyStroke.getKeyStroke('L'));
          
          JMenuItem exitAction = new JMenuItem("Exit");
-         JMenuItem cutAction = new JMenuItem("Cut");
+         
+         openGraphAction = new JMenuItem("Open Graph");
+         openGraphAction.addActionListener(new MenuActionListener());
+         openGraphAction.setEnabled(false);
+         
          JMenuItem copyAction = new JMenuItem("Copy");
          JMenuItem pasteAction = new JMenuItem("Paste");
          JMenuItem sizeAction = new JMenuItem("Adjust Size");
@@ -252,7 +257,7 @@ public class TestGrid01 implements EventListener, ActionListener {
          fileMenu.add(loadMapAction);
          fileMenu.add(loadDefaultMapAction);
          
-         fileMenu.add(cutAction);
+         fileMenu.add(openGraphAction);
          fileMenu.add(copyAction);
          fileMenu.add(pasteAction);
          fileMenu.add(exitAction);
@@ -398,6 +403,8 @@ public class TestGrid01 implements EventListener, ActionListener {
 				c.disableTrafficLights();
 			}else if(source == enableTrafficLights){
 				c.setTrafficLightsColour(TrafficLightColour.GREEN);
+			}else if(source == openGraphAction){
+				//c.showGraph();
 			}
 			else{
 				System.out.println("Unimplemented control");
@@ -412,7 +419,7 @@ public class TestGrid01 implements EventListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("view timer event");
+		//System.out.println("view timer event");
 		if(markedForRepaint){
 			System.out.println("repaint");
 			tp.repaint();
