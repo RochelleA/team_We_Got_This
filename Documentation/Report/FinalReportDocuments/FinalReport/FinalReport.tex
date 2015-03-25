@@ -2,7 +2,6 @@
 \documentclass{article}
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{graphicx, float,amsmath, caption, subcaption,float}
-\usepackage{pdfpages}
 \definecolor{DarkGray}{gray}{0.25}
 \pagestyle{plain}
 %opening
@@ -27,7 +26,7 @@
 	\section*{Introduction}
 	%todo	\textcolor{blue}{Describe the context for the work and the problem you are addressing. Briefly summarise what you achieved in the project.}
 	
-	\section{Literature Review}{\label{LiteratureReview}}
+	\section{Literature Review}
 	%	\textcolor{gray}{
 	%		\begin{itemize}
 	%			\item What are the possible types of traffic simulation? What are the benefits of each? 
@@ -47,7 +46,7 @@
 	In order to accurately study a real-life system, it is often necessary to first model this system by abstracting some information. 
 	Once this model has been made, one can build a simulation to make several observations of the model. 
 	Finally one analyses the information collected from the simulation in order to make inferences and suggestions \cite{sokolowski2011principles}. 
-	A traffic simulation can be classified in several ways - microscopic, mesoscopic and macroscopic. 
+	A traffic simulation can be classified in several ways -- microscopic, mesoscopic and macroscopic. 
 	Another distinction of a traffic simulator is discrete or continuous. 
 	In a discrete system the variables change at set intervals of time whereas in a continuous system the variables change continuously with time. 
 	
@@ -61,7 +60,7 @@
 	These are attributes we would like to model in our simulation, hence it would seem a microscopic model would best represent our simulation. 
 	
 	
-	\subsection{Microscopic Simulations}
+	\subsection{Microscopic Simulations}\label{LiteratureReview}
 	
 	Before categorising our model, it was necessary to further explore different microscopic simulations to see what other attributes we could include in our simulation.
 	In \cite{namekawa2005general}, the author describes a cell automation method for realizing a microscopic model. 
@@ -73,11 +72,10 @@
 	
 	This model has many useful characteristics which we would like to implement in our traffic simulation. The first, is that by giving cells physical attributes as well as logical attributes, we could better represent different types of networks using the same simulation. 
 	We could use this in our simulation to allow users to build their own road networks and specify these attributes themselves. In doing this, we hope the simulation will have a broader application. 
-	The second - the use of cell automation - by recording information on neighbouring cells, cars could be modelled individually and make unique decisions based on their current position but also on any policies we introduce. 
+	The second model -- the use of cell automation -- records information on neighbouring cells and using this, cars could be modelled individually and make unique decisions based on their current position but also on any policies we introduce. 
 	Cars having decision making capabilities based on their current state would also improve our ability to model more complex road structures such as roundabouts.  
 	
-	Another microscopic simulation that we would like to draw elements from defines a reactive agent and is presented in \cite{ehlert2001microscopic}. I
-	n this paper the authors focus on intelligent agents so that vehicles can model individual driving behaviours. 
+	Another microscopic simulation that we would like to draw elements from defines a reactive agent and is presented in \cite{ehlert2001microscopic}. In this paper the authors focus on intelligent agents so that vehicles can model individual driving behaviours. 
 	The paper defines an intelligent agent as capable of sensing its environment and acting accordingly. This model differs from the above model as drivers can now be classed as aggressive if they break the set behaviours defined below. 
 	Each agent has seven behaviours which automate its driving on the network. 
 	The first, Road-following, keeps the vehicle on the road whilst the second, Intersection/Changing Lanes, ensures the driver adjusts its speed before changing its direction or reaching an intersection. 
@@ -96,7 +94,7 @@
 		\item Road-following
 		\item Traffic Lights
 		\item Car-following
-		\item Switching lane
+		\item Switching lanes
 	\end{itemize}
 	We have had great success in representing many of these behaviours in a few of the initial simulations we created. 
 	This will be explained in detail in section \ref{RequirementsAndDeisgn}. 
@@ -106,7 +104,7 @@
 	We believe a microscopic system will better represent our simulation because it will focus on smaller areas and individual driver capabilities. 
 	We have used the different approaches presented in the two microscopic simulations to influence the requirements and implementation of our system. 
 	We would like to use the cell automation used in the first simulation to control where our vehicles are at each tick of the clock. 
-	In order to model a real urban environment we would like the vehicles in our system to exhibit the following behaviours, Traffic Lights, Car-following, Road-following and Switching Lanes behaviours from the second simulation.
+	In order to model a real urban environment we would like the vehicles in our system to exhibit the following behaviours: Traffic Lights, Car-following, Road-following and Switching Lanes from the second simulation.
 	
 	%	\textcolor{red}{When we discuss the early models we made, it would be good to say tat Anton's model exhibited the Traffic lights behaviour from the paper, \cite{ehlert2001microscopic}}
 	%	
@@ -119,11 +117,11 @@
 	%todo also wish to mention the impact of team-working on your requirements and design.
 	
 	\subsection{Introduction}
-	In this section we will discuss the requirements of our simulation based on the initial requirements laid out in the introductory slides, the Literature we have reviewed and based on the initial models we created. 
-	We will categorise the requirements of our simulation into functional and non-functional requirements. Given this new list of requirements we will prioritise them into one of three sub-categories  --- Necessary, Optional and Extra. 
+	In this section we will discuss the requirements of our simulation based on the initial requirements laid out in the introductory slides, the literature we have reviewed and based on the initial models we created. 
+	We will categorise the requirements of our simulation into functional and non-functional requirements. Given this new list of requirements we will prioritise them into one of three sub-categories  -- Necessary, Optional and Extra. 
 	Finally we will outline a timetable for the start and completion of each requirement.  
 	
-	Software systems Requirement Engineering is an important part of software development life-cycle as it extracts the key requirements necessary to build a software. 
+	Software systems Requirement Engineering is an important part of the software development life-cycle as it extracts the key requirements necessary to build software. 
 	By having clear criteria, software engineers can easily analyse, implement and evaluate their system \cite{nuseibeh2000requirements}. 
 	There are five key stages of requirement engineering. The first is the elicitation of requirements where the team identifies, reviews and understands the constraints of the system. 
 	The second stage is analysing the constraints followed by writing these constraints into a requirement specification of the system. 
@@ -169,7 +167,7 @@
 	{\bf\textcolor{MidnightBlue}{Meta-requirements:}}
 	\begin{itemize}
 		
-		\item Development must be coordinated through github repository.
+		\item Development must be coordinated through GitHub repository.
 		\item The source code can be written in any language.
 		\item Documentation must be provided in Latex format and exported as PDF.
 		\item Unit testing of high quality and coverage should be performed.
@@ -196,9 +194,9 @@
 	After considering the available requirements, our team decided to go ahead and implement a number of ideas of how such requirements can be modelled. A description of each system along with an analysis of their benefits and pitfalls are discussed in the next section. 
 	
 	
-	\subsection{Requirement Analysis}
+	\subsection{Requirement Analysis}\label{ssb:initial designs}
 	
-	Once we had elicited the requirements we wanted our system to have, we needed to decide how to implement them. As a group there were several viable ideas and so we chose to take some time to explore each option. Each team member had two weeks to explore their idea and at the end of this period they presented it to the group. This presentation included whether their option was discrete or continuous, the benefits of their implementation choice and the problems they had with it or they thought would occur. In this section we discuss these initial designs and analyse how each choice of implementation effected our final simulation. 
+	Once we had elicited the requirements we wanted our system to have, we needed to decide how to implement them. As a group there were several viable ideas and so we chose to take some time to explore each option. Each team member had two weeks to explore their idea and at the end of this period they presented it to the group. This presentation included whether their option was discrete or continuous, the benefits of their implementation choice and the problems they had with it or they thought would occur. In this section we discuss these initial designs and analyse how each choice of implementation affected our final simulation. 
 %	\noindent
 %	\begin{enumerate}
 %		
@@ -218,32 +216,32 @@
 
 \begin{figure}
 	\centering
-	\begin{subfigure}{4cm}
+	\begin{subfigure}{5cm}
 		\centering
-		\includegraphics[width=0.8\textwidth]{ScreenShotNurSim}
+		\includegraphics[width=1\textwidth]{ScreenShotNurSim}
 		\caption{Screen shot of our pixel approach}
 		\label{NursModel}
 	\end{subfigure}
-	\begin{subfigure}{4cm }
+	\begin{subfigure}{5.5cm}
 		\centering
-		\includegraphics[width=0.8\textwidth]{KimsModel}
+		\includegraphics[width=1\textwidth]{KimsModel}
 		\caption{Using parametric equations to represent a network}
 		\label{KimModel}
 	\end{subfigure}
-    \caption{}
+    \caption{Intial simulations}
 \end{figure}
 	
-	The first option we considered was using a matrix made of hexagons to represent the network. In this way each cell would have row and column coordinates in the matrix to track the position of cars. We hoped that using this method would allow us to check the adjoining cells for cars to prevent collisions. We thought the hexagon-shaped cells would allow us to better simulate a roundabout than square-shaped cells would. In the working simple model using this method, we had achieved working traffic lights. If a light was green for straight ahead only, the cars who wanted to go straight would go while the cars who wanted to turn left would stay stopped at the light. In this simple model we had not yet enabled cars to respond to other cars. Thus if a car was travelling at a faster speed than the car in front of it, it would pass through it. When attempting to implement this as a trial of the model, we decided that a hexagon matrix was an unnecessary complication but there was potential in the use of a matrix to represent the network. 
+	The first option we considered was using a matrix made of hexagons to represent the network. In this way, each cell would have row and column coordinates in the matrix to track the position of cars. We hoped that using this method would allow us to check the adjoining cells for cars to prevent collisions. We thought the hexagon-shaped cells would allow us to better simulate a roundabout than square-shaped cells would. In the working simple model using this method, we had achieved working traffic lights. If a light was green for straight ahead only, the cars who wanted to go straight would go while the cars who wanted to turn left would stay stopped at the light. In this simple model we had not yet enabled cars to respond to other cars. Thus if a car was travelling at a faster speed than the car in front of it, it would pass through it. When attempting to implement this as a trial of the model, we decided that a hexagon matrix was an unnecessary complication but there was potential in the use of a matrix to represent the network. 
 	
 	The second option we came up with also used a matrix and was based on the cell automation model \cite{namekawa2005general}. In this model each cell of a matrix is given attributes and properties. The attributes included the width, height, and type of cell whilst the properties would give information about whether or not the cell is occupied by a vehicle. The most important feature we would include in each cell was information on its neighbouring cells so that cars could make dynamic decisions about where they would go at each tick of the clock in the simulation. Although we had not yet successfully implemented this approach, we did believe it could be used to adequately model the requirements of our system. 
 	
-	The third option was the first working simulation that the group created. In this simulation, pixels are recoloured every thirty milliseconds to show the movement of cars across the map ({see figure \ref{NursModel}}). The entry points, exit points, and changing lanes were all dependent on the size of the static map. We had this simulation working very quickly, but we questioned whether it would be dynamic enough to adapt to our growing plans without getting overly complicated. In particular, we were concerned that this approach would hold us back as we tried to develop a multi-lane roundabout where cars would need to know when to change lanes to exit. This model originally had a similar problem with collisions as mentioned in option two where faster cars would pass through slower cars. We were able to implement a level of intelligence in the cars -- faster cars could respond to a slower car in front of them by overtaking in the right lane. If, however, the cars were already in the right-hand lane, the car would merely slow down and match the slower speed of the car in front of them while keeping a safe distance. This implementation could model many of the behaviours discussed in \cite{ehlert2001microscopic}, but it would be too reliant on the map and hence it would not be possible to have the user build their own maps. 
+	The third option was the first working simulation that the group created. In this simulation, pixels are recoloured every thirty milliseconds to show the movement of cars across the map ({see figure \ref{NursModel}}). The entry points, exit points, and changing lanes were all dependent on the size of the static map. We had this simulation working very quickly, but we questioned whether it would be dynamic enough to adapt to our growing plans without getting overly complicated. In particular, we were concerned that this approach would hold us back as we tried to develop a multi-lane roundabout where cars would need to know when to change lanes to exit. This model originally had a similar problem with collisions as mentioned in option two where faster cars would pass through slower cars. We were able to implement a level of intelligence in the cars -- faster cars could respond to a slower car in front of them by overtaking in the right lane. However, if a car was already in the right-hand lane, the car would merely slow down and match the slower speed of the car in front of it while keeping a safe distance. This implementation could model many of the behaviours discussed in \cite{ehlert2001microscopic}, but it would be too reliant on the map and hence it would not be possible to have the user build their own maps. 
 	
-	The final option we considered a continuous model based on a mathematical approach in which our map was represented by several parametric equations dependent on time ({see figure \ref{KimModel}}). In this way, each car would have its position denoted by a set of coordinates $(x,y)$. The parametric equation used to calculate the car's next position at each time step would be determined using its current position and the intended direction of travel. This solution would simplify the problem of the  multi-lane roundabout in the previous approach by merely using two sets of parametric equations for two concentric circles. Although this approach would allow us to accurately calculate where each car is at any given time, it would be difficult to come up with an efficient way to check for nearby vehicles. Again it was clear that the biggest challenge we would face was insuring our cars could respond to other cars in the network. 
+	The final option we considered a continuous model based on a mathematical approach in which our map was represented by several parametric equations dependent on time ({see figure \ref{KimModel}}). In this way, each car would have its position denoted by a set of coordinates $(x,y)$. The parametric equation used to calculate the car's next position at each time step would be determined using its current position and the intended direction of travel. This solution would simplify the problem of the  multi-lane roundabout in the previous approach by merely using two sets of parametric equations for two concentric circles as a two-lane roundabout. Although this approach would allow us to accurately calculate where each car is at any given time, it would be difficult to come up with an efficient way to check for nearby vehicles. Again it was clear that the biggest challenge we would face was ensuring our cars could respond to other cars in the network. 
 	
 	\subsubsection{Possible Scenarios and Policies}
 	
-	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. All members of our team had agreed that we wanted one of the  a multi-lane roundabout in our simulation. However, we foresaw several problems that could occur when implementing it. 
+	Another consideration we made when finalising the requirements of our simulation was how we could model real-life scenarios. Each member of our team had agreed that we wanted a multi-lane roundabout in our simulation. However, we foresaw several problems that could occur when implementing it. 
 	
     
 \begin{figure}
@@ -251,7 +249,7 @@
     \begin{subfigure}[h]{0.5\textwidth}
         \includegraphics[width=\textwidth]{CarCrash3}
         \caption{Issue with exiting a multi-lane roundabout}
-        \label{carCrash3}
+        \label{CarCrash3}
     \end{subfigure}%
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
       %(or a blank line to force the subfigure onto a new line)
@@ -261,7 +259,7 @@
         \caption{Traffic jam caused by a steady flow of cars}
         \label{steadyFlow}
     \end{subfigure}
-    \caption{}
+    \caption{Intial simulations}
 \end{figure}
 
 \begin{figure}[h]
@@ -272,7 +270,7 @@
 	   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	As our groups focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In figure \ref{carCrash3}, we can see that the silver car has approached the roundabout with its final destination being exit 4, the blue car then approaches the roundabout with it final destination being exit 1. In this scenario a problem arises because the silver car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real life the driver of the silver car would anticipate this problem and either adjust its speed so the blue car could proceed before it or the blue car would give way to the silver car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decided to research problems in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London \textcolor{red}{(spiral roundabout reference)}. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{spiralRoundabout}) is a spiral roundabout which ensures that the lane in which the person enters the roundabout will lead them directly to the correct exit without having to change lanes. We decided we would also like to model this as it is a new and unique solution to a problem which has existed for many years.
+	As our group's focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In figure \ref{CarCrash3}, we can see that the silver car has approached the roundabout with its final destination being exit number four, the blue car then approaches the roundabout with it final destination being exit number one. In this scenario a problem arises because the silver car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real life the driver of the silver car would anticipate this problem and either adjust its speed so the blue car could proceed before it or the blue car would give way to the silver car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decided to research problems in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London \textcolor{red}{(spiral roundabout reference)}. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{spiralRoundabout}) is a spiral roundabout which ensures that the lane in which the person enters the roundabout will lead them directly to the correct exit without having to change lanes. We decided we would also like to model this as it is a new and unique solution to a problem which has existed for many years.
 	
 	It was at this point the group decided it would be useful to have a case network on which we could test new policies. This would allow us to ensure that the simulation we built could be used by clients to represent their own network and to gather relevant statistics. We decided that our test network would focus on a four junction multi-lane roundabout. In order to gather statistics and test new policies, we needed a scenario. In our scenario there would be a heavy flow of cars coming from junction one, this would delay other cars from entering the roundabout at the next junction, causing a traffic jam (see figure \ref{steadyFlow}). The solution we propose is that we could add traffic lights to this roundabout to help regulate the flow of traffic. If we could build dynamic traffic lights, the duration of the traffic light would instead be dependent on the number of cars passing through the light rather than a timer-based traffic light. What we hope is that after we have built our simulation we will be able to test this scenario and use the simulation to find the most efficient light duration which would maximise the network flow through the roundabout. Considering the end goal of our simulation allowed us to be clearer on what is necessary to build a quality traffic simulation.  
 
@@ -295,7 +293,7 @@
 	On the other hand, it is required that every method has a corresponding test code written for it to make sure it works correctly in a variety of situations, such as boundary and corner conditions, therefore edge-cases must be tested.\\
 	
 	\noindent 
-	\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\textcolor{red}{ref: http://www.nngroup.com/articles/ten-usability-heuristics/}] should be considered and applied for implementation of user interface, for example there should be a match between the system and real world so users understand the analogy. 
+	\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\textcolor{red}{ref: http://www.nngroup.com/articles/ten-usability-heuristics/}] should be considered and applied for implementation of user interface. For example, there should be a match between the system and real world so users understand the analogy. 
 	This means that cars in the simulation should look like cars and the designs for road and roundabouts must be as realistic as possible. 
 	Also, help should be provided for users with explanations of how to use the simulation engine. 
 	A heuristic testing for all the 10 principles must be performed in the end of the UI’s development life-cycle by an expert. \\
@@ -307,7 +305,7 @@
 	\textbf{Maintainability:} The code should make use of interfaces and appropriate design patterns to make sure that all programmers can understand it and make required changes (refactor it) easily.\\
 	
 	\noindent 
-	\textbf{Extensibility:} It should be possible to introduce new features into the system without having to restructure the engine’s core if additional requirements emerge. 
+	\textbf{Extensibility:} It should be possible to introduce new features into the system without having to restructure the engine's core if additional requirements emerge. 
 	For example an appropriate level of abstraction should be used to ensure that a cyclist lane occupied by cyclists, taxis, buses and motorbikes can be incorporated into the system at the later stages of development.\\
 	
 	\noindent
@@ -354,14 +352,13 @@
 		
 	\end{enumerate}
 	
-	\subsubsection{Architectural Patterns}
+	\subsection{Architectural Patterns}
 	Whenever a team designs a system, there are many different ways to do it and even with clear specifications it can be a challenge to decide which direction is best. 
 	Consequently, a software architect can make use of design patterns -- the proven good design structures which have emerged from hard-won architectural knowledge \cite{bass2007software} -- to decide their approach. 
-	In our system, we will implement a number of design patterns to make sure we use appropriate tested solutions to save time and help us work well as a team. \\
-	\vspace{1cm}
+	In our system, we will implement a number of design patterns to make sure we use appropriate tested solutions to save time and help us work well as a team. 
 	
-	\noindent
-	{\bf Layered Pattern Solution}\\\\
+	
+	\subsubsection{Layered Pattern Solution}
 	Complex software systems usually require a clear separation of services so that different modules can be developed and maintained by different team members. 
 	We will use a layered pattern to clearly show which parts make up the whole system and assign modules to each programmer in our group. 
 	
@@ -382,7 +379,7 @@
 	Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine \textcolor{red}{[glossary]}. 
 	Secondly, the data layer is responsible for the handling of data from the real world, e.g. how many cars are coming from different entry points at each point in time. 
 	This data could be gathered from cameras installed along the roads or from the mobile apps of drivers who wish to participate in helping to gather statistics about traffic conjectures \cite{NCTA}. 
-	Although it would be very challenging to have our system be able to read information in a similar way, it would be useful to allow users to be able to specify the probability a car will enter a given junction. 
+	Although it would be very challenging to have our system be able to read information in a similar way, it would be \textcolor{red}{useful} to allow users to be able to specify the probability a car will enter a given junction. 
 	This will allow the user to correctly model their own networks and design policies to improve problems. Thirdly, the Simulation Model layer uses the provided information about cars currently using the road network and attempts to predict future states of the network. 
 	A number of policies will be used in a simulation and one of the aims of this project is to find the most appropriate policy by comparing their performance, thus statistics and policies are two essential sub-layers. 
 	The Simulation Engine will also move the cars and switch colours on the traffic lights, so control is the third sub-layer. 
@@ -403,30 +400,28 @@
 	To sum up, the Layered Pattern Solution helps us to clearly define underlying critical components of the system (OS, hardware, JVM) and create a separation of responsibilities by partitioning the system into a number of modules. 
 	By drawing different layers, we can see how services depend on each other and what interfaces we need to specify between them. 
 	Because the relations between layers is unidirectional, it is clear what parts of the system depend on each other (e.g. UI depends on the Simulation Model which depends on the data, and all three depend on the JVM).
-	Tasks can now be assigned to different programmers who will be working on whichever layer they prefer based on their experience and interest. \\
-	\vspace{1cm}
+	Tasks can now be assigned to different programmers who will be working on whichever layer they prefer based on their experience and interest. 
 	
-	\noindent
-	{\bf Model-View-Controller}\\\\
+	\subsubsection{Model-View-Controller}
 	The second architecture pattern we will make use of is the MVC module pattern which breaks the system into three components. 
 	The three components are the model which represents the application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
 	
-	\textcolor{red}{The MVC uses notifies relation to connect instances of model, view and controller}, i.e. elements are notified of a state change. 
+	\textcolor{red}{The MVC uses the Notifies relation to connect instances of model, view and controller}, i.e. elements are notified of a state change. 
 	The restrictions of this pattern are that at least one instance of each element must be created, and the model component should not interact directly with the controller. 
 	Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexities for simple programs \cite{bass2007software}. 
 	In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine. Therefore, we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
 	
-	\begin{figure}[h]
+	\begin{figure}[p]
 		\centering
-		\begin{subfigure}{0.45\textwidth}
+		\begin{subfigure}{\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{MVCExample.jpg}
+			\includegraphics[width=0.9\textwidth]{MVCExample.jpg}
 			\caption{An example MVC structure from \cite{bass2007software}}
 		\end{subfigure}	
-%		\par \bigskip
-		\begin{subfigure}{0.45\textwidth}
+		\par \bigskip
+		\begin{subfigure}{\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{mvc}
+			\includegraphics[width=0.9\textwidth]{mvc}
 			\caption{The MVC design for our simulation}
 			\label{OurMvc}
 		\end{subfigure}
@@ -459,15 +454,16 @@
 	The overall diagram for the MVC and a sequence diagram for a typical run of a simulation are presented in diagrams \ref{OurMvc} and \ref{SequenceDiagram}. \\
 	
 	\textcolor{red}{Problems with UML can three of them be combined on the same page to save space. Explain them here.}
-%	
+    
+    %	
 %\begin{figure}
 %	\centering
-%	\includegraphics[scale= 0.65]{ClassDiagram}
+%\includegraphics[scale=0.65{ClassDiagram}
 %\end{figure}
-
-\includepdf{ClassDiagram}
 	
 	\subsection{Requirement Management}\label{Requirement Management}
+	\textcolor{red}{How can we explain the attributes above if some have already been described in the above functional requirements\\
+	}
 	
 	Once we defined our functional and non-functional requirements, it was clear that there were a large number of requirements. 
 	Although we would like to include every attribute in our system, in order to clearly manage the requirements, we needed to know in what order we should complete them. 
@@ -501,12 +497,12 @@
 		\begin{tabular}{|c|c|c|}
 			\hline \rule{0pt}{2.5ex}
 			\textcolor{MidnightBlue}{\bf Necessary}      & \textcolor{MidnightBlue}{\bf Optional} & \textcolor{MidnightBlue}{\bf Extra}   \\ \hline \rule{0pt}{2.5ex}
-			Roads & Spiral roundabout & Buses  \\ 
-			Cars & Emergency vehicles & Parking \\ 
-			Roundabout & Dynamic traffic lights & Zebra crossing \\ 
-			Multiple lanes & & Driver Behaviour  \\
-			Traffic lights & & Horns/honking \\
-			Car timer  & & \\ \hline 
+			Roads & Spiral Roundabout & Buses  \\ 
+			Cars & Emergency Vehicles & Parking \\ 
+			Roundabout & Dynamic Traffic Lights & Zebra Crossing \\ 
+			Multiple Lanes & & Driver Behaviour  \\
+			Traffic Lights & & Horns/Honking \\
+			Car Timer  & & \\ \hline 
 		\end{tabular}
 		\caption{Priority listing for the requirement of our system}
 		\label{requirements}
@@ -519,16 +515,16 @@ Table \ref{requirements} displays the requirements we wanted in our simulation b
 
 We decided that the best way to build our system would be to start with the basics and build up. First, we would implement cars on a road at a basic intersection with a timer-based traffic light. Then we would add multiple lanes with intelligence in the cars to know when they can change lanes, as we did in the first simulation mentioned in section \ref{ssb:initial designs}. From there we hoped to add the roundabout and the car timer. The car timer would measure the time it takes for each car to complete its journey from start to end. We can then use this information to calculate the statistics. 
 
-If all the necessary requirements were finished, we hoped to implement the spiral roundabout to solve the changing lanes in a multi-lane roundabout problem. If we could add emergency vehicles vehicles such as ambulances, police cars and fire engines, we wanted them to be able to bypass the traffic lights and also have the other cars be able to respond to them by getting out of the way. As part of the Optional requirements we also hoped to make our traffic lights dynamic so that they would depend on the number of cars coming into each junction.
+If all the necessary requirements were finished, we hoped to implement the spiral roundabout to solve the problem of changing lanes in a multi-lane roundabout. If we could add emergency vehicles vehicles such as ambulances, police cars and fire engines, we wanted them to be able to bypass the traffic lights and also have the other cars be able to respond to them by getting out of the way. As part of the Optional requirements we also hoped to make our traffic lights dynamic so that they would depend on the number of cars passing through each junction.
 
 
-If both the necessary and optional requirements were implemented and there was still time to be spared, we would try to implement any of the requirements we listed as Extra. This included different types of vehicles such as buses, places for cars to park, and a zebra crossing where cars would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give each car a behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
+ Once both the necessary and optional requirements were implemented and if there was still time to be spared, we would try to implement any of the requirements we listed as Extra. This included varying the vehicles between cars and buses, places for vehicles to park, and a zebra crossing where vehicles would have to stop to wait for a pedestrian to cross if one appeared. We would also try to give each car a behavior such as differing levels of recklessness or caution as well as the ability to honk their horn at a slow driver who would then speed up as a reaction.
 \newline\indent	We thought that creating categories like this would give us a step-ladder approach to first complete the basics, fine tune what is already there to make it more advanced, and finally add even more elements to make it as realistic as possible.
 
 
-\subsubsection{Project Timetabling}
+\subsection{Project Timetabling}
 
-	As a team we decided to set a schedule for completing each of the requirements previously mentioned. We created a Gantt Chart demonstrating the order of events and their dependencies (see figure \ref{Gchart}). We have simplified the Gantt Chart by detailing the Name, Priority, Start Date, End Date, and Dependency in table \ref{timetable}. The Dependency column notes the number of the item that must already be implemented before that item can begin to be programmed. The Start and End dates noted in the table are our initial estimations of when we would start and finish each element. In actuality some of the elements took longer than expected and thus postponed their end date and the start of another element.
+	As a team we decided to set a schedule for completing each of the requirements previously mentioned. We created a Gantt Chart demonstrating the order of events and their dependencies (see figure \ref{Gchart}). We have simplified the Gantt Chart by detailing the Name, Priority, Start Date, End Date, and Dependency in table \ref{timetable}. The Dependency column notes the number of the item that must already be implemented before that item can begin to be programmed. The Start and End dates noted in the table are our initial estimations of when we would start and finish each element. In actuality, some of the elements took longer than expected and thus postponed their end date and the start date of another element.
     
 	\begin{table}[H]
 		\centering
@@ -556,7 +552,7 @@ If both the necessary and optional requirements were implemented and there was s
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=\textwidth]{"G Chart"}
+		\includegraphics[width=\textwidth]{"G_Chart"}
         \caption{}
         \label{Gchart}
 	\end{figure}
@@ -586,7 +582,7 @@ If both the necessary and optional requirements were implemented and there was s
 	Person responsible: Anton. 
 	
 	\subsubsection{Model Package}
-	The Model package consists of the Model class, which has a number of methods to control the state of the simulation such as change maps as a response to user input and pause, start and save simulations. 
+	The Model package consists of the Model class, which has a number of methods to control the state of the simulation such as change maps as a response to user input and pause, start, and save simulations. 
 	Once a grid is loaded, the logic of changing the positions of cars and the colour of traffic lights is defined in the IGridController interface and implemented in the GridController class.\\
 	
 	\noindent
@@ -605,7 +601,7 @@ If both the necessary and optional requirements were implemented and there was s
 	
 	\subsubsection{Events Package}
 	Because we are using the layered design pattern, we needed to find a way to pass messages from lower layers to higher layers. In figure 1.2, the structure is as follows: Data Layer --\textgreater Model Layer --\textgreater UI Layer. 
-	A common way to create messages and pass them between classes is by using an Observer pattern, the Events package contains classes and interfaces to do that: DataEvent is the object (body) of an event (e.g. a new car Event will contain coordinates of a new car in its data field), EventDispatchable is an interface which has to be implemented by a class which wants to dispatch messages and EventListener is an abstract class with methods which can be used to listen to messages.\\
+	A common way to create messages and pass them between classes is by using an Observer pattern, the Events package contains classes and interfaces to do that: DataEvent is the object (body) of an event (e.g. a new car Event will contain coordinates of a new car in its data field), EventDispatchable is an interface which has to be implemented by a class that wants to dispatch messages and EventListener is an abstract class with methods which can be used to listen to messages.\\
 	
 	\noindent
 	Person responsible: Anton.
@@ -655,6 +651,156 @@ If both the necessary and optional requirements were implemented and there was s
 	
 	\subsection{Testing}
 	%todo		\textcolor{blue}{unit testing evidence screenshots, description of typical bugs.}
+  
+
+
+\section*{Implementation}
+In this section, we describe how we approached the implementation stage of
+our project. We started this project using the waterfall approach but after the intermediate report we realised that this approach was not the best model for our team. Instead we switched to the Agile (scrum) methodology. This methodology was more appropriate for our group because the sprint allowed us to focus on a few attributes in one week before moving on to the next. The project will be implemented with the help of designs such as Architectural Patterns and UML diagrams from the previous sections.
+
+
+\subsection{Model Package}	
+The Model is the working engine that is responsible for controlling the flow and the movement of the traffic on the map. The Model is equipped with all the necessary functions required for the smooth implementation of the simulation engine. The core package or the Model contains some of the core functionality classes like the GridController.java, TrafficLight.java, Model.java and important interfaces like IGridController.java and IGrid.java.
+The following are the core functions
+
+\begin{itemize}
+\item Vehicle Movement on the Lane
+\item Vehicle Movement when on the Roundabout
+\item Decision Making when on the Junction
+\item Decision Making when on the Roundabout
+\item Avoiding Accidents / Collisions and Overtaking
+\end{itemize}
+
+\subsection{View Package}
+
+From the MVC model, the View is responsible for rendering the Model information to the user. The View also provides the interface required by the user such that their actions can be recorded and sent to the controller. The Model maintains the state information of the engine. The View then queries the Model to fetch the current State Information. The Model is also responsible for maintaining and updating the functionality of the application based on the user requests, \textcolor{red}{i.e pausing the simulation}. The Controller receives the user actions from the View and requests the Model to act as per the request.
+
+In our simulation, the View is responsible for displaying the collection of cells which form a grid. All vehicles are then moved on these cells.  We have used the JFrame class of the Java Swing API to show the grid. The frame is set on a border layout with a certain size as appropriate. There is a Menu Bar that has been added with some basic functionalities that allow the user to control the simulation. One of the actions the user can perform in the View is to start the simulation based on a map they have already created. However if the user does not have a map they wish to use, they can load the default map. This default map displays all attributes that can be represented in our simulation as it contains both a crossroad and a roundabout. Currently, a user can start and pause the simulation. Pausing the simulation allows the user to collect data on the simulation up to that point and to take screen-shots. They can then un-pause the simulation to let it keep running and then pause it again later to collect more data. These two sets of data can be analysed to find out what is happening in the simulation. \textcolor{red}{This functionality has been implemented using a MenuActionListener object which has the functions required to have a control on the user's actions. All the user actions are taken from the View and passed on to the controller for respective actions that have to be taken. Effort has been made in making sure any change in the status of the model is recorded by the application and is befit to be used wherever necessary in future developments.}
+
+An important aspect of our simulation is how the controller reads the user's map. When a user creates and saves their own map, this map is stored as a text file containing a grid of numbers. \\
+
+%\vspace{0.5cm}
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.45\textwidth}
+%\begin{table}
+\centering
+
+\begin{tabular}{ccccccccc}
+0 & 0 & 0 & 3! & 4* & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
+1* & 1 & 1 & 5 & 5 & 1 & 1 & 1 & 1!\\
+2! & 2 & 2 & 5 & 5 & 2 & 2 & 2 & 2*\\
+0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 3* & 4! & 0 & 0 & 0 & 0\\
+\end{tabular} 
+\caption{A representation of basic network based on numbers}
+\label{NumberRepresentation}
+\end{subfigure}
+%
+\qquad
+\begin{subfigure}{0.45\textwidth}
+\centering
+\begin{tabular}{ccccccccc}
+0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+E* & E & E & J & J & E & E & E & E!\\
+W! & W & W & J & J & W & W & W & W*\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
+\end{tabular} 
+\caption{A representation of a basic network based on directions}
+\label{DirectionRepresentation}
+\end{subfigure}
+\caption{A grid representation of a map.}
+\label{ExampleNet}
+\end{figure}
+
+%vspace{0.5cm}	
+Figure \ref{ExampleNet} shows two representations of the map as created in a matrix string \textcolor{red}{referencing the image of the map}. When this file is uploaded into the simulation, the controller takes the string and replaces the number with the corresponding image. Initially we designed the system to require only 5 numbers -- 0,1,2,3 and 4. These would represent an empty cell or the directions east, west, north, and south respectively. However, whilst we were trying to organise the retrieval  of a pre-designed map by the simulation, we noticed that there was not currently a method to identify which cells were entrance and exit cells. We resolved this issue by creating two extra parameters that would go after a number. These parameters where an exclamation point (!) which determines an exit and asterisk (*) which determines an entrance. In the map editor, a user can click on a cell and set it to be either an entrance or exit cell. There is a restriction which prevents them from trying to make a cell both an exit and entrance. Once this map is saved as a text file, the string that represents this entrance or exit will have the direction as well as the parameter assigning to it the extra function of adding or removing a car. In the table below we briefly explain what each number represents and what image corresponds to each. We will save the explanation of the numbers 5, 7 and 9 to the section \textcolor{red}{reference this section once it is written} where we will use an example to describe these directions. 
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tabular}{|c|l|c|}
+
+\hline {\bf Number} & {\bf Description} & {\bf Image} \\ 
+\hline 0 & empty - these cells do not represent any special feature & grass \\ 
+\hline 1 & road with east direction & road \\ 
+\hline 2 & road with west direction & road \\ 
+\hline 3 & road with north direction & road \\ 
+\hline 4 & road with south direction & road \\ 
+\hline 5 & junction & road \\ 
+\hline 7 & circle - island in the middle of the roundabout & grass \\ 
+\hline 9 & roundabout - any part cell which is part of the roundabout & road \\ 
+\hline 1! & the exclamation point declares that this cell is also an exit point & road \\
+\hline 1* & the asterisk declares that this cell is also an entrance point & road \\ 
+\hline
+\end{tabular} 
+\end{center} 	
+
+\vspace{0.5cm}
+Once the text file is parsed using a File Reader object in Model.java class, cells are created based on the numbers in the string. Each cell is given properties such as direction and whether it is an entrance or an exit. After this point numbers are no longer used within the simulation and the logic is based on seven possible directions. These are north, south, east, west, junction, roundabout, and circle. This implementation allowed us to seamlessly include a dynamic map builder which allows our users to represent their own network. In the next section we describe how these directions are used to move cars across the network. 
+
+
+
+\subsection{Vehicle Movement}
+
+The most interesting element of our simulation is how we move a car from one position to the next. This movement is dependant on where the car is currently on the network. Moreover it was necessary to write different logic for each case. The possible cases are: on a straight road, in a junction, or on a roundabout. In the following section we will discuss through examples how the logic for the movement of cars works and the problems we faced when implementing each case. 
+
+\subsubsection{Movement on a Straight Road}
+It was important for our team that our network model intelligent cars which could make decisions based on their current or previous state. \textcolor{red}{Hence, in order to move across the network, cars used their origin and current position.} Moreover, they must be able to call the direction of the cell they are currently in as this dictates where they will be able to move to in the next tick of the simulation. For example, suppose a car `A' enters the map from West and is intending to go to East. The car has predefined information that its entry point was west and that its final destination is east. In order to accurately model real life, the assignment of an initial and final destination is random. 
+Moreover there is an extra condition added to this assignment that a car will not have the same initial and final destination, i.e. a car should not start from east intending to go east as this is not realistic. At each tick of the simulation a car checks what the  direction is of the cell that it sits on. If this cell is east, the car calls the function moveEast() which ensures the car keeps moving east for as long as the cell it sits on is a road to the east. We have designed this system so that cars are prevented from moving in any other direction than that of the cell which it sits on. However this led to a problem when a car crosses an intersection. The problem and solution are discussed in the next section. 
+
+\subsubsection{Moving in a Junction} 
+
+We have seen that cars in our network move on straight roads based on the direction of the cell on which  they sit. This approach can not be used on a junction since here we would like cars to be able to move in a different direction from which they came in, i.e. a car coming from east may move north when it exits the junction. Now we can see from figure \ref{DirectionRepresentation} that when car A moving from the west entrance reaches the start of the intersection, the last cell in the west road calls the moveEast() function which moves the car into the junction. At this point, when the car asks the cell for its direction, it does not make sense for a junction to have a direction because we wanted cars to be able to move in several possible directions. Instead we introduced a direction called junction and a car on a cell with junction as its direction now needs extra information before it can move again. At this point it needs to find out where its original destination was and what the final destination is. Given the example of car A who is trying to move from the west entrance to the east exit, the car uses the fact that it is trying to move east to check the cell to the \textcolor{red}{east} of it current position. If this cell is empty the car moves to this position in the next tick. However a more complex problem on a junction is when a car say B is entering from the west but trying to move north. Once the car is on the first cell of the intersection (represented in green in figure \ref{NumberRepresentation}) it asks where it is going and where it has come from. As it is going north it checks whether the road north of it has direction north. In our example map \textcolor{red}{delete: (see figure \ref{StringRepresentation})} we would see that the the road has direction south which means we do not want to move north yet. Instead our car uses its initial entrance to move once more the the east. Again it checks where its final destination is (north) and it again checks whether the road north of it corresponds to a road with a northern direction. At this point the car would now change its direction to north and continue north on the junction until it reaches the road going north to its final destination.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\begin{tabular}{ccccccccc}
+0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+E* & E & E & J & J & E & E & E & E!\\
+W! & W & W & J & \textcolor{green}{J} & W & W & W & W*\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
+\end{tabular} 
+\caption{A representation of basic network based on numbers}
+\label{NumberRepresentation}
+\end{subfigure}
+%
+\qquad
+\begin{subfigure}{0.50\textwidth}
+\centering
+\begin{tabular}{ccccccccc}
+0 & 0 & 0 & N! & S* & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+E* & E & E & J & J & E & E & E & E!\\
+W! & W & W & J & J & W & W & W & W*\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N & S & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & N* & S! & 0 & 0 & 0 & 0\\
+\end{tabular} 
+\caption{A representation of a basic network based on directions}
+\label{DirectionRepresentation}
+\end{subfigure}
+%\end{table}
+\label{ExampleNetwork}
+\end{figure}
+
+
 	
 	\section{Team Work}
 	In a group project, team work plays a big part in the successes and failures of the project. In this section we discuss what roles each of the group members had and how this helped or hindered the project. We also discuss how the group handled using GitHub to work as a team and what we have learned through this experience. 
@@ -666,18 +812,18 @@ If both the necessary and optional requirements were implemented and there was s
 	There was a lack of communication which continued to be an issue for the group until the end of the project. 
 	At first we struggled to find an instant message application that could be used by all members of the group. 
 	For a few weeks we used a combination of both WhatsApp and text messages to communicate, but this caused issues when we would only put the message on the group WhatsApp. 
-	This meant that some members of the team would not get the messages and would miss the group meetings. 
+	This meant that some members of the team who did not use WhatsApp would not get the messages and would miss the group meetings. 
 	Consequently, we needed a new form of communication and we chose Slack as an alternative which every member of the group was happy to use. 
 	However, again we struggled to be consistent with our means of communication and it began to hold the group back. 
 	Finally a decision was made that all important messages which needed to be read by all members of the group would be sent by KCL email as this was an application that every member had and would check frequently. 
 	Although this worked well for us, it had its drawbacks. 
-	The main problem was that it was not as instantaneous as an instant message and we would have to leave at least 24 hours for people to check their emails. 
+	The main problem was that it was not as instantaneous as a text message and we would have to leave at least 24 hours for people to check their emails. 
 	Alongside this, Rochelle, as project coordinator would send out a calendar request for all meetings so each member of the team knew when every meeting was. 
 	This worked much better as no member of the group missed the team meetings as a result of not knowing they were taking place. 
 	
 	Another way we tried to ensure we were making the best use of our weekly meetings was to set an agenda at the start of every meeting. 
 	This allowed every member of the group to bring to attention any issue they were having and also helped us to structure our meetings. 
-	At the end of every meeting the project co-ordinator would create a report of the minutes of the meeting. This included the agenda, discussion point -- what was discussed in the meeting, and action points -- what each member of the team needed to do before the next meeting. 
+	At the end of every meeting the project coordinator would create a report of the minutes of the meeting. This included the agenda, discussion points -- what was discussed in the meeting, and action points -- what each member of the team needed to do before the next meeting. 
 	These reports were uploaded to GitHub so that every member could look at it if they needed to clarify anything.
 	
 	Once we were clear of the specifications of the system and we were ready to start designing, we gave everyone the components of the project they were to work on. Then, in the weekly meetings which were decreased to once a week, we would give feedback on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model was not suited to our project and we began to follow the agile scrum method instead. \textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implementation section.}
@@ -695,7 +841,7 @@ If both the necessary and optional requirements were implemented and there was s
 		\item [Anton] - Software engineer and architect
 		\item [Kim] - Graphics coordinator
 		\item [Nur] - Software engineer
-		\item [Rochelle] - Project and documentation co-ordinator
+		\item [Rochelle] - Project and documentation coordinator
 		\item [Zaki] - Software engineer
 	\end{description}
 	
@@ -704,22 +850,23 @@ If both the necessary and optional requirements were implemented and there was s
     
     GitHub was an ongoing challenge for our team in the beginning of the project. As it took us a while to acclimate ourselves to using GitHub, we first used the online file-sharing platform Dropbox to distribute and save our team files. We set ourselves a deadline by which each member needed to be familiarised with GitHub.
     
-    Following this deadline all team members began using Github frequently, however it was apparent that the present structure of our repository was holding us back. When we began using github, we simply replicated the structure of our Dropbox folder. Consequently our repository had a separate folder for each team member to store their files. As the group progressed in the project we began working on similar areas and hence needed to use the same files. We decided that it was important to restructure the repository so that it had a more cohesive structure. Instead of separating files by who created them we sorted all the groups files into three categories: Documentation, Software and Graphics. At this point we created a file to explain how to store your files and use the repository so that everyone could easily find their files. Moreover we decided that everyone should try to leave clear comments when committing to Github so that everyone would understand the changes made to a file in the repository. We mostly followed this structure and Github became a a vital tool for our group. 
+    Following this deadline all team members began using GitHub frequently, however it was apparent that the present structure of our repository was holding us back. When we began using GitHub, we simply replicated the structure of our Dropbox folder. Consequently our repository had a separate folder for each team member to store their files. As the group progressed in the project we began working on similar areas and hence needed to use the same files. We decided that it was important to restructure the repository so that it had a more cohesive structure. Instead of separating files by who created them we sorted all the group files into three categories: Documentation, Software and Graphics. At this point we created a file to explain how to store your files and use the repository so that everyone could easily find their files. Moreover we decided that everyone should try to leave clear comments when committing to GitHub so that everyone would understand the changes made to a file in the repository. We mostly followed this structure and GitHub became a a vital tool for our group. 
+    \textcolor{red}{add stuff on problem with git not updating files}
    
     
 	\section{Evaluation}
 	%todo	\textcolor{blue}{Critically evaluate your project: what worked well, and what didn't? 	how did you do relative to your plan? what changes were the result of improved thinking and what changes were forced upon you? how did your team work together? etc. 	Note that you need to show that you understand the weaknesses in your work as well as its strengths. You may wish to identify relevant future work that could be done on your project}
-	Our group had clear goals for what we wanted to achieve. We wanted to build a simulation which had intelligent cars. We used what we researched in literature to specify the list of requirements discussed above. At the end of this project our group recognises that we only met 6 out of the 14 requirements which might suggest we had not done enough. In fact as we will explain in this section, our team focused on building a strong foundation to our simulation which would be dynamic enough to include numerous extra attributes. 
+	Our group had clear goals for what we wanted to achieve. We wanted to build a simulation which had intelligent cars. We used what we researched in literature to specify the list of requirements discussed above. At the end of this project our group recognises that we only met six out of the fourteen requirements which might suggest we had not done enough. In fact as we will explain in this section, our team focused on building a strong foundation to our simulation which would be dynamic enough to include numerous extra attributes. 
 	
-	Our original goal, discussed in \ref{LiteratureReview} was to use cell automation to track where cars were in the simulation and to use this to avoid collisions. This method was challenging for us to build but we focused on making sure we could achieve it to a high level. This means that although we did not implement extra attributes such as parking, we could simply add an attribute to a given cell to specify that it was a parking space or a bus stop. We ran out of time to complete all the 14 attributes we wanted to include but we did successfully implement all of the necessary attributes. In our original test simulation we had many of the behaviours identified \cite{ehlert2001microscopic} such as switching-lanes but in our final simulation we spent a lot of time focusing on other attributes. Hence, in our final simulation we allow cars to move at the same speed and therefore there is no need to switch lanes to overtake. We exhibit a version of the car-following, in that cars will stop behind other cars in front of it but as they all move at the same speed cars do not adjust there speed to match the speed of the car in front. We worked hard to insure that we had a successful roundabout and recognised that the map builder would need to be reworked to include this new type of junction. It was infeasible to allow users to build their own sized roundabouts and it would also be cumbersome for them. Hence we decided to have a set sized roundabout which the user only had to place on the map they created. Creating a roundabout was extremely challenging for the group and required a whole week sprint. However it was something we had all agreed was necessary and we are pleased that we managed to achieve it.
+	Our original goal, discussed in section \ref{LiteratureReview} was to use cell automation to track where cars were in the simulation and to use this to avoid collisions. This method was challenging for us to build, but we focused on making sure we could achieve it to a high standard. This means that although we did not implement extra attributes such as parking, we could simply add an attribute to a given cell to specify that it was a parking space or a bus stop. We ran out of time to complete all fourteen attributes that we had wanted to include but we did successfully implement all of the necessary attributes. In our original test simulation we had many of the behaviours identified \cite{ehlert2001microscopic} such as switching-lanes, but in our final simulation we spent more time focusing on other attributes. Hence, in our final simulation we only allow cars to move at the same speed and therefore there is no need to switch lanes to overtake. We exhibit a version of the car-following, in that cars will stop behind other cars in front of it but as they all move at the same speed cars do not adjust their speed to match the speed of the car in front. We worked hard to ensure that we had a successful roundabout and recognised that the map builder would need to be reworked to include this new type of junction. It was infeasible to allow users to build their own sized roundabouts and it would also be cumbersome for them. Hence we decided to have a set sized roundabout which the user only had to place on the map they created. Creating a roundabout was extremely challenging for the group and required a whole week sprint. However it was something we had all agreed was necessary and we are pleased that we managed to achieve it.
 	
-	As a group we are happy with how we worked together but we recognise our issues and how this effected the project. One of the key success of the group was the clear structure of our software. Anton created all the class files and this insured that every member knew which functions they could access. This cohesive platform allowed members of the group to work on completely different areas of the simulation which would rely on another feature.
+	As a group we are happy with how we worked together but we recognise our issues and how this affected the project. One of the key successes of the group was the clear structure of our software. Anton created all the class files and this ensured that every member knew which functions they could access. This cohesive platform allowed members of the group to work on completely different areas of the simulation which would rely on another feature.
 	
-	 Although we had this cohesive structure, the main issue which effected every aspect of our project was communication. Whilst we designed many strategies to overcome this problem, some of which were extremely successful, it still impacted the final result. We recognise that if we had better communication from the beginning, we would have avoided points where two members of the team were working on the same feature or when members were unclear about what was expected of them. Another problem the group had was time keeping and this impacted the effectiveness of meetings as a lot of time was wasted. Again this effected communication because sometimes team members who missed some or all of the meeting didn't get some piece of information.   
+	 Although we had this cohesive structure, the main issue which affected every aspect of our project was communication. Whilst we designed many strategies to overcome this problem, some of which were extremely successful, it still impacted the final result. We recognise that if we had better communication from the beginning, we would have avoided points where two members of the team were working on the same feature or when members were unclear about what was expected of them. Another problem the group had was time keeping and this impacted the effectiveness of meetings as a lot of time was wasted. Again this affected communication because if a team members missed some or all of the meeting, they did not get some vital piece of information.   
 	 
-	 Finally as a team we struggled to stick to a set timetable and this resulted in us loosing our way half way through the project. At this time the team decided we needed a new approach. The team agreed to follow the agile scrum methodology because we felt we would benefit from the short sharp burst of productivity which a sprint gave. We had three successful sprints which completely turned the project around. It was far easier for the group to understand what needed to be achieved over the coming week given a sprint plan instead of following our original Gantt chart. We believe that the final sprint that was dedicated to statistics, transformed our project from simply simulating cars to reporting on how they moved across a network. We wanted a user to have some understand of what the visual representation was showing and this need to be something quantifiable. 
+	 Finally, as a team we struggled to stick to a set timetable and this resulted in \textcolor{red}{us losing our way half way through the project.} At this time the team decided we needed a new approach. The team agreed to follow the agile scrum methodology because we felt we would benefit from the short sharp burst of productivity which a sprint gave. We had three successful sprints which completely turned the project around. It was far easier for the group to understand what needed to be achieved over the coming week given a sprint plan instead of following our original Gantt chart. We believe that the final sprint that was dedicated to statistics, transformed our project from simply simulating cars to reporting on how they moved across a network. We wanted a user to have some understanding of what the visual representation was showing and this needed to be something quantifiable. 
 	 
-	 Overall, as a group we feel this project has been largely successful and we have learnt a lot about how we could improve our own working style and how we work as a team. Each member recognises where the could have done more but also how important they were to our success. 
+	 Overall, as a group we feel this project has been largely successful and we have learned a great deal about how we could improve our own working style and how we work as a team. Each member recognises where the could have done more but also how important they were to our success. 
 	
 	
 	
