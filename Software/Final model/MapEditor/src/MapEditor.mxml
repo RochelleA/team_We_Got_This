@@ -73,7 +73,9 @@
 		</s:Scroller>
 
 		<s:VGroup height="100%">
-			<s:BitmapImage source="@Embed('assets/logo3.png')" width="200" scaleMode="letterbox" smooth="true"/>
+			<s:BitmapImage 
+source="@Embed('/../assets/logo3.png')" width="200" 
+scaleMode="letterbox" smooth="true"/>
 			
 			<s:HGroup verticalAlign="middle">
 				<s:Label text="Title" />

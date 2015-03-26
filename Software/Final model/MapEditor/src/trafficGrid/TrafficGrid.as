@@ -56,16 +56,20 @@ package trafficGrid
 						case "None":
 							break;
 						case TrafficLightColour.RED:
-							trafficLights += "["+cell.xPos+";"+cell.xPos+"] 1500 RED\n"
+							trafficLights += 
+"["+cell.xPos+";"+cell.yPos+"] 1500 RED\n"
 							break;
 						case TrafficLightColour.RED_AMBER:
-							trafficLights += "["+cell.xPos+";"+cell.xPos+"] 1500 RED_AMBER\n"
+							trafficLights += 
+"["+cell.xPos+";"+cell.yPos+"] 1500 RED_AMBER\n"
 							break;
 						case TrafficLightColour.GREEN:
-							trafficLights += "["+cell.xPos+";"+cell.xPos+"] 1500 GREEN\n"
+							trafficLights += 
+"["+cell.xPos+";"+cell.yPos+"] 1500 GREEN\n"
 							break;
 						case TrafficLightColour.AMBER:
-							trafficLights += "["+cell.xPos+";"+cell.xPos+"] 1500 AMBER\n"
+							trafficLights += 
+"["+cell.xPos+";"+cell.yPos+"] 1500 AMBER\n"
 							break;
 						
 					}
