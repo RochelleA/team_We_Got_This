@@ -115,8 +115,8 @@ public class TestGrid01 implements EventListener, ActionListener {
         
         titleLabel = new JLabel("Map");
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.ITALIC, 14));
-        dataRoundLabel = new JLabel("Data Round",new ImageIcon("images/ferrari.png"),JLabel.LEFT);
-        modelRoundLabel = new JLabel("Model Round",new ImageIcon("images/clock.png"),JLabel.LEFT);
+        dataRoundLabel = new JLabel("Data Round",new ImageIcon(getClass().getResource("/ferrari.png")),JLabel.LEFT);
+        modelRoundLabel = new JLabel("Model Round",new ImageIcon(getClass().getResource("/clock.png")),JLabel.LEFT);
         
         listPane.add(titleLabel);
         listPane.add(Box.createVerticalStrut(5));
@@ -136,7 +136,6 @@ public class TestGrid01 implements EventListener, ActionListener {
         getCurrentData();
         
         trLightTimer.start();
-
     }
 
 	private void getCurrentData(){
@@ -321,7 +320,10 @@ public class TestGrid01 implements EventListener, ActionListener {
     	this.dataStatusLabel.setText(s);
     }
     
-
+   
+    /**
+     *  Method used to Update the View When it recieves any updates from the Model
+     */
 	@Override
 	public void handleSimpleEvent(SimpleEvent e) {
 		if(e instanceof DataEvent){
@@ -355,7 +357,10 @@ public class TestGrid01 implements EventListener, ActionListener {
 		}
 		
 	}
-	
+	/**
+	 *  Listener method which takes the User Inputs and from the View and sends the Info to the Model
+	 *
+	 */
 	
 	class MenuActionListener implements ActionListener {
 		@Override
@@ -386,7 +391,9 @@ public class TestGrid01 implements EventListener, ActionListener {
 					c.setMapFile(fc.getSelectedFile().getAbsolutePath());
 				}
 			}else if(source == loadDefaultMapAction){
-				c.setMapFile("files/roundabout_new.txt");
+				//String path = getClass().getResource("/roundabout_new.txt").getPath();
+				//System.out.println(path);
+				c.loadDefaultFile();
 			}else if(source == setTrafficLightsRed){
 				c.setTrafficLightsColour(TrafficLightColour.RED);
 			}else if(source == setTrafficLightsRedAmber){
@@ -413,11 +420,18 @@ public class TestGrid01 implements EventListener, ActionListener {
 		}
 	}
 	
+	/**
+	 * Sets the Controller for the View
+	 * @param mvcc
+	 */
 	public void setMVCController(MVCController mvcc){
 		this.c = mvcc;
 	}
 
 	@Override
+	/**
+	 * Based on the User Action repaints the view if required.
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		//System.out.println("view timer event");
 		if(markedForRepaint){

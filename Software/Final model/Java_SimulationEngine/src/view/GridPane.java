@@ -18,7 +18,8 @@ import core.TrafficLightColour;
 
 /**
  * 
- * The main User Interface Class (View component of the system).
+ * The main User Interface Class and the View component of the system.
+ * Used to design the Layout of the cells on the Grid and setting the Dimensions
  * @author Moinuddin Zaki
  * @version 1
  *
@@ -28,27 +29,27 @@ import core.TrafficLightColour;
 public class GridPane extends JComponent {
 	
 	
-	Image grass = new ImageIcon("images/grass2-20.png").getImage();
+	Image grass = new ImageIcon(getClass().getResource("/grass2-20.png")).getImage();
 	
 	
 	/** The road. */
-	Image road = new ImageIcon("images/road20.png").getImage();
-	Image roadEastSpaceLane = new ImageIcon("images/roadEastSpaceLane.png").getImage();
-	Image roadEastLane = new ImageIcon("images/roadEastLane.png").getImage();
-	Image roadWestSpaceLane = new ImageIcon("images/roadWestSpaceLane.png").getImage();
-	Image roadNorthSpaceLane = new ImageIcon("images/roadNorthSpaceLane.png").getImage();
-	Image roadSouthSpaceLane = new ImageIcon("images/roadSouthSpaceLane.png").getImage();
-	Image roadNorthLane = new ImageIcon("images/roadNorthLane.png").getImage();
+	Image road = new ImageIcon(getClass().getResource("/road20.png")).getImage();
+	Image roadEastSpaceLane = new ImageIcon(getClass().getResource("/roadEastSpaceLane.png")).getImage();
+	Image roadEastLane = new ImageIcon(getClass().getResource("/roadEastLane.png")).getImage();
+	Image roadWestSpaceLane = new ImageIcon(getClass().getResource("/roadWestSpaceLane.png")).getImage();
+	Image roadNorthSpaceLane = new ImageIcon(getClass().getResource("/roadNorthSpaceLane.png")).getImage();
+	Image roadSouthSpaceLane = new ImageIcon(getClass().getResource("/roadSouthSpaceLane.png")).getImage();
+	Image roadNorthLane = new ImageIcon(getClass().getResource("/roadNorthLane.png")).getImage();
 	
-	Image car = new ImageIcon("images/redCar.jpg").getImage();
-	Image carNorth = new ImageIcon("images/redCarNorth.jpg").getImage();
-	Image carNorthEast = new ImageIcon("images/northEast.png").getImage();
-	Image carEastSouth = new ImageIcon("images/eastSouth.png").getImage();
+	Image car = new ImageIcon(getClass().getResource("/redCar.jpg")).getImage();
+	Image carNorth = new ImageIcon(getClass().getResource("/redCarNorth.jpg")).getImage();
+	Image carNorthEast = new ImageIcon(getClass().getResource("/northEast.png")).getImage();
+	Image carEastSouth = new ImageIcon(getClass().getResource("/eastSouth.png")).getImage();
 	
-	Image roadNorthEast = new ImageIcon("images/roadNorthEast.png").getImage();
-	Image roadEastSouth = new ImageIcon("images/roadEastSouth.png").getImage();
-	Image roadSouthWest = new ImageIcon("images/roadSouthWest.png").getImage();
-	Image roadWestNorth = new ImageIcon("images/roadWestNorth.png").getImage();
+	Image roadNorthEast = new ImageIcon(getClass().getResource("/roadNorthEast.png")).getImage();
+	Image roadEastSouth = new ImageIcon(getClass().getResource("/roadEastSouth.png")).getImage();
+	Image roadSouthWest = new ImageIcon(getClass().getResource("/roadSouthWest.png")).getImage();
+	Image roadWestNorth = new ImageIcon(getClass().getResource("/roadWestNorth.png")).getImage();
 	
 	private IGrid nGrid;
 	
@@ -59,6 +60,10 @@ public class GridPane extends JComponent {
     
     };
     
+    /**
+     * Overrides the PaintComponent of JComponent
+     * Used to paint the Cells on the Grid
+     */
     @Override
 	public void paintComponent (Graphics g) {
 		
@@ -230,10 +235,17 @@ public class GridPane extends JComponent {
 		
 		}
     }
-  
+    
+    /**
+     * @return The Grid Object
+     */
 	public IGrid getGrid() {
 		return nGrid;
 	}
+	/**
+	 * Function used to assign the Dimensions and set the Width and Height of the Grid 
+	 * @param nGrid
+	 */
 	public void setGrid(IGrid nGrid) {
 		this.nGrid = nGrid;
 		Dimension d = new Dimension(nGrid.getWidth()*CELL_WIDTH, nGrid.getHeight()*CELL_HEIGHT);

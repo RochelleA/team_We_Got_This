@@ -56,19 +56,25 @@ public class GridController implements EventListener, ActionListener, IGridContr
 			tl.addEventListener(this);
 		}
 	}
-	
+	/**
+	 *  Method used to start the timer and the sets status of the Model to Running
+	 */
 	public void startTimer(){
 		mainTimer.start();
 		this.setStatus(Model.STATUS_RUNNING);
 	}
-	
+	/**
+	 *  Method used to stop the timer and the sets status of the Model to Paused
+	 */
 	public void stopTimer(){
 		mainTimer.stop();
 		this.setStatus(Model.STATUS_PAUSED);
 	}
 	
-		
-	//driving to RoundAbout
+	/**
+	 * Method is used to drive the vehicle inside the Round About
+	 * @param car
+	 */
 	private void driveRoundAbout(ICar car){
 		ICar myCar = car;
 				
@@ -128,6 +134,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	
 	
 	//driving to SOUTH-WEST
+	/**
+	 * The method is used to Move the vehicle to the SOUTH-WEST Direction on the Roundabout
+	 * @param car
+	 */
 	public void driveWestNorth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()-1)){
@@ -142,6 +152,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 
 	
 	//driving to NORTH-EAST
+	/**
+	 * The method is used to Move the vehicle to the NORTH-EAST Direction on the Roundabout
+	 * @param car
+	 */
 	public void driveNorthEast(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()-1)){
@@ -156,6 +170,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to SOUTH-WEST
+	/**
+	 * The method is used to Move the vehicle to the SOUTH-WEST Direction on the Roundabout
+	 * @param car
+	 */
 	public void driveSouthWest(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX()-1, myCar.getY()+1)){
@@ -169,6 +187,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to EAST-SOUTH
+	/**
+	 * The method is used to Move the vehicle to the SOUTH-EAST Direction on the Roundabout
+	 * @param car
+	 */
 	public void driveEastSouth(ICar car){
 			ICar myCar = car;
 			if(!grid.hasCarAt(myCar.getX()+1, myCar.getY()+1)){
@@ -183,6 +205,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 		
 	
 	//driving to NORTH
+	/**
+	 * The method is used to Move the vehicle to the NORTH Direction
+	 * @param car
+	 */
 	public void driveNorth(ICar car){
 		ICar myCar = car;
 		if(!grid.hasCarAt(myCar.getX(), myCar.getY()-myCar.getSpeed())){
@@ -198,6 +224,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to SOUTH
+	/**
+	 * The method is used to Move the vehicle to the SOUTH Direction
+	 * @param car
+	 */
 	public void driveSouth(ICar car){
 		ICar myCar = car;
 		if(grid.hasCarAt(myCar.getX(), myCar.getY()+myCar.getSpeed()) && (grid.getCellDirection(myCar.getX(), myCar.getY())==Direction.JUNCTION))
@@ -217,6 +247,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to EAST
+	/**
+	 * The method is used to Move the vehicle to the EAST Direction
+	 * @param car
+	 */
 	public void driveEast(ICar car){
 		ICar myCar = car;
 		if(grid.hasCarAt(myCar.getX()+myCar.getSpeed(), myCar.getY()) && (grid.getCellDirection(myCar.getX(), myCar.getY())==Direction.JUNCTION))
@@ -236,6 +270,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//driving to WEST
+	/**
+	 * The method is used to Move the vehicle to the WEST Direction
+	 * @param car
+	 */
 	public void driveWest(ICar car){
 		ICar myCar = car;
 		
@@ -254,6 +292,10 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 	
 	//OVER TAKING
+	/**
+	 * The Method makes the car the change lane or Overtake based on the traffic policies
+	 * @param car
+	 */
 	public void overTake(ICar car){
 		ICar myCar = car;
 	
@@ -676,6 +718,9 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 
 	@Override
+	/**
+	 * Used to Add a Vehicle on the Grid
+	 */
 	public void addCar(ICar car) {
 		
 		grid.placeCarAt(car.getX(), car.getY(), car);
@@ -685,6 +730,9 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 
 	@Override
+	/**
+	 * Used to get the Status of the Vehicle
+	 */
 	public String getStatus() {
 		return this.status;
 	}
@@ -695,6 +743,9 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 
 	@Override
+	/**
+	 * Returns number of rounds
+	 */
 	public int getRound() {
 		// TODO Auto-generated method stub
 		return rounds;
@@ -706,6 +757,9 @@ public class GridController implements EventListener, ActionListener, IGridContr
 	}
 
 	@Override
+	/**
+	 * Method Fires 
+	 */
 	public void handleSimpleEvent(SimpleEvent e) {
 		if(e.getType().equals(SimpleEvent.TRAFFIC_LIGHT_CHANGE)){
 			model.fireSimpleEvent(new SimpleEvent(this, SimpleEvent.TRAFFIC_LIGHT_CHANGE));
