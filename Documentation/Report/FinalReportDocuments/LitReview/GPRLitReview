@@ -1,0 +1,19 @@
+\documentclass[]{article}
+
+%opening
+\title{Traffic Simulation Notes}
+\author{team\_we\_got\_this}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Intro}
+\begin{itemize}
+\item The applications of traffic simulation programs can be classified in several ways. Some basic classifications are the division between microscopic, mesoscopic and macroscopic, and between continuous and discrete time approach.
+\end{itemize}
+
+
+
+\end{document}

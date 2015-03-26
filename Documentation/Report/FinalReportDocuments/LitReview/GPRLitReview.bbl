@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{burghout2005hybrid}
+Wilco Burghout, Haris~N Koutsopoulos, and Ingmar Andreasson.
+\newblock Hybrid mesoscopic-microscopic traffic simulation.
+\newblock {\em Transportation Research Record: Journal of the Transportation
+  Research Board}, 1934(1):218--255, 2005.
+
+\bibitem{ehlert2001microscopic}
+Partich~AM Ehlert and Leon~JM Rothkrantz.
+\newblock Microscopic traffic simulation with reactive driving agents.
+\newblock In {\em Intelligent Transportation Systems, 2001. Proceedings. 2001
+  IEEE}, pages 860--865. IEEE, 2001.
+
+\bibitem{namekawa2005general}
+M~Namekawa, F~Ueda, Y~Hioki, Y~Ueda, and A~Satoh.
+\newblock General purpose road traffic simulation system with a cell automaton
+  model.
+\newblock In {\em International Congress on Modelling and Simulation
+  (MODSIM05), Melbourne, Australia}, 2005.
+
+\bibitem{sokolowski2011principles}
+John~A Sokolowski and Catherine~M Banks.
+\newblock {\em Principles of modeling and simulation: A multidisciplinary
+  approach}.
+\newblock John Wiley \& Sons, 2011.
+
+\end{thebibliography}

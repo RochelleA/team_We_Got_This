@@ -1,0 +1,197 @@
+1.1  
+-par1sen2: made observation plural
+-par2sen1: made simulation plural, suggestion: remove 'traffic simulations' after 'are'
+-par2sen2: added fullstop
+-par2sen3: added 'a' before 'vehicle'
+-par2sen6: removed space before fullstop
+-par2sen7: added 'a' before 'smaller area'
+
+1.2
+-par1sen1: made first 'simulation' plural
+-par2sen3: added 'as' before 'widths'
+-par1sen6(last sen): added 'to' before 'decide'
+-par2 lastsen: removed comma
+-par3sen4: removed extra 'l' in 'below'
+-par3sen5: wrote the number 7 as 'seven'
+-par3sen6: changed 'insures' to 'ensures' and added commas around 'Intersection/Changing Lanes'
+-par3sen7: ensures again
+-par3sen8: removed both commas (OR reword to "Car-following is another necessary behaviour that is implemented to simulate realistic driving.")
+-par3sen9: made 'its' plural and removed 'than it'
+-par3sen11: made 'streets' plural
+-par3sen12: added comma after 'Finally'
+-par3sen13(last sen): made 'takes' plural
+-par4sen1: changed 'our' before 'crucial' to 'are'
+-par4sen2: made 'behaviour' plural
+
+1.3
+-sen3: added 'of the clock' at end of sen
+-sen4: added 'Road-following' to list as its mentioned in 1.2
+-consider rewording the sentences so there aren't 3 beginning with 'We' in a row
+
+2.1
+-par1sen2: 'categorise' changed to 's' for UK spelling
+-par1sen3: made the dash longer and added a space before it
+-par2sen4: made 'reviews' plural
+-par2sen5: removed 'and this is'
+
+2.2
+-SR-3: made 'places' plural and changed 'where they leave' to 'exit'
+-SR-5: corrected apostrophe to show up
+-SR-6: made 'ambulances' plural and changed 'to' to 'and'
+-SR-8: run-on sentence, reword somehow...
+
+2.3
+Not editing my own section
+
+2.4
+-sen1: added comma after 'analysed'
+-sen3: consider rewording to 'we specify the priority of each requirement and this priority list will...' and added 'section' before '2.6'
+
+2.4.1
+-Repo: capitalised 'The' and removed ', which are' added 'the' before 'results'
+-Perf: capitalised 'The' 
+-Test: capitalised 'The', changed 'in case of' to 'when writing in Java', made 'Tests' plural
+-Usab: capitalised 'It', made ref red so we remember to change it later, split second sen into 2 with a fullstop after 'analogy' and changed 'that means' to 'This means'
+-Port: capitalised 'The' and removed comma after parenthesis
+-Main: capitalised 'The'
+-Exte: capitalised 'It', changed 'and' to 'at'
+-Docu: capitalised 'Every', removed comma after 'exceptions' and added 'and' before '@throws tags', added 'the' before 'overall', changed 'and' to 'the' before 'team'
+
+2.4.2
+-MD-5: added 'an' before 'existing', removed comma after 'light on it'
+-MD-6: added 'the' before '.map' and 'a' before 'serialised', removed comma.
+-MD-7: added a fullstop at the end
+-MD-9: added '.0' as full name is ActionScript 3.0
+-SE-1: added fullstop at end
+-SE-2: sounds awkward toward the end consider rewording.
+-SE-3: added 'at' before 'every'
+-SE-4: made 'collision' plural, added 'the' before 'future'
+-SE-5: removed comma, changed 'junctions' to 'a junction'
+-SE-7: made 'lights' possessive
+-SE-8: removed comma, split into two sentences after 'exits' --> 'At this point, statistics are collected on the time....'
+-SE-11: changed 'The' to 'A', added 'the' before 'speed', changed 'they are driving with' to 'at which they are driving', added 'the' before 'decisions'
+-SE-12: made 'ambulance' and 'brigade' plural, split into 2 sentences after 'services' change 'which' to 'These special vehicles'
+-SE-13: added 'A' to beginning of sen, added 'that' before 'it can be...', added 'the' before 'user'
+-SE-14: removed 'user interface' since its redundant (OR write out graphic user interface)
+-SE-15: made 'policy' plural
+
+2.5
+-sen1: added comma after 'system', changed 'a clear specification' to 'clear specifications'
+-sen2: made 'pattern' plural, should we add a comma after 'proven'? changed comma after ref to '--'
+
+2.5.1
+-par2sen2: make 'layers' singular
+-par2sen5: added 'the' before 'disadvantages' and also before 'addition', made 'cost' plural, broke into two sentences w/ second beginning w/ 'However,'
+-par3sen1: changed 'which' to 'that', removed 'that is,', added 'a' before 'JVM'
+-par3sen3: added 'data' after 'This', should 'apps' be 'applications' i.e. not abbreviated?, reworded so that 'the mobile apps of' is before 'drivers'
+-par3sen4: added 'a' before 'similar', what word goes in 'be __ to'? 'useful' inserted in red until can be changed to what was meant to be there
+-par3sen5: changed 'The' to 'This', changed 'use' to 'the'
+-par3sen6: added 'the' before 'Simulation'
+-par3sen7: changed 'so' to 'thus' wrote 2 out as 'two'
+-par3sen8: wrote out '3rd' as 'third'
+-par3sen11: removed 'A' as first word of sen, wrote 'who's' out as 'who is' and 'what's' as 'what is', changed ', whereas' to 'because', added 'and' before 'to check'
+-par3sen12: removed comma after 'example', added $s around 'c', 'r, and 'v' to make them italicised as in diagram
+-par4sen1: remove comma after parenthesis
+-par4sen3: added 'the' before 'Simulation, remove comma after 'Model', change 'they all' to 'all three'
+-par4sen5: move 'Now' to after 'can'
+
+2.5.2
+-par1sen2: change 'These are:' to 'The three components are', add 'the' before 'application's'
+-par2sen1: Not sure what this means so idk how to grammatically correct it 'The MVC uses notifies relation to connect instances of model, view and controller'
+-par2sen3: made 'complexity' plural (OR change to 'an unnecessary complexity')
+-par2sen4; split into two sentences at comma after 'engine' beginning w/ 'Therefore,'
+-par3sen1: changed 'there's' to 'there is'
+-par3sen2: changed 'It's' to 'It is' suggestion: what exactly is 'It'? consider changing to something else; add 'the' before 'design'; changed ', to if it suits system’s needs and can enhance performance' to 'so that it can suit the system's needs and enhance performance'
+-par4sen1: added 'the' before 'same' and 'the design' before 'pattern'
+-par4sen3: moved 'or' in parenthesis to before 'restart'; added 'the' before 'simulation'; removed both commas; added 'an' before 'appropriate'
+
+2.6
+-par1sen3: change 'This would help in scheduling a timetable for each because we would be able to indentify which elements were dependant on the completion of another attribute. ' to 'This would help in creating a schedule for each requirement to be completed so that we could identify which 
+elements were dependent on the completion of another.'
+-par1sen4: changed 'to build' to 'when building'; changed 'which' to 'that' before 'vehicles' and 'could' which was changed to 'would'
+-Nece: capitalised 'A' and added 'the' before 'simulation'; changed 'which deem' to 'which is deemed'
+-Opti: removed apostrophe from 'its'
+-Extr: capitalised 'A'
+-Table2: made 'Roundabout singular; made 'multiple lanes' plural
+-comment: why do we need both tables if Table  2 has the same information and more? I suggest removing Table 1 which will give us more writing space.
+
+3.0
+-sen2: run-on sentence so:
++ added 'the' before 'waterfall'
++ corrected the quotations around 'must'
++ split into another sentence after 'document'
++ changed 'using' to 'This will be implemented with the help of'
++ split into another sentence after 'sections'
++ changed 'and' to 'We will'
++ added 'the' before 'Agile'
++ added comma after 'optional'
++ removed comma after 'requirements' which was made plural
+
+3.1
+-sen1: changed 'will be build' to 'was built'
++(b): made 'light' plural
++(c): added 'the' before 'road network'
+-sen2: made 'create' past tense; does 'following' refer to the previously listed components? If so consider changing to 'components'
+-sen4: change 'work' to 'worked'; removed 'has' before 'picked'; change 'so we can focus on one thing at a time and allow other people to develop their ideas fully' to 'which allowed us to focus on one thing at a time and to develop ideas fully.' --> split into another sentence here beginning with 
+'This made sure...'; change 'have' to 'had'; changed 'meets' to 'wouldmeet'; removed comma after 'requirements'
+
+3.1.1
+-sen2: removed colon; added 'a' to beginning of parenthesised phrase; added 'the' before  'documentation'
+-sen3: changed 'a lot' to 'often'
+-sen4: added 'the' begore 'View' and also 'Model'; removed comma; changed 'of' to 'in'; changed 'to what' to 'than what'
+-sen5: added 'the' before 'main'
+
+3.1.2
+-sen1: move comma after 'simulation' to after 'Model class', remove comma after 'input' and 
+insert ' and'
+-sen2: add 'the' before 'positions' and also 'colour'; add 'in' after 'implemented'
+
+3.1.3
+-sen1: 'model' changed to 'the Model package' NOTE: or did it mean the generic model in which case it should be changed to 'the model'; 'the' added before 'designs'
+-sen2: changed 'such as' to 'for example'
+-sen3: remove comma after 'resources'; changed 'theres' to 'there is'
+
+3.1.5
+-sen1: changed 'upper' to 'higher'
+-sen2: made > signs appear
+-sen3: changed 'and' to 'the' after pattern'
+
+3.1.6
+none
+
+3.2
+-par1sen1: added 'the' before 'version' and a comma before 'Git' which was capitalised
+-par1sen2: 'GitHub'; added 'an' before 'up-to-date; added 'the' before 'local'
+-par1sen3: remove comma after IDE; 'GitHub'
+-par2sen1&2: 'Git'
+-par3senL 'Git'; 'the' added before 'SimulationEngine'
+
+4.0
+-sen1: comma added after 'project'; 'a' changed to 'the' before 'project'
+-sen2: 'GitHub'
+
+4.1
+-par1sen1: 'start' changed to 'beginning'
+-par1sen2: 'need' changed to 'needed'
+-par1sen4: 'This'-->'There'; 'and'-->'which'
+-par1sen6: 'would use'-->'used; 'Whatapp'-->'WhatsApp' for both; comma before 'but'; 'issue because sometimes'-->'issues when'-par1sen8: 'need'-->'needed'; 'choose'-->'chose'; 'slack'-->'Slack'
+-par1sen9: 'struggles'-->'struggled'
+-par1sen10: 'my KCL'-->'by KCL'; 'heck'-->'check'
+-par1sen11: 'it's'-->'its'
+-par1sen12: 'wasn't an'-->'was not as'; 'a isntant'-->'an instant'; remove 'so'; 'look at'-->'check'
+-par1sen13: comma after 'Rochelle'; 'send our'-->'send out a'; consider removing 'Alongside this,'
+-par1sen14: 'a lot'-->'much'; remove 'for the group'; 'members'-->'member'
+-par2sen1: 'insure'-->'ensure'; add 'were' before 'making'
+-par2sen4: 'include'-->'included'; fixed dashes; added comma after 'meeting'
+-par2sen5: 'upload'-->'uploaded'; 'GitHub'; 'had to'-->'needed to'
+-par3sen1: clarify? 'clearly'-->'clear'; 'specification'-->plural; adde 'the' before 'system'; comma after 'designing'
+-par3sen2: comma after 'Then' and 'week'; 'meeting'-->plural; 'would feed back'-->'would give feedback'
+-par3sen4: 'wasn't'-->'was not'; 'instead' added at end
+
+4.2
+-par1sen1: comma added after 'team'
+-par1sen2: 'task'-->'tasks'
+-par1sen3: 'at that time'-->'as they changed'
+-par1sen4: consider rewording, awkward
+
+figure 2b: 'out'-->'our'
