@@ -100,6 +100,9 @@ package grid
 				try{
 					var gridCell:ICell = grid[y+cell.yPos][x+cell.xPos] as ICell;
 					if(gridCell){
+						trace('set gridCell debug type', cell.type);
+						trace('cell', cell);
+						gridCell.debugType = cell.type;
 						cells.push(gridCell);
 					}
 				}catch(e:Error){

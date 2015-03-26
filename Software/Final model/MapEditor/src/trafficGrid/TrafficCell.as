@@ -50,7 +50,7 @@ package trafficGrid
 		{
 			super.type = value;
 			this._isRoad = false;
-			
+						
 			switch(value){
 				case TrafficCellType.ROAD_WEST:
 					super.setFill(null, Icons.ROAD_WEST);
@@ -74,6 +74,8 @@ package trafficGrid
 				case TrafficCellType.ROUNDABOUT:
 					super.setFill(0x3b5f91, null);
 					break;
+				case TrafficCellType.ROUNDABOUT_INSIDE:
+					trace('set type roundabout inside');
 				case TrafficCellType.EMPTY:
 					super.setFill(0xffffff);
 					break;
@@ -99,6 +101,37 @@ package trafficGrid
 			if(_isExit && value){
 				isExit = false;
 			}
+		}
+		
+		public function toNumber():int{
+			var i:int = 0;
+			switch(type){
+				case TrafficCellType.ROAD_WEST:
+					i = 1;
+					break;
+				case TrafficCellType.ROAD_NORTH:
+					i = 3;
+					break;
+				case TrafficCellType.ROAD_EAST:
+					i = 2;
+					break;
+				case TrafficCellType.ROAD_SOUTH:
+					i = 4;
+					break;
+				case TrafficCellType.ROAD_JUNCTION:
+					i = 5;
+					break;
+				case TrafficCellType.ROUNDABOUT:
+					i = 9;
+					break;
+				case TrafficCellType.ROUNDABOUT_INSIDE:
+					i = 7;
+					break;
+				case TrafficCellType.EMPTY:
+					i = 0;
+					break;
+			}
+			return i;
 		}
 
 	}

@@ -13,5 +13,7 @@ package trafficGrid
 		function get isEntry():Boolean;
 		function get isExit():Boolean;
 		
+		function toNumber():int;
+		
 	}
 }

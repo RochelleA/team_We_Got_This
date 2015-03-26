@@ -1,8 +1,8 @@
 package trafficGrid
 {
+	import grid.BasicCell;
 	import grid.ICell;
 	import grid.ICustomShape;
-	import grid.BasicCell;
 
 	public class Roundabout implements ICustomShape
 	{
@@ -27,9 +27,11 @@ package trafficGrid
 			draw();
 		}
 		private function addCells(a:Array, type:String):void{ 
-			for each (var cell:ICell in a){
-				cell.type = type;
-				_cells.push(cell);
+			for each (var cell:BasicCell in a){
+				var newBasicCell:ICell = new BasicCell(cell.xPos, cell.yPos, type);
+				//cell.type = type;
+				trace('add cells, set type', newBasicCell.type);
+				_cells.push(newBasicCell);
 			}
 		}
 		private function draw():void{
@@ -43,6 +45,13 @@ package trafficGrid
 				grid[7][1],grid[7][2],grid[7][3],grid[7][6],grid[7][7],grid[7][8],
 				grid[9][3],grid[9][4],grid[9][5],grid[9][6]
 			], TrafficCellType.ROUNDABOUT);
+			this.addCells(
+				[grid[2][4],grid[2][5],grid[7][4],grid[7][5],
+					grid[3][3],grid[3][4],grid[3][5],grid[3][6],
+					grid[6][3],grid[6][4],grid[6][5],grid[6][6],
+					grid[4][2],grid[4][3],grid[4][4],grid[4][5],grid[4][6],grid[4][7],
+					grid[5][2],grid[5][3],grid[5][4],grid[5][5],grid[5][6],grid[5][7]
+				], TrafficCellType.ROUNDABOUT_INSIDE);
 			
 			for (var i:int = 2; i<8; i++){
 				addCells([grid[1][i], grid[8][i]], TrafficCellType.ROUNDABOUT);

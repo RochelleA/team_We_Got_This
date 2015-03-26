@@ -14,6 +14,8 @@ package grid
 		
 		private var _xPos:int, _yPos:int;
 		
+		private var _debugType:String;
+		
 		[SkinState("normal")]
 		[SkinState("temp")]
 		
@@ -126,7 +128,7 @@ package grid
 		 */
 		public function restore():void{
 			if(this._temp){
-				trace('restore');
+				//trace('restore');
 				this.type = this._prevType;
 				this.temp = false;
 			}
@@ -141,7 +143,7 @@ package grid
 				this._prevType = type;
 				this.type = value;
 			}
-			trace('set temp type', this, _temp);
+			//trace('set temp type', this, _temp);
 		}
 		/**
 		 * Saves the temporary cell's type.
@@ -152,6 +154,17 @@ package grid
 		{
 			this.temp = false;
 		}
+
+		public function get debugType():String
+		{
+			return _debugType;
+		}
+
+		public function set debugType(value:String):void
+		{
+			_debugType = value;
+		}
+
 
 	}
 }

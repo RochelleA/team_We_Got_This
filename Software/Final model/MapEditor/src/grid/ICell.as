@@ -7,5 +7,8 @@ package grid
 		function toString():String;
 		function get type():String;
 		function set type(value:String):void;
+		
+		function set debugType(value:String):void;
+		function get debugType():String;
 	}
 }

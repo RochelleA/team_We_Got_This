@@ -6,15 +6,18 @@ package grid
 		protected var _yPos:int;
 		protected var _type:String;
 		
+		private var _debugType:String;
+		
 		/**
 		 * A simple cell with x, y and type attributes.
 		 * @param x x coordinate
 		 * @param y y coordinate
 		 */
-		public function BasicCell(x:int, y:int)
+		public function BasicCell(x:int, y:int, type:String = null)
 		{
 			_xPos = x;
 			_yPos = y;
+			_type = type;
 		}
 		
 		public function get xPos():int
@@ -29,7 +32,7 @@ package grid
 		
 		public function toString():String
 		{
-			return "("+_xPos+":"+_yPos+")";
+			return "("+_xPos+":"+_yPos+") ";
 		}
 		
 		public function get type():String
@@ -41,5 +44,16 @@ package grid
 		{
 			this._type = type;
 		}
+
+		public function get debugType():String
+		{
+			return _debugType;
+		}
+
+		public function set debugType(value:String):void
+		{
+			_debugType = value;
+		}
+
 	}
 }
