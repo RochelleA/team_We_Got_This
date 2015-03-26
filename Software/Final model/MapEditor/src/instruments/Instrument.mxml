@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableComponent xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="instruments.InstrumentSkin">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[SkinState("normal")]
+		[SkinState("selected")]
+		[SkinState("down")]
+		[SkinState("disabled")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var icon:Class;
+			private var _selected:Boolean;
+			
+			private var _title:String;
+			
+			[Bindable]
+			public var instrId:String;
+			
+			override protected function getCurrentSkinState():String {
+				return currentState;
+			}
+
+			[Bindable]
+			public function get selected():Boolean
+			{
+				return _selected;
+			}
+
+			public function set selected(value:Boolean):void
+			{
+				_selected = value;
+				if(value){
+					this.currentState = "selected";
+				}else{
+					this.currentState = "normal";
+				}
+			}
+
+			[Bindable]
+			public function get title():String
+			{
+				return _title;
+			}
+
+			public function set title(value:String):void
+			{
+				_title = value;
+				this.toolTip = value;
+			}
+
+
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal" enterState="invalidateSkinState()" />
+		<s:State name="selected" enterState="invalidateSkinState()" />
+		<s:State name="down" enterState="invalidateSkinState()" />
+		<s:State name="disabled" enterState="invalidateSkinState()" />
+	</s:states>
+	
+	
+</s:SkinnableComponent>

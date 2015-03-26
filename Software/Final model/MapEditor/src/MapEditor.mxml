@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="955" height="600" xmlns:local="*"
+			   creationComplete="application1_creationCompleteHandler(event)" xmlns:instruments="instruments.*" xmlns:grid="grid.*" xmlns:trafficGrid="trafficGrid.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import trafficGrid.ITrafficCell;
+			import trafficGrid.Roundabout;
+			
+			public static const rb:Roundabout = new Roundabout();			
+
+			protected function updateDimBtn_clickHandler(event:MouseEvent):void
+			{
+				tg = new trafficGrid.TrafficGrid();
+				tg.widthInCells = parseInt(gridWidth.text);
+				tg.heightInCells = parseInt(gridWidth.text);
+				tg.setStyle("cellSide", 25);
+				tg.instrument = instrPane.currentInstrumentId;
+				tg.addEventListener("cellSelected",tg_cellSelectedHandler);
+				tg.addEventListener("cellDeselected", tg_cellDeselectedHandler);
+				scroller.viewport = tg;				
+			}
+
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				gridWidth.text = "25";
+				gridHeight.text = "25";
+			}
+			
+			protected function onSaveClick(event:MouseEvent):void
+			{
+				var MyFile:FileReference = new FileReference();
+				var myTitle:String;
+				if(title.text.length == 0){
+					myTitle = "Untitled";
+				}else{
+					myTitle = title.text;
+				}
+				//trace(tg.getAsString(myTitle));
+				MyFile.save(tg.getAsString(myTitle), myTitle+".map");
+			}
+		
+			protected function onChangeInstrument(event:Event):void
+			{
+				trace('instrument change in model');
+				tg.instrument = instrPane.currentInstrumentId;
+			}
+			
+			protected function tg_cellSelectedHandler(event:Event):void
+			{
+				trace('select cell', tg.selectedCell);
+				cellProp.selectedCell = tg.selectedCell as ITrafficCell;
+			}
+			
+			protected function tg_cellDeselectedHandler(event:Event):void
+			{
+				cellProp.selectedCell = null;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup paddingTop="10" paddingLeft="10" height="100%">
+		<s:Scroller id="scroller" width="501" height="551">
+			<trafficGrid:TrafficGrid id="tg" widthInCells="10" heightInCells="10" cellSide="20" cellSelected="tg_cellSelectedHandler(event)" cellDeselected="tg_cellDeselectedHandler(event)" />
+		</s:Scroller>
+
+		<s:VGroup height="100%">
+			<s:BitmapImage 
+source="@Embed('/../assets/logo3.png')" width="200" 
+scaleMode="letterbox" smooth="true"/>
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label text="Title" />
+				<s:TextInput id="title" />
+			</s:HGroup>
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label text="Width:"/>
+				<s:TextInput id="gridWidth" width="50" />
+				<s:Label text="Height:"/>
+				<s:TextInput id="gridHeight" width="50" />
+				<s:Button label="Update" id="updateDimBtn" click="updateDimBtn_clickHandler(event)" />
+			</s:HGroup>
+			<s:Button label="Save as..." click="onSaveClick(event)"/>
+			
+			<instruments:InstrumentsPane id="instrPane" changeInstrument="onChangeInstrument(event)" />
+			
+			<local:CellPropertiesPanel id="cellProp" paddingTop="50" />
+			
+		</s:VGroup>
+		
+		
+	</s:HGroup>
+	
+</s:Application>

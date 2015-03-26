@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" mouseChildren="false" preinitialize="skin1_preinitializeHandler(event)">
+	<fx:Metadata>[HostComponent("trafficGrid.TrafficCell")]</fx:Metadata>
+	<!-- host component -->
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function skin1_preinitializeHandler(event:FlexEvent):void
+			{
+				hostComponent.addEventListener("trafficLightChanged", onTrafficLightChange);
+				//hostComponent.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onPropChange);
+
+			}
+//			
+//			protected function onPropChange(event:PropertyChangeEvent):void
+//			{
+//				// TODO Auto-generated method stub
+//				trace('property change event',event.property, event.oldValue, event.newValue);
+//				
+//			}
+			
+			protected function onTrafficLightChange(event:Event):void
+			{
+				trace('traffic light change');
+				ellipse2Fill.alpha = 0;
+				ellipseFill.alpha = 0;
+				switch(hostComponent.trafficLight){
+					case "None":
+						break;
+					case TrafficLightColour.RED:
+						ellipseFill.color = 0xff0000;
+						ellipseFill.alpha = 1;
+						break;
+					case TrafficLightColour.RED_AMBER:
+						ellipseFill.color = 0xffff00;
+						ellipse2Fill.color = 0xff0000;
+						ellipse2Fill.alpha = 1;
+						ellipseFill.alpha = 1;
+						break;
+					case TrafficLightColour.GREEN:
+						ellipseFill.color = 0x00ff00;
+						ellipseFill.alpha = 1;
+						break;
+					case TrafficLightColour.AMBER:
+						ellipseFill.color = 0xffff00;
+						ellipseFill.alpha = 1;
+						break;
+					
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="temp" />
+	</s:states>
+	
+	<!-- Transparent rectangle to react for mouse events-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="transparentFillRect">
+		<s:fill>
+			<s:SolidColor color="0xffffff" alpha="0" />
+		</s:fill>
+	</s:Rect>
+	
+	<!--Cell Solid Colour Fill-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="solidFillRect" alpha.temp="0.5" 
+			includeInLayout="{getStyle('isSolidFill')}" visible="{getStyle('isSolidFill')}">
+		<s:fill>
+			<s:SolidColor color="{getStyle('solidFill')}" />
+		</s:fill>
+	</s:Rect>
+	
+	<!--Cell Bitmap Fill-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}" id="bitmapFillRect" alpha.temp="0.5"
+			includeInLayout="{getStyle('isBitmapFill')}" visible="{getStyle('isBitmapFill')}">
+		<s:fill>
+			<s:BitmapFill source="{getStyle('bitmapFill')}" smooth="true" fillMode="scale"/>
+		</s:fill>
+	</s:Rect>
+	
+	<!--Cell Border-->
+	<s:Rect width="{getStyle('side')}" height="{getStyle('side')}">	
+		<s:stroke>
+			<s:SolidColorStroke color="{getStyle('strokeColour')}" />
+		</s:stroke>
+	</s:Rect>
+	
+	<s:Label text="entry" color="0x90ee90" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isEntry}" />
+	<s:Label text="exit" color="red" fontSize="8" paddingLeft="2" paddingTop="2" visible="{hostComponent.isExit}" />
+	
+	<s:Ellipse right="2" top="2" id="ellipse" width="5" height="5">
+		<s:fill>
+			<s:SolidColor color="red" id="ellipseFill" alpha="0"/>
+		</s:fill>
+	</s:Ellipse>
+	<s:Ellipse right="8" top="2" id="ellipse2" width="5" height="5">
+		<s:fill>
+			<s:SolidColor color="red" id="ellipse2Fill" alpha="0"/>
+		</s:fill>
+	</s:Ellipse>
+	
+</s:Skin>
