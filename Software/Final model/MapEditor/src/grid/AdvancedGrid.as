@@ -1,41 +1,56 @@
 package grid
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 		
+	[Event(name="cellSelected", type="flash.events.Event")]
+	[Event(name="cellDeselected", type="flash.events.Event")]
 	/**
 	 * Andvanced Grid can work with mouse events, draw lines and place arbitrary figures.
 	 */
 	public class AdvancedGrid extends Grid
 	{
-		private var currentCell:Cell;
+		protected var _currentCell:Cell;
 		private var tempCells:Array = [];
 		private var mouseDown:Boolean;
 
 		private var downX:int, downY:int;
 		
-		private var mouseDownAllowed:Boolean = true;
+		protected var mouseDownAllowed:Boolean = true;
 		private var _customShape:ICustomShape;
+		
+		private var _selectedCell:Cell;
 		
 		public function AdvancedGrid()
 		{
 			super();
+			
+			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			this.addEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+		}
+		
+		protected function onMouseUp(event:MouseEvent):void
+		{
+			mouseDown = false;
+			for each (var c:Cell in tempCells){
+				c.confirmNewType();
+			}
+			tempCells.length = 0;
 		}
 		
 		override protected function init(width:int, height:int):void{
 			trace('init advanced grid');
 			super.init(width, height);
-			
-			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			//this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			
-			this.addEventListener(MouseEvent.ROLL_OUT, onMouseOut);
 		}
 		
 		protected function onMouseOut(event:MouseEvent):void
 		{
-			currentCell = null;
-			super.hideSelectCell();
+			restoreCells(tempCells);
+			_currentCell = null;
+
+			//super.hideSelectCell();
 		}
 		
 		protected function performAction(cells:Array):void{
@@ -49,31 +64,30 @@ package grid
 		{
 			var c:Cell = super.getCellByCoordinated(event.localX, event.localY);
 			
-			if(c == null || c == currentCell){
+			if(c == null || c == _currentCell){
 				return;
 			}else{
-				currentCell = c;
+				_currentCell = c;
 				trace(c);
 			}
 			
 			restoreCells(tempCells);
 			
-			var newType:String;
-			
 			if(mouseDown && mouseDownAllowed){
 				tempCells = plotLine(downX, downY, c.xPos, c.yPos, super._cells);
-			}else if(customShape){
-				tempCells = plotCustomShape(c.xPos-customShape.width/2, c.yPos-customShape.height/2, _cells, customShape);
+			}else if(_customShape){
+				tempCells = plotCustomShape(c.xPos-_customShape.width/2, c.yPos-_customShape.height/2, _cells, _customShape);
 			}else{
 				tempCells.push(c);
 			}
 			
+			//this.dispatchEvent(new GridEvent(GridEvent.MOUSE_MOVE, mouseDown, tempCells));
 			performAction(tempCells);
 			
 		}
 		
 		/**
-		 * Calculates cells of a roundabout at particular coordinates.
+		 * Calculates cells of a custom shape (e.g. roundabout) at particular coordinates.
 		 * @param x x center of roundabout
 		 * @param y y center of roundabout
 		 * @param _cell 2D array of the grid
@@ -84,7 +98,7 @@ package grid
 			
 			for each (var cell:ICell in customShape.cells){
 				try{
-					var gridCell:Cell = grid[y+cell.yPos][x+cell.xPos] as Cell;
+					var gridCell:ICell = grid[y+cell.yPos][x+cell.xPos] as ICell;
 					if(gridCell){
 						cells.push(gridCell);
 					}
@@ -129,7 +143,7 @@ package grid
 		 * @return array of affected cells lying on the line
 		 * @author http://groups.csail.mit.edu/graphics/classes/6.837/F99/grading/asst2/turnin/rdror/Bresenham.java
 		 */
-		private static function plotLine(x1:int, y1:int, x2:int, y2:int, _cells:Array):Array {
+		public static function plotLine(x1:int, y1:int, x2:int, y2:int, _cells:Array):Array {
 			trace('plot line');
 			
 			// If slope is outside the range [-1,1], swap x and y
@@ -206,16 +220,48 @@ package grid
 			
 		}
 
-		public function get customShape():ICustomShape
-		{
-			return _customShape;
-		}
+//		private function get customShape():ICustomShape
+//		{
+//			return _customShape;
+//		}
 
 		public function set customShape(value:ICustomShape):void
 		{
-			mouseDownAllowed = (value != null);
 			_customShape = value;
 		}
+		
+		protected function removeCustomShape():void{
+			_customShape = null;
+		}
+		
+		/**
+		 * Select a cell and highlight it.
+		 * @param value cell to highlight
+		 * @see AdvancedGrid.deselectCell()
+		 */
+		protected function selectCell(value:Cell):void{
+			_selectedCell = value;
+			super.showSelectCell(value.xPos, value.yPos);
+			this.dispatchEvent(new Event("cellSelected"));
+		}
+		/**
+		 * Deselect cell to remove highlighting.
+		 * @see AdvancedGrid.selectCell()
+		 */
+		protected function deselectCell():void{
+			_selectedCell = null;
+			super.hideSelectCell();
+			this.dispatchEvent(new Event("cellDeselected"));
+		}
+		/**
+		 * Returns currently select cell.
+		 * @return the cell which is currently highlighted.
+		 */
+		public function get selectedCell():Cell
+		{
+			return _selectedCell;
+		}
+		
 
 	}
 }

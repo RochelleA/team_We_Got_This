@@ -19,9 +19,8 @@ package grid
 		
 		protected var _cells:Array;
 		protected var _allCells:Array;
-		//protected var gridWidth:int, gridHeight:int;
 		
-		protected var selectCell:Rect;
+		private var selectCell:Rect;
 		private var selectCellStroke:SolidColorStroke = new SolidColorStroke();
 		
 		public function Grid()
@@ -40,12 +39,20 @@ package grid
 		
 		protected function onCreationComplete(event:FlexEvent):void
 		{
-			this.init(widthInCells, heightInCells);
+			trace('on creation complete');
+			if(widthInCells == 0 || heightInCells == 0){
+				trace('wrong number of cells, please check how you create a grid object');
+			}
+			this._cells = new Array(widthInCells);
+			this._allCells = new Array(widthInCells*heightInCells);
 			
-			this.width = widthInCells*this.getStyle("cellSide")+1;
-			this.height = heightInCells*this.getStyle("cellSide")+1;
+			init(widthInCells, heightInCells);
+			
+//			this.width = widthInCells*this.getStyle("cellSide")+1;
+//			this.height = heightInCells*this.getStyle("cellSide")+1;
+			this.measuredHeight = heightInCells*this.getStyle("cellSide")+1;
+			this.measuredWidth = widthInCells*this.getStyle("cellSide")+1;
 			this.mouseChildren = false;
-			
 			this.addElement(selectCell);
 			this.hideSelectCell();
 		}
@@ -84,9 +91,6 @@ package grid
 		 */
 		protected function init(width:int, height:int):void
 		{
-			this._cells = new Array(height);
-			this._allCells = new Array(width*height);
-			
 			for(var i:int=0; i<height; i++){
 				var row:Array = new Array(width);
 				for (var j:int=0; j<width; j++){
@@ -126,7 +130,13 @@ package grid
 		 * @return Cell at (x;y);
 		 */
 		protected function getCellByCoordinated(x:int, y:int):Cell{
-			return this._cells[getCellY(y)][getCellX(x)];
+			var c:Cell = null;
+			try{
+				c = this._cells[getCellY(y)][getCellX(x)];
+			}catch(e:Error){
+				trace('cell not found');
+			}
+			return c;
 		}
 		
 		public function get cells():Array

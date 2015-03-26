@@ -4,37 +4,36 @@
 		  xmlns:mx="library://ns.adobe.com/flex/mx">
 	<fx:Script>
 		<![CDATA[
+			import trafficGrid.ITrafficCell;
 			import spark.events.IndexChangeEvent;
-			
-			import grid.Cell;
-			
-			private var _selectedCell:Cell;
+						
+			private var _selectedCell:ITrafficCell;
 			
 			protected function ddl_changingHandler(event:IndexChangeEvent):void
 			{
 				var value:String = ddl.dataProvider.getItemAt(event.newIndex).value;
-				selectedCell.trafficLight = value;
-				updateTrafficLightDDL(selectedCell, ddl);
+				_selectedCell.trafficLight = value;
+				updateTrafficLightDDL(_selectedCell, ddl);
 			}
 			
 			protected function onCheckBoxChange(event:Event):void
 			{
 				if(event.target == entryCB){
-					selectedCell.isEntry = entryCB.selected;
+					_selectedCell.isEntry = entryCB.selected;
 				}else if(event.target == exitCB){
-					selectedCell.isExit = exitCB.selected;
+					_selectedCell.isExit = exitCB.selected;
 				}
-				updateEntryExitCheckBoxes(selectedCell, entryCB, exitCB);
+				updateEntryExitCheckBoxes(_selectedCell, entryCB, exitCB);
 			}
-			private static function updateEntryExitCheckBoxes(cell:Cell, entryCB:CheckBox, exitCB:CheckBox):void{
+			private static function updateEntryExitCheckBoxes(cell:ITrafficCell, entryCB:CheckBox, exitCB:CheckBox):void{
 				trace('update check boxes');
 				entryCB.selected = cell.isEntry;
 				exitCB.selected = cell.isExit;
 			}
-			public function get selectedCell():Cell{
-				return _selectedCell;
-			}
-			public function set selectedCell(c:grid.Cell):void{
+//			public function get selectedCell():ITrafficCell{
+//				return _selectedCell;
+//			}
+			public function set selectedCell(c:ITrafficCell):void{
 				this._selectedCell = c;
 				
 				entryCB.enabled = false;
@@ -53,15 +52,14 @@
 					if(c.isRoad){
 						entryCB.enabled = true;
 						exitCB.enabled = true;
-						updateEntryExitCheckBoxes(selectedCell, entryCB, exitCB);
+						updateEntryExitCheckBoxes(_selectedCell, entryCB, exitCB);
 					}
-					updateTrafficLightDDL(selectedCell, ddl);
+					updateTrafficLightDDL(_selectedCell, ddl);
 				}
 			}
 			
-			private function updateTrafficLightDDL(cell:Cell, ddl:DropDownList):void
+			private function updateTrafficLightDDL(cell:ITrafficCell, ddl:DropDownList):void
 			{
-				// TODO Auto Generated method stub
 				var i:int = 0;
 				switch(cell.trafficLight){
 					case TrafficLightColour.RED:

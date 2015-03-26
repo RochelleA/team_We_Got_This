@@ -2,59 +2,55 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" width="955" height="600" xmlns:local="*"
-			   creationComplete="application1_creationCompleteHandler(event)" xmlns:instruments="instruments.*" xmlns:grid="grid.*">
+			   creationComplete="application1_creationCompleteHandler(event)" xmlns:instruments="instruments.*" xmlns:grid="grid.*" xmlns:trafficGrid="trafficGrid.*">
 	
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
+			import trafficGrid.ITrafficCell;
+			import trafficGrid.Roundabout;
+			
 			public static const rb:Roundabout = new Roundabout();			
 
 			protected function updateDimBtn_clickHandler(event:MouseEvent):void
 			{
-				
-				//squareGrid = new grid.SquareGrid();
-				//squareGrid.init(parseInt(gridWidth.text), parseInt(gridHeight.text));
-				
-				//scroller.viewport = squareGrid;
-				
+				tg = new trafficGrid.TrafficGrid();
+				tg.widthInCells = parseInt(gridWidth.text);
+				tg.heightInCells = parseInt(gridWidth.text);
+				tg.setStyle("cellSide", 25);
+				tg.instrument = instrPane.currentInstrumentId;
+				scroller.viewport = tg;				
 			}
-//			
+
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				//squareGrid.init(10,10);
 				gridWidth.text = "25";
 				gridHeight.text = "25";
-				
-				//ddl.setStyle('icon', TrafficLightColour.RED_ICON);
-				
-				//changeInstrument(SELECT);
-				
-			}
-	
-			protected function onCellSelected(event:Event):void
-			{
-				//trace('cell selected'+);
-				//cellProp.selectedCell = squareGrid.selectedCell;
 			}
 			
-//			
 			protected function onSaveClick(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
 				var MyFile:FileReference = new FileReference();
 				MyFile.save("abc", "data.map");
 			}
-//			
+		
 			protected function onChangeInstrument(event:Event):void
 			{
 				trace('instrument change in model');
-				//squareGrid.instrument = instrPane.currentInstrumentId;
-				//testCell.temp = !testCell.temp;
-				//squareGrid.setStyle("side", 25);
+				tg.instrument = instrPane.currentInstrumentId;
 			}
 			
+			protected function tg_cellSelectedHandler(event:Event):void
+			{
+				trace('select cell', tg.selectedCell);
+				cellProp.selectedCell = tg.selectedCell as ITrafficCell;
+			}
 			
+			protected function tg_cellDeselectedHandler(event:Event):void
+			{
+				cellProp.selectedCell = null;
+			}
 			
 		]]>
 	</fx:Script>
@@ -64,11 +60,9 @@
 	</fx:Declarations>
 	<s:HGroup paddingTop="10" paddingLeft="10">
 		<s:Scroller id="scroller" width="501" height="551">
-			<!--<local:SquareGrid id="squareGrid" cellSelected="onCellSelected(event)"/>-->
-			<grid:AdvancedGrid widthInCells="10" heightInCells="10" cellSide="25" />
+			<trafficGrid:TrafficGrid id="tg" widthInCells="10" heightInCells="10" cellSide="20" cellSelected="tg_cellSelectedHandler(event)" cellDeselected="tg_cellDeselectedHandler(event)" />
 		</s:Scroller>
-<!--		<grid:SquareGrid id="squareGrid" cellSide="25" cellSelected="onCellSelected(event)" includeInLayout="false" visible="false"/>
--->
+
 		<s:VGroup>
 			<s:HGroup verticalAlign="middle">
 				<s:Label text="Width:"/>
@@ -81,8 +75,8 @@
 			
 			<instruments:InstrumentsPane id="instrPane" changeInstrument="onChangeInstrument(event)" />
 			
-<!--			<local:CellPropertiesPanel id="cellProp" paddingTop="50" />
--->			
+			<local:CellPropertiesPanel id="cellProp" paddingTop="50" />
+			
 		</s:VGroup>
 		
 		

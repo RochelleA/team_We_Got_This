@@ -1,6 +1,6 @@
-package grid
+package trafficGrid
 {
-	public class CellType
+	public class TrafficCellType
 	{
 		public static const ROAD_EAST:String = "road_east";
 		public static const ROAD_SOUTH:String = "road_south";
@@ -10,5 +10,6 @@ package grid
 		
 		public static const EMPTY:String = "empty";
 		public static const ROUNDABOUT:String = "roundabout";
+		public static const ROUNDABOUT_INSIDE:String = "roundabout_inside";
 	}
 }

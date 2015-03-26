@@ -4,6 +4,8 @@ package grid
 	import flash.events.MouseEvent;
 		
 	import instruments.Instruments;
+	import old_files.ICell;
+	import trafficGrid.TrafficCellType;
 	
 	[Event(name="cellSelected", type="flash.events.Event")]
 	[Style(name="cellSide", inherit="yes", type="int")]
@@ -91,14 +93,14 @@ package grid
 					}
 					break;
 				case Instruments.ROUNDABOUT:
-					newType = grid.CellType.ROUNDABOUT;
+					newType = trafficGrid.TrafficCellType.ROUNDABOUT;
 					tempCells = putRoundabout(c.xPos-5, c.yPos-5, super._cells);
 					break;
 				case Instruments.SELECT:					
 					cellToSelect = c;
 					break;
 				case Instruments.RUBBER:
-					newType = grid.CellType.EMPTY;
+					newType = trafficGrid.TrafficCellType.EMPTY;
 					tempCells.push(c);
 			}
 			for each (c in tempCells){
@@ -204,23 +206,23 @@ package grid
 			switch (value){
 				case Instruments.ROAD_EAST:
 					_instrument = Instruments.ROAD;
-					this._roadType = grid.CellType.ROAD_EAST;
+					this._roadType = trafficGrid.TrafficCellType.ROAD_EAST;
 					break;
 				case Instruments.ROAD_SOUTH:
 					_instrument = Instruments.ROAD;
-					this._roadType = grid.CellType.ROAD_SOUTH;
+					this._roadType = trafficGrid.TrafficCellType.ROAD_SOUTH;
 					break;
 				case Instruments.ROAD_NORTH:
 					_instrument = Instruments.ROAD;
-					this._roadType = grid.CellType.ROAD_NORTH;
+					this._roadType = trafficGrid.TrafficCellType.ROAD_NORTH;
 					break;
 				case Instruments.ROAD_WEST:
 					_instrument = Instruments.ROAD;
-					this._roadType = grid.CellType.ROAD_WEST;
+					this._roadType = trafficGrid.TrafficCellType.ROAD_WEST;
 					break;
 				case Instruments.ROAD_JUNCTION:
 					_instrument = Instruments.ROAD;
-					this._roadType = grid.CellType.ROAD_JUNCTION;
+					this._roadType = trafficGrid.TrafficCellType.ROAD_JUNCTION;
 					break;
 			}
 			this.setSelectedCell(null); //stop selecting a cell

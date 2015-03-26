@@ -9,7 +9,6 @@
 		<![CDATA[			
 			import mx.events.FlexEvent;
 			private var selectedInstrument:Instrument;
-			private var _currentInstrumentId:String;
 			
 			protected function onInstrumentClick(event:MouseEvent):void
 			{

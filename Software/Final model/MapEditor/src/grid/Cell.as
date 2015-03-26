@@ -5,10 +5,10 @@ package grid
 	import spark.primitives.Rect;
 		
 	[Style(name="side", inherit="no", type="int")]
-	public class Cell extends SkinnableComponent
+	public class Cell extends SkinnableComponent implements ICell
 	{
-		private var _type:String;
-		private var _prevType:String;
+		protected var _type:String;
+		protected var _prevType:String;
 		
 		private var _temp:Boolean;
 		
@@ -68,7 +68,7 @@ package grid
 		}
 		
 		/**
-		 * Overwrite to change side
+		 * Override to change side
 		 */
 		override public function setStyle(styleProp:String, newValue:*):void{
 			super.setStyle(styleProp, newValue);
@@ -80,7 +80,7 @@ package grid
 		override protected function getCurrentSkinState():String
 		{
 			var s:String = "";
-			if(this.temp){
+			if(this._temp){
 				s = "temp";
 			}else{
 				s = "normal";
@@ -95,20 +95,17 @@ package grid
 
 		public function set type(value:String):void
 		{
-			this._prevType = _type;
-			trace('set type');
 			_type = value;
 		}
 
-		public function get temp():Boolean
-		{
-			return _temp;
-		}
+//		public function get temp():Boolean
+//		{
+//			return _temp;
+//		}
 
-		public function set temp(value:Boolean):void
+		private function set temp(value:Boolean):void
 		{
 			_temp = value;
-			trace('set temp');
 			this.invalidateSkinState();
 		}
 
@@ -122,15 +119,38 @@ package grid
 			return _xPos;
 		}
 		
+		/**
+		 * If cell's type was temporary changed, this method will discard the temporary type.
+		 * @see Cell.tempType
+		 * @see Cell.confirmNewType()
+		 */
 		public function restore():void{
-			this.temp = false;
-			this.type = this._prevType;
+			if(this._temp){
+				trace('restore');
+				this.type = this._prevType;
+				this.temp = false;
+			}
 		}
-		
+		/**
+		 * Sets a temporary cell type. It can de discarded using restore() method.
+		 * @see Cell.restore()
+		 */
+		public function set tempType(value:String):void{
+			if(value){
+				this.temp = true;
+				this._prevType = type;
+				this.type = value;
+			}
+			trace('set temp type', this, _temp);
+		}
+		/**
+		 * Saves the temporary cell's type.
+		 * @see Cell.tempType
+		 * @see Cell.restore()
+		 */
 		public function confirmNewType():void
 		{
 			this.temp = false;
-			this.type = this.type;
 		}
 
 	}
