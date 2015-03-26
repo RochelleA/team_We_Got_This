@@ -32,6 +32,7 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 		
 		car.setSpeed(1);
 		car.setPosition(x,y);
+		
 		if(D==Direction.NORTH)
 		{car.setEnterDir(Direction.SOUTH);
 		}
@@ -43,6 +44,15 @@ public class DataSimulator extends EventDispatchable implements Runnable {
 		}
 		else if(D==Direction.WEST)
 		{car.setEnterDir(Direction.EAST);
+		}
+		
+		int randColour = random.nextInt(4)+1;
+		
+		if(randColour%2==0){
+			car.setCarsColour(CarsColour.BLUE);
+		}
+		else{
+			car.setCarsColour(CarsColour.RED);
 		}
 		
 		int rand = random.nextInt(4)+1;

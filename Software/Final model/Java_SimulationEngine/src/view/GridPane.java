@@ -11,10 +11,10 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
+import core.CarsColour;
 import core.CellType;
 import core.Direction;
 import core.IGrid;
-import core.TrafficLightColour;
 
 /**
  * 
@@ -41,10 +41,15 @@ public class GridPane extends JComponent {
 	Image roadSouthSpaceLane = new ImageIcon(getClass().getResource("/roadSouthSpaceLane.png")).getImage();
 	Image roadNorthLane = new ImageIcon(getClass().getResource("/roadNorthLane.png")).getImage();
 	
-	Image car = new ImageIcon(getClass().getResource("/redCar.jpg")).getImage();
-	Image carNorth = new ImageIcon(getClass().getResource("/redCarNorth.jpg")).getImage();
-	Image carNorthEast = new ImageIcon(getClass().getResource("/northEast.png")).getImage();
-	Image carEastSouth = new ImageIcon(getClass().getResource("/eastSouth.png")).getImage();
+	Image carRed = new ImageIcon(getClass().getResource("/redCar.jpg")).getImage();
+	Image carNorthRed = new ImageIcon(getClass().getResource("/redCarNorth.jpg")).getImage();
+	Image carNorthEastRed = new ImageIcon(getClass().getResource("/northEast.png")).getImage();
+	Image carEastSouthRed = new ImageIcon(getClass().getResource("/eastSouth.png")).getImage();
+	
+	Image carBlue = new ImageIcon(getClass().getResource("/blueCar.jpg")).getImage();
+	Image carNorthBlue = new ImageIcon(getClass().getResource("/blueCarNorth.jpg")).getImage();
+	Image carNorthEastBlue = new ImageIcon(getClass().getResource("/northEastBlue.png")).getImage();
+	Image carEastSouthBlue = new ImageIcon(getClass().getResource("/eastSouthBlue.png")).getImage();
 	
 	Image roadNorthEast = new ImageIcon(getClass().getResource("/roadNorthEast.png")).getImage();
 	Image roadEastSouth = new ImageIcon(getClass().getResource("/roadEastSouth.png")).getImage();
@@ -155,36 +160,56 @@ public class GridPane extends JComponent {
 						
 					}
 					if(getGrid().hasCarAt(x, y)){
-						if(getGrid().getCarAt(x, y).getcarsDir()==Direction.EAST || getGrid().getCarAt(x, y).getcarsDir()==Direction.WEST)
+						if(getGrid().getCarAt(x, y).getcarsDir()==Direction.EAST || getGrid
+
+().getCarAt(x, y).getcarsDir()==Direction.WEST)
 						{
-							g.drawImage(car, px, py, null);
+							if(getGrid().getCarAt(x, y).getCarsColour()==CarsColour.RED){
+							g.drawImage(carRed, px, py, null);}
+							
+							else if(getGrid().getCarAt(x, y).getCarsColour
+
+()==CarsColour.BLUE){
+								g.drawImage(carBlue, px, py, null);}
 						}
-						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.NORTH || getGrid().getCarAt(x, y).getcarsDir()==Direction.SOUTH)
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.NORTH || getGrid
+
+().getCarAt(x, y).getcarsDir()==Direction.SOUTH)
 						{
-							g.drawImage(carNorth, px, py, null);
+							if(getGrid().getCarAt(x, y).getCarsColour()==CarsColour.RED){
+							g.drawImage(carNorthRed, px, py, null);}
+							else if(getGrid().getCarAt(x, y).getCarsColour
+
+()==CarsColour.BLUE){
+								g.drawImage(carNorthBlue, px, py, null);
+							}
 						}
-						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.eastSouth || getGrid().getCarAt(x, y).getcarsDir()==Direction.westNorth)
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.eastSouth || 
+
+getGrid().getCarAt(x, y).getcarsDir()==Direction.westNorth)
 						{
-							g.drawImage(carEastSouth, px, py, null);
+							if(getGrid().getCarAt(x, y).getCarsColour()==CarsColour.RED){
+							g.drawImage(carEastSouthRed, px, py, null);}
+							else if(getGrid().getCarAt(x, y).getCarsColour
+
+()==CarsColour.BLUE){
+								g.drawImage(carEastSouthBlue, px, py, null);
+							}
 						}
-						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.northEast || getGrid().getCarAt(x, y).getcarsDir()==Direction.southWest)
+						else if(getGrid().getCarAt(x, y).getcarsDir()==Direction.northEast || 
+
+getGrid().getCarAt(x, y).getcarsDir()==Direction.southWest)
 						{
-							g.drawImage(carNorthEast, px, py, null);
+							if(getGrid().getCarAt(x, y).getCarsColour()==CarsColour.RED){
+							g.drawImage(carNorthEastRed, px, py, null);}
+							else if(getGrid().getCarAt(x, y).getCarsColour
+
+()==CarsColour.BLUE){
+								g.drawImage(carNorthEastBlue, px, py, null);
+							}
 						}
 						
-						/**
-						if(getGrid().getCellDirection(x, y)==Direction.NORTH || getGrid().getCellDirection(x, y)==Direction.SOUTH)
-						{
-//	    						px=x*10;
-//	            				py=y*10;
-            				g.drawImage(carNorth, px, py, null);	
-						}
-    					else{
-//	            				px=x*10;
-//	        					py=y*10;
-        					g.drawImage(car, px, py, null);
-    					}
-    					*/
+
 					}
 					
     			}

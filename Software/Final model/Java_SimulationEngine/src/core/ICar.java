@@ -23,7 +23,21 @@ public interface ICar {
 	 */
 	public void setY(int y);
 	
+	
+	/**
+	 * Sets the cars colour.
+	 *
+	 * @param carsColour the new cars colour
+	 */
+	public void setCarsColour(CarsColour carsColour);
+	
 
+	/**
+	 * Gets the cars colour.
+	 *
+	 * @return the cars colour
+	 */
+	public CarsColour getCarsColour();
 	/**
 	 * Gets the stop c.
 	 *

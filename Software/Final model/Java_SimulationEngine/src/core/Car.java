@@ -16,7 +16,7 @@ public class Car implements ICar {
 	private int numbRounds;
 	private int numbOverTaking;
 	private Direction carsDir;
-	
+	private CarsColour carsColour;
 	private Direction dirEnt;
 	private Direction dirExt;
 	
@@ -34,6 +34,17 @@ public class Car implements ICar {
 		this.y = y;
 	}
 	
+	
+	
+	@Override
+	public void setCarsColour(CarsColour carsColour){
+		this.carsColour = carsColour;
+	}
+	
+	@Override
+	public CarsColour getCarsColour(){
+		return carsColour;
+	}
 	
 	@Override
 	public void setEnterDir(Direction dirEnt){
