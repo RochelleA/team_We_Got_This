@@ -20,7 +20,7 @@
 	\listoffigures
 	\listoftables
 	\vspace{2cm}
-	\textcolor{red}{What are our goals? We need to be able to say in two sentence what the goal of building our simulation is? }
+	%\textcolor{red}{What are our goals? We need to be able to say in two sentence what the goal of building our simulation is? }
 	
 	\pagebreak
 	\section{Introduction}
@@ -270,7 +270,7 @@
 	   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	As our group's focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In figure \ref{CarCrash3}, we can see that the silver car has approached the roundabout with its final destination being exit number four, the blue car then approaches the roundabout with it final destination being exit number one. In this scenario a problem arises because the silver car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real life the driver of the silver car would anticipate this problem and either adjust its speed so the blue car could proceed before it or the blue car would give way to the silver car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decided to research problems in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London \textcolor{red}{(spiral roundabout reference)}. The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{spiralRoundabout}) is a spiral roundabout which ensures that the lane in which the person enters the roundabout will lead them directly to the correct exit without having to change lanes. We decided we would also like to model this as it is a new and unique solution to a problem which has existed for many years.
+	As our group's focus was on multi-lane roundabouts, one of the the problems that exists in real-life which would be a bigger problem in our simulation was how cars exit a multi-lane roundabout. In figure \ref{CarCrash3}, we can see that the silver car has approached the roundabout with its final destination being exit number four, the blue car then approaches the roundabout with it final destination being exit number one. In this scenario a problem arises because the silver car will need to cut across the path of the blue car in order to exit the roundabout. As a group we discussed how in real life the driver of the silver car would anticipate this problem and either adjust its speed so the blue car could proceed before it or the blue car would give way to the silver car. We wanted to model something similar and hence again we needed a way for our cars to have intelligence. Whilst we were considering possible rules for our roundabout, we decided to research problems in existing roundabouts in London. During the research we came across a solution to a dangerous roundabout which was trialled in north London  The roundabout in question had both three and four lane entrances and exits which made it difficult for cars to navigate the roundabout. The solution which was designed (see figure \ref{spiralRoundabout}) is a spiral roundabout which ensures that the lane in which the person enters the roundabout will lead them directly to the correct exit without having to change lanes. We decided we would also like to model this as it is a new and unique solution to a problem which has existed for many years. %\textcolor{red}{(spiral roundabout reference)}.
 	
 	It was at this point the group decided it would be useful to have a case network on which we could test new policies. This would allow us to ensure that the simulation we built could be used by clients to represent their own network and to gather relevant statistics. We decided that our test network would focus on a four junction multi-lane roundabout. In order to gather statistics and test new policies, we needed a scenario. In our scenario there would be a heavy flow of cars coming from junction one, this would delay other cars from entering the roundabout at the next junction, causing a traffic jam (see figure \ref{steadyFlow}). The solution we propose is that we could add traffic lights to this roundabout to help regulate the flow of traffic. If we could build dynamic traffic lights, the duration of the traffic light would instead be dependent on the number of cars passing through the light rather than a timer-based traffic light. What we hope is that after we have built our simulation we will be able to test this scenario and use the simulation to find the most efficient light duration which would maximise the network flow through the roundabout. Considering the end goal of our simulation allowed us to be clearer on what is necessary to build a quality traffic simulation.  
 
@@ -293,7 +293,7 @@
 	On the other hand, it is required that every method has a corresponding test code written for it to make sure it works correctly in a variety of situations, such as boundary and corner conditions, therefore edge-cases must be tested.\\
 	
 	\noindent 
-	\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\textcolor{red}{ref: http://www.nngroup.com/articles/ten-usability-heuristics/}] should be considered and applied for implementation of user interface. For example, there should be a match between the system and real world so users understand the analogy. 
+	\textbf{Usability:} It must be easy for users to understand how to use the simulation capabilities. Jakob Nielsen's 10 general principles for interaction design [\ref{Nielsen}] should be considered and applied for implementation of user interface. For example, there should be a match between the system and real world so users understand the analogy. 
 	This means that cars in the simulation should look like cars and the designs for road and roundabouts must be as realistic as possible. 
 	Also, help should be provided for users with explanations of how to use the simulation engine. 
 	A heuristic testing for all the 10 principles must be performed in the end of the UI’s development life-cycle by an expert. \\
@@ -325,7 +325,7 @@
 		\item Users can load a map saved earlier by choosing a file.
 		\item  Users should be able to erase all objects from the map (i.e. to start over). 
 		\item Map builder should be programmed in ActionScript 3.0. 
-		\textcolor{red}{[Screenshot of a blank map, and map with road, cars and traffic lights on it]}
+		%\textcolor{red}{[Screenshot of a blank map, and map with road, cars and traffic lights on it]}
 	\end{enumerate}
 	
 	
@@ -340,7 +340,7 @@
 		\item The simulation controller must move cars according to their speed and direction, making sure that collisions do not occur, e.g. if a car needs to be moved to the next cell which is already occupied by another car, it will not be moved. In the future, a collision can be allowed to occur and cause a traffic jam, but this is subject to changes in requirements.
 		\item The cars must be allowed to go ahead in their current direction or change direction when they reach a junction. 
 		\item The appropriate methods should exist to make cars enter, follow and exit roundabouts.
-		\item Traffic light's colour must change according to a certain delay associated with it by the global controller. \textcolor{red}{explain this in the implementation section} The possible states are: RED, RED-AMBER, AMBER, GREEN. The exact behaviour of cars in these situations must be specified by a policy.
+		\item Traffic light's colour must change according to a certain delay associated with it by the global controller. The possible states are: RED, RED-AMBER, AMBER, GREEN. The exact behaviour of cars in these situations must be specified by a policy.
 		\item Each car should have a timer which starts when it enters the map and stops when it exits. At this point, statistics are collected on the time taken for it to travel through the road network.
 		\item  The simulation might be paused by the user and its state can be saved by him/her to load later. 
 		\item The vehicles may be able to overtake each other. 
@@ -379,7 +379,7 @@
 	Firstly, the layered pattern diagram is a good way of providing documentation of the essential “stack” components that our system requires: an OS and appropriate hardware to run a JVM machine. 
 	Secondly, the data layer is responsible for the handling of data from the real world, e.g. how many cars are coming from different entry points at each point in time. 
 	This data could be gathered from cameras installed along the roads or from the mobile apps of drivers who wish to participate in helping to gather statistics about traffic conjectures \cite{NCTA}. 
-	Although it would be very challenging to have our system be able to read information in a similar way, it would be useful to allow users to be able to specify the probability a car will enter a given junction. 
+	Although it would be very challenging to have our system be able to read information in a similar way, it would be useful to allow users to be able to specify the probability that a car will enter a given junction. 
 	This will allow the user to correctly model their own networks and design policies to improve problems. Thirdly, the Simulation Model layer uses the provided information about cars currently using the road network and attempts to predict future states of the network. 
 	A number of policies will be used in a simulation and one of the aims of this project is to find the most appropriate policy by comparing their performance, thus statistics and policies are two essential sub-layers. 
 	The Simulation Engine will also move the cars and switch colours on the traffic lights, so control is the third sub-layer. 
@@ -406,7 +406,7 @@
 	The second architecture pattern we will make use of is the MVC module pattern which breaks the system into three components. 
 	The three components are the model which represents the application's state and provides interface to application logic, the view which produces a representation of the model to the user and handles user input, and the controller which manages the interaction between the model and the view by translating user actions into changes in the model. 
 	
-	\textcolor{red}{The MVC uses the Notifies relation to connect instances of model, view and controller}, i.e. elements are notified of a state change. 
+	The MVC uses the Notifies relation to connect instances of model, view and controller, i.e. elements are notified of a state change. 
 	The restrictions of this pattern are that at least one instance of each element must be created, and the model component should not interact directly with the controller. 
 	Finally, one of the weaknesses of the MVC design pattern is that it may introduce unnecessary complexities for simple programs \cite{bass2007software}. 
 	In spite of that, our system is not that simple and a number of people will be working on different parts of the simulation engine. Therefore, we decided that we will benefit from the adoption of the MVC: for example, one person will be able to work on the model (logic of moving cars according to a policy) simultaneously with another person programming the UI, such as displaying the map, importing graphics and handling user input. 
@@ -452,7 +452,7 @@
 	The model performs necessary transformations (e.g. going back to the initial state in case of a restart) and notifies the view about the update. 
 	The overall diagram for the MVC and a sequence diagram for a typical run of a simulation are presented in diagrams \ref{OurMvc} and \ref{SequenceDiagram}. \\
 	
-	\textcolor{red}{Problems with UML can three of them be combined on the same page to save space. Explain them here.}
+%	\textcolor{red}{Problems with UML can three of them be combined on the same page to save space. Explain them here.}
     
 \begin{figure}[H]
 	\centering
@@ -604,7 +604,7 @@ If all the necessary requirements were finished, we hoped to implement the spira
 		It uses JFrame of the Java Swing API to create a window and JPanel to place various components on the stage, for example graphical representation of the map (GridPane), JMenu, logo and statistical data. 
 		The view depends on resources such as images of cars, empty cells and roads and updates when there is a change in the model.  An important feature of simulation allows  to laod a default map if they do not have their own. This map will display all the attributes that can represented in our simulation as it contains both a junction and a roundabout.
 		
-		\textcolor{red}{All the user actions are taken from the view and passed on to the controller for respective actions that have to be taken. Effort has been made in making sure any change in the status of the model is recorded by the application and is befit to be used wherever necessary in future developments.}\\
+	All of the user actions are taken from the View and passed on to the controller for the respective actions to be taken. Effort has been made in making sure that any change in the status of the model is recorded by the application and is appropriate to be used wherever necessary in future developments.\\
 		
 	
 	\noindent
@@ -767,7 +767,7 @@ Each time the car wants to move, it first checks whether or not its desired exit
 	At the end of every meeting the project coordinator would create a report of the minutes of the meeting. This included the agenda, discussion points -- what was discussed in the meeting, and action points -- what each member of the team needed to do before the next meeting. 
 	These reports were uploaded to GitHub so that every member could look at it if they needed to clarify anything.
 	
-	Once we were clear of the specifications of the system and we were ready to start designing, we gave everyone the components of the project they were to work on. Then, in the weekly meetings which were decreased to once a week, we would give feedback on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model was not suited to our project and we began to follow the agile scrum method instead. \textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implementation section.}
+	Once we were clear of the specifications of the system and we were ready to start designing, we gave everyone the components of the project they were to work on. Then, in the weekly meetings which were decreased to once a week, we would give feedback on what we had done. However it became clear that progress had slowed. It was decided that the waterfall model was not suited to our project and we began to follow the agile scrum method instead. %\textcolor{red}{explain this method. Find a space to put the description of waterfall. Perhaps in the implementation section.}
 	
 	
 	\subsection{Roles and Subgroups}
@@ -792,7 +792,8 @@ Each time the car wants to move, it first checks whether or not its desired exit
     GitHub was an ongoing challenge for our team in the beginning of the project. As it took us a while to acclimate ourselves to using GitHub, we first used the online file-sharing platform Dropbox to distribute and save our team files. We set ourselves a deadline by which each member needed to be familiarised with GitHub.
     
     Following this deadline all team members began using GitHub frequently, however it was apparent that the present structure of our repository was holding us back. When we began using GitHub, we simply replicated the structure of our Dropbox folder. Consequently our repository had a separate folder for each team member to store their files. As the group progressed in the project we began working on similar areas and hence needed to use the same files. We decided that it was important to restructure the repository so that it had a more cohesive structure. Instead of separating files by who created them we sorted all the group files into three categories: Documentation, Software and Graphics. At this point we created a file to explain how to store your files and use the repository so that everyone could easily find their files. Moreover we decided that everyone should try to leave clear comments when committing to GitHub so that everyone would understand the changes made to a file in the repository. We mostly followed this structure and GitHub became a a vital tool for our group. 
-    \textcolor{red}{add stuff on problem with git not updating files}
+  %%  \textcolor{red}{add stuff on problem with git not updating files}
+  %% Toward the end of the project, we had another bump in the road regarding GitHub. When one person would update a document, GitHub would show that the document had been updated however it would not take the changes. This led to one group member writing a section of the paper that had already been written by another member. At another point, because the software was being continuously updated, GitHub was not allowing the coordinator to upload a version of the paper which delayed another team member from editing it. 
    
    	\subsection{Setting Up a Common IDE}
    	
@@ -811,7 +812,7 @@ Each time the car wants to move, it first checks whether or not its desired exit
 	
 	 Although we had this cohesive structure, the main issue which affected every aspect of our project was communication. Whilst we designed many strategies to overcome this problem, some of which were extremely successful, it still impacted the final result. We recognise that if we had better communication from the beginning, we would have avoided points where two members of the team were working on the same feature or when members were unclear about what was expected of them. Another problem the group had was time keeping and this impacted the effectiveness of meetings as a lot of time was wasted. Again this affected communication because if a team members missed some or all of the meeting, they did not get some vital piece of information.   
 	 
-	 Finally, as a team we struggled to stick to a set timetable and this resulted in \textcolor{red}{us losing our way half way through the project.} At this time the team decided we needed a new approach. The team agreed to follow the agile scrum methodology because we felt we would benefit from the short sharp burst of productivity which a sprint gave. We had three successful sprints which completely turned the project around. It was far easier for the group to understand what needed to be achieved over the coming week given a sprint plan instead of following our original Gantt chart. We believe that the final sprint that was dedicated to statistics, transformed our project from simply simulating cars to reporting on how they moved across a network. We wanted a user to have some understanding of what the visual representation was showing and this needed to be something quantifiable. 
+	 Finally, as a team we struggled to stick to a set timetable and this resulted in us losing our way half way through the project. At this time the team decided we needed a new approach. The team agreed to follow the agile scrum methodology because we felt we would benefit from the short sharp burst of productivity which a sprint gave. We had three successful sprints which completely turned the project around. It was far easier for the group to understand what needed to be achieved over the coming week given a sprint plan instead of following our original Gantt chart. We believe that the final sprint that was dedicated to statistics, transformed our project from simply simulating cars to reporting on how they moved across a network. We wanted a user to have some understanding of what the visual representation was showing and this needed to be something quantifiable. 
 	 
 	 Overall, as a group we feel this project has been largely successful and we have learned a great deal about how we could improve our own working style and how we work as a team. Each member recognises where the could have done more but also how important they were to our success. 
 	
