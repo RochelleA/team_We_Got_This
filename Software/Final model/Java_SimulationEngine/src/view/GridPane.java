@@ -46,8 +46,8 @@ public class GridPane extends JComponent {
 	Image carNorthEastRed = new ImageIcon(getClass().getResource("/northEast.png")).getImage();
 	Image carEastSouthRed = new ImageIcon(getClass().getResource("/eastSouth.png")).getImage();
 	
-	Image carBlue = new ImageIcon(getClass().getResource("/blueCar.jpg")).getImage();
-	Image carNorthBlue = new ImageIcon(getClass().getResource("/blueCarNorth.jpg")).getImage();
+	Image carBlue = new ImageIcon(getClass().getResource("/bueCar.png")).getImage();
+	Image carNorthBlue = new ImageIcon(getClass().getResource("/blueCarNorth.png")).getImage();
 	Image carNorthEastBlue = new ImageIcon(getClass().getResource("/northEastBlue.png")).getImage();
 	Image carEastSouthBlue = new ImageIcon(getClass().getResource("/eastSouthBlue.png")).getImage();
 	
