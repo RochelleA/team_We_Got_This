@@ -1,0 +1,38 @@
+\documentclass[]{article}
+\usepackage{xcolor}
+
+%opening
+\title{Traffic Simulation Notes}
+\author{team\_we\_got\_this}
+
+\begin{document}
+
+\maketitle
+
+\section{Literature Review}
+
+In this section we will evaluate traffic simulations presented in literature. We will begin by discussing the different categories of traffic simulation and then we will focus on Microscopic traffic simulations as these best meet the specifications of our system presented in section %\ref{RequirementsAndDesign}.
+\subsection{Background}
+
+In order to accurately study a real-life system, it is often necessary to first model this system by abstracting some information. Once this model has been made, one can build a simulation to make several observation of the model. Finally one analyses the information collected from the simulation in order to make inferences and suggestions \cite{sokolowski2011principles}. A traffic simulation can be classified in several ways - microscopic, mesoscopic and macroscopic. Another distinction of a traffic simulator is discrete or continuous. In a discrete system the variables change at set intervals of time whereas in a continuous system the variables change continuously with time. 
+
+Macroscopic traffic simulations are large traffic simulation capable of showing the effect of small changes on vast and complex networks. Whereas a microscopic traffic simulation is used to model individual movement of cars  in smaller sections of a network such as one specific intersection. These models are more suitable for studying changes such as a new road ramp as they focus on parameters such as velocity and acceleration \cite{sokolowski2011principles}. Macroscopic and mesoscopic models are similar in their approaches as they capture traffic dynamics in lesser detail. This results in a faster and easier simulator which is more suitable for larger networks . 
+On the other hand, a microscopic simulator are applied to smaller areas as it better represents vehicle and driver-behaviour \cite{burghout2005hybrid}. 
+
+
+\subsection{Microscopic Simulations}
+
+In \cite{namekawa2005general}, the author describes a cell automation method for realizing a microscopic model. In this simulation the main aim is to have vehicles that have the capability to make their own decisions. The road network has physical attributes such widths, shapes and slopes. They also have logical attributes such as traffic signals and signs. A vehicle is contained within a cell, this is the state at say time $t$. At the next time step, $t+1$, the vehicle will have decide its new cell based on the information of neighbouring cells in the previous time step. 
+
+Another microscopic simulation that we would like to draw elements from defines a reactive agent and is presented in \cite{ehlert2001microscopic}. In this paper the authors focus on intelligent agents so that vehicles can model individual driving behaviours. The paper defines an intelligent agent as capable of sensing its environment and acting accordingly. This model differs from the above model as drivers can now be classed as aggressive if they break the set behaviours defined bellow. Each agent has 7 behaviours which automated its driving on the network. The first, Road-following, keeps the vehicle on the road whilst the second Intersection/Changing Lanes insures the driver adjusts its speed before changing its direction or reaching an intersection. The Traffic Lights behaviour insures a car stops at a red or yellow traffic light if that traffic light applies to it.  Another necessary behaviour, implemented to simulate realistic driving, is Car-following. This behaviour requires that a vehicle adjust it speed if the car in front is travelling at a slower speed than it. The behaviour, Switching Lanes, allows a car to change into another lane in order to overtake a slower car. Applying Other Traffic Rules is a behaviour which allows the simulation to model other rules such as maximum speeds and one-way street such that drivers will exhibit the necessary actions to comply with these rules. Finally the Collision Detection and Emergency Breaking behaviour alerts the car when it is about to crash into and object. This behaviour take priority over all other behaviours. 
+
+We have used the different approaches presented in the two microscopic simulations to influence the requirements and implementation of our system. We would like to use the cell automation used in the first simulation to control where are cars are at each tick. In order to model a real urban environment we would like our system to have the Traffic Lights, Car-following and Switching Lanes behaviours from the second simulation.
+
+\textcolor{red}{When we discuss the early models we made, it would be good to say tat Anton's model exhibited the Traffic lights behaviour from the paper, \cite{ehlert2001microscopic}}
+
+
+\bibliographystyle{plain}
+\bibliography{../references}
+
+
+\end{document}
